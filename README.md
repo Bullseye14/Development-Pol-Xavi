@@ -1,1 +1,3 @@
-# Platform_Development
+# Development game
+
+## by Pol Casaú & Xavi Marin
