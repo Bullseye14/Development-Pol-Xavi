@@ -30,8 +30,8 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	img = App->tex->Load("textures/test.png");
-	App->map->Load("map1.tmx");
+	//img = App->tex->Load("textures/test.png");
+	App->map->Load("hello2.tmx");
 	return true;
 }
 
