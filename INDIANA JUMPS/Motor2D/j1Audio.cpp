@@ -50,6 +50,12 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
+	//FX
+	jump = LoadFx("audio/fx/Jump51.wav");
+
+	//MUSIC
+	PlayMusic("audio/music/IndianaJump_audio.ogg");
+
 	return ret;
 }
 
