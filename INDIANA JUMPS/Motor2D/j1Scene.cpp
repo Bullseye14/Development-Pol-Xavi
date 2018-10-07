@@ -31,7 +31,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	//img = App->tex->Load("textures/test.png");
-	App->map->Load("hello2.tmx");
+	App->map->Load("desert_map.tmx");
 	return true;
 }
 
