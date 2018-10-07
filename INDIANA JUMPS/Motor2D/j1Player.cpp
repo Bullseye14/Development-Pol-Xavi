@@ -58,9 +58,15 @@ bool j1Player::CleanUp()
 }
 bool j1Player::Update(float dt)
 {
+	// Here we declare the GetKet(SCANCODE) for moving the player
+
+
 	return true;
 }
 bool j1Player::PostUpdate()
 {
+	// Here we call the Blit function
+
+
 	return true;
 }
