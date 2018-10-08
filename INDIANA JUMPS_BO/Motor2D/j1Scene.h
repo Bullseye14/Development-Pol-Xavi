@@ -5,6 +5,9 @@
 
 struct SDL_Texture;
 
+class Collider;
+class Player;
+
 class j1Scene : public j1Module
 {
 public:
