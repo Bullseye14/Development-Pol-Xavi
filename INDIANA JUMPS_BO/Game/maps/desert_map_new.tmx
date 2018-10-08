@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextobjectid="12">
  <tileset firstgid="1" name="desert_tileset_new.png" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="desert_tileset_new.png" width="128" height="128"/>
  </tileset>
- <imagelayer id="2" name="Image Layer 1">
-  <image source="BG_new.png" width="6400" height="480"/>
+ <imagelayer name="Background">
+  <image source="BG_new.png" width="6400" height="500"/>
  </imagelayer>
- <layer id="1" name="Tile Layer 1" width="200" height="15">
+ <objectgroup color="#aa5500" name="Colliders">
+  <object id="3" x="32" y="351.909" width="606" height="124.091"/>
+  <object id="4" x="512" y="193" width="126" height="157"/>
+  <object id="5" x="161" y="289" width="94" height="62"/>
+  <object id="6" x="801" y="320" width="191" height="159"/>
+  <object id="7" x="992" y="224" width="159" height="254"/>
+  <object id="10" x="705" y="127" width="94" height="14"/>
+  <object id="11" x="897" y="128" width="95" height="15"/>
+ </objectgroup>
+ <layer name="Tiles" width="200" height="15">
   <data>
    <tile/>
    <tile/>
@@ -811,15 +820,15 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="13"/>
-   <tile gid="14"/>
-   <tile gid="15"/>
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="13"/>
-   <tile gid="14"/>
-   <tile gid="15"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -3010,4 +3019,7 @@
    <tile/>
   </data>
  </layer>
+ <objectgroup color="#ff0000" name="Personatge">
+  <object id="2" x="66" y="319" width="30" height="30"/>
+ </objectgroup>
 </map>
