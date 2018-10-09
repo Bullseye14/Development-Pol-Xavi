@@ -20,8 +20,11 @@ public:
 public:
 	SDL_Texture* graphics = nullptr;
 
-	iPoint position;
-	float speed;
+	iPoint pos;
+	float xspeed;
+	float yspeed;
+
+	SDL_Rect rect_player;
 
 	Animation* current_animation = nullptr;
 	Animation idle;
