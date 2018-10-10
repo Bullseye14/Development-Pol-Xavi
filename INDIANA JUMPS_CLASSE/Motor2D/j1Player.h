@@ -27,7 +27,9 @@ public:
 
 	iPoint pos;
 	iPoint speed;
-	
+	int playerheight;
+	int playerwidth;
+
 	int yspeed;
 
 	SDL_Rect rect_player;
@@ -40,9 +42,10 @@ public:
 	Collider* playerHitbox;
 
 	bool changeJump;
-	bool from_above;
+	bool from_up;
 	bool from_right;
 	bool from_left;
+	bool from_down;
 	bool jumping;
 	bool falling;
 	bool contact;

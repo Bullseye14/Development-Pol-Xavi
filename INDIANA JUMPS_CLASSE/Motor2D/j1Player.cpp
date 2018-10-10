@@ -45,6 +45,8 @@ j1Player::~j1Player()
 
 bool j1Player::Awake(pugi::xml_node& config)
 {
+	pos.x = config.child("pos").attribute("x").as_int();
+	pos.y = config.child("pos").attribute("y").as_int();
 	return true;
 }
 bool j1Player::Start()
@@ -56,11 +58,9 @@ bool j1Player::Start()
 	current_animation = &idle;
 	speed.x = 0;
 	speed.y = 0;
-	pos.x = 5;
-	pos.y = 350;
 	yspeed = 7;
 	changeJump = false;
-	from_above = false;
+	from_up = false;
 	from_left = false;
 	from_right = false;
 	jumping = false;
@@ -81,9 +81,10 @@ bool j1Player::Update(float dt)
 {
 	
 
-	from_above = false;
+	from_up = false;
 	from_left = false;
 	from_right = false;
+	from_down = false;
 
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {

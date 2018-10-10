@@ -17,7 +17,11 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
-
+  
+  <player>
+	<pos x="5" y="352" />
+  </player>
+  
   <file_system>
     <path>data.zip</path>
   </file_system>
