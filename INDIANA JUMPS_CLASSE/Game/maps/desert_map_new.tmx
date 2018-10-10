@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="125">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="176">
  <tileset firstgid="1" name="desert_tileset_new.png" tilewidth="32" tileheight="32" tilecount="84" columns="12">
   <image source="desert_tileset_new.png" width="384" height="224"/>
  </tileset>
@@ -3010,7 +3010,7 @@
    <tile gid="14"/>
   </data>
  </layer>
- <objectgroup color="#aa5500" id="6" name="COLLIDER_Walls">
+ <objectgroup color="#ff0000" id="6" name="COLLIDER_Walls">
   <object id="19" x="0" y="416" width="608" height="64"/>
   <object id="20" x="320" y="352" width="96" height="64"/>
   <object id="21" x="480" y="256" width="128" height="160"/>
@@ -3065,52 +3065,50 @@
   <object id="70" x="6016" y="224" width="64.5" height="16"/>
   <object id="71" x="6080" y="416" width="128" height="64"/>
   <object id="72" x="6208" y="352" width="192" height="128"/>
- </objectgroup>
- <objectgroup color="#ff0000" id="7" name="COLLIDER_Death">
-  <object id="73" x="672" y="320" width="64" height="64"/>
-  <object id="74" x="608" y="448" width="192" height="32"/>
-  <object id="75" x="1152" y="448" width="224" height="32"/>
-  <object id="76" x="1376" y="416" width="64" height="64"/>
-  <object id="78" x="1440" y="448" width="288" height="32"/>
-  <object id="79" x="1728" y="416" width="64" height="64"/>
-  <object id="80" x="1792" y="448" width="96" height="32"/>
-  <object id="81" x="1600" y="320" width="64" height="64"/>
-  <object id="82" x="2112" y="416" width="192" height="64"/>
-  <object id="83" x="2144" y="96" width="32" height="32"/>
-  <object id="84" x="2464" y="448" width="64" height="32"/>
-  <object id="85" x="2624" y="448" width="352" height="32"/>
-  <object id="86" x="2816" y="192" width="64" height="64"/>
-  <object id="87" x="3232" y="384" width="32" height="32"/>
-  <object id="88" x="3424" y="384" width="32" height="32"/>
-  <object id="89" x="3552" y="448" width="32" height="32"/>
-  <object id="90" x="3584" y="416" width="64" height="64"/>
-  <object id="91" x="3648" y="448" width="32" height="32"/>
-  <object id="92" x="3904" y="416" width="32" height="32"/>
-  <object id="93" x="3936" y="448" width="64" height="32"/>
-  <object id="94" x="4000" y="416" width="64" height="64"/>
-  <object id="95" x="4064" y="448" width="160" height="32"/>
-  <object id="96" x="4224" y="416" width="64" height="64"/>
-  <object id="97" x="4288" y="448" width="224" height="32"/>
-  <object id="98" x="4352" y="352" width="64" height="64"/>
-  <object id="99" x="4320" y="224" width="32" height="32"/>
-  <object id="100" x="4448" y="224" width="32" height="32"/>
-  <object id="101" x="4512" y="320" width="64" height="32"/>
-  <object id="102" x="4672" y="416" width="64" height="64"/>
-  <object id="103" x="4736" y="384" width="64" height="32"/>
-  <object id="104" x="5056" y="448" width="96" height="32"/>
-  <object id="105" x="5152" y="416" width="64" height="64"/>
-  <object id="106" x="5216" y="448" width="64" height="32"/>
-  <object id="107" x="5280" y="416" width="64" height="64"/>
-  <object id="108" x="5344" y="448" width="96" height="32"/>
-  <object id="109" x="5184" y="192" width="32" height="32"/>
-  <object id="110" x="5312" y="224" width="64" height="32"/>
-  <object id="111" x="5568" y="416" width="32" height="32"/>
-  <object id="112" x="5600" y="448" width="32" height="32"/>
-  <object id="113" x="5536" y="160" width="32" height="32"/>
-  <object id="114" x="5760" y="384" width="32" height="32"/>
-  <object id="115" x="5856" y="224" width="32" height="32"/>
-  <object id="116" x="6016" y="160" width="64" height="64"/>
-  <object id="117" x="5856" y="448" width="224" height="32"/>
+  <object id="125" name="cactus" x="672" y="320" width="64" height="64"/>
+  <object id="126" name="cactus" x="608" y="448" width="192" height="32"/>
+  <object id="127" name="cactus" x="1152" y="448" width="224" height="32"/>
+  <object id="128" name="cactus" x="1376" y="416" width="64" height="64"/>
+  <object id="129" name="cactus" x="1440" y="448" width="288" height="32"/>
+  <object id="130" name="cactus" x="1728" y="416" width="64" height="64"/>
+  <object id="131" name="cactus" x="1792" y="448" width="96" height="32"/>
+  <object id="132" name="cactus" x="1600" y="320" width="64" height="64"/>
+  <object id="134" name="cactus" x="2112" y="416" width="192" height="64"/>
+  <object id="135" name="cactus" x="2144" y="96" width="32" height="32"/>
+  <object id="136" name="cactus" x="2464" y="448" width="64" height="32"/>
+  <object id="137" name="cactus" x="2624" y="448" width="352" height="32"/>
+  <object id="138" name="cactus" x="2816" y="192" width="64" height="64"/>
+  <object id="139" name="cactus" x="3232" y="384" width="32" height="32"/>
+  <object id="146" name="cactus" x="3424" y="384" width="32" height="32"/>
+  <object id="147" name="cactus" x="3552" y="448" width="32" height="32"/>
+  <object id="148" name="cactus" x="3584" y="416" width="64" height="64"/>
+  <object id="149" name="cactus" x="3648" y="448" width="32" height="32"/>
+  <object id="150" name="cactus" x="3904" y="416" width="32" height="32"/>
+  <object id="151" name="cactus" x="3936" y="448" width="64" height="32"/>
+  <object id="152" name="cactus" x="4000" y="416" width="64" height="64"/>
+  <object id="153" name="cactus" x="4064" y="448" width="160" height="32"/>
+  <object id="154" name="cactus" x="4320" y="224" width="32" height="32"/>
+  <object id="155" name="cactus" x="4446" y="224" width="32" height="32"/>
+  <object id="156" name="cactus" x="4352" y="352" width="64" height="64"/>
+  <object id="157" name="cactus" x="4224" y="416" width="64" height="64"/>
+  <object id="158" name="cactus" x="4288" y="448" width="224" height="32"/>
+  <object id="159" name="cactus" x="4512" y="320" width="64" height="32"/>
+  <object id="160" name="cactus" x="4672" y="416" width="64" height="64"/>
+  <object id="161" name="cactus" x="4736" y="384" width="64" height="32"/>
+  <object id="162" name="cactus" x="5184" y="192" width="32" height="32"/>
+  <object id="163" name="cactus" x="5312" y="224" width="64" height="32"/>
+  <object id="164" name="cactus" x="5056" y="448" width="96" height="32"/>
+  <object id="165" name="cactus" x="5152" y="416" width="64" height="64"/>
+  <object id="166" name="cactus" x="5216" y="448" width="64" height="32"/>
+  <object id="167" name="cactus" x="5280" y="416" width="64" height="64"/>
+  <object id="168" name="cactus" x="5344" y="448" width="96" height="32"/>
+  <object id="169" name="cactus" x="5568" y="416" width="32" height="32"/>
+  <object id="170" name="cactus" x="5600" y="448" width="32" height="32"/>
+  <object id="171" name="cactus" x="5536" y="160" width="32" height="32"/>
+  <object id="172" name="cactus" x="5760" y="384" width="32" height="32"/>
+  <object id="173" name="cactus" x="5856" y="224" width="32" height="32"/>
+  <object id="174" name="cactus" x="6016" y="160" width="64" height="64"/>
+  <object id="175" name="cactus" x="5856" y="448" width="224" height="32"/>
  </objectgroup>
  <objectgroup color="#00ff00" id="8" name="COLLIDER_Personatge">
   <object id="121" x="32" y="352" width="64" height="64"/>
