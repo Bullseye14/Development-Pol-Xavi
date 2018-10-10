@@ -17,6 +17,8 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
+	void Jump();
+
 	//void ChangeDirection();
 	//void OnCollision(Collider* c1, Collider* c2);
 	bool Check_Collision(const SDL_Rect &r);
@@ -27,8 +29,9 @@ public:
 
 	iPoint pos_player;
 	iPoint speed;
-	int playerheight;
+	int playerheight = 64;
 	int playerwidth;
+	int doublejump = 2;
 
 	int yspeed;
 

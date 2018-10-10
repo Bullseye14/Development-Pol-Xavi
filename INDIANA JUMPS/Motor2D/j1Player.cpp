@@ -90,7 +90,7 @@ bool j1Player::Start()
 	jumping = false;
 	contact = false;
 
-	playerHitbox = App->collision->AddCollider({ pos_player.x, pos_player.y, 64, 64 }, COLLIDER_PLAYER, this);
+	playerHitbox = App->collision->AddCollider({ pos_player.x, pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
 
 	return true;
 }
@@ -108,7 +108,7 @@ bool j1Player::Update(float dt)
 
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		speed.x = 2;
+		speed.x = 1;
 		if (current_animation == &idle) 
 		{
 			current_animation = &run;
@@ -116,7 +116,7 @@ bool j1Player::Update(float dt)
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		speed.x = -2;
+		speed.x = -1;
 		if (current_animation == &idle) 
 		{
 			current_animation = &run_left;
@@ -129,20 +129,17 @@ bool j1Player::Update(float dt)
 		if (current_animation != &jump) { current_animation = &idle; }
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && falling == false && jumping == false)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && falling == false && jumping == false && doublejump > 0)
 	{	
 		
-		for (int i = -2; i = 2; i++)
-		{
-			speed.y = i;
-			current_animation = &jump;
-		}
+		//Jump();	
+		doublejump--;
 		
 		//speed.y = 0;
 
 	}
 
-	playerHitbox->setPos(pos_player.x, pos_player.y);
+	playerHitbox->setPos(pos_player.x + 16, pos_player.y);
 
 	if (speed.y > 0) //falling
 	{
@@ -173,6 +170,27 @@ bool j1Player::PostUpdate()
 
 
 	return true;
+}
+
+void j1Player::Jump() 
+{
+		
+	int inicial_height = pos_player.y;
+
+	int maximum_jump = playerheight * 2;
+
+	current_animation = &jump;
+
+	for (int i = 0; i < maximum_jump; i++) 
+	{
+		pos_player.y = inicial_height - i;
+	}
+
+
+	if (pos_player.y < inicial_height) 
+	{
+		speed.y = 0;
+	}
 }
 
 bool j1Player::Check_Collision(const SDL_Rect &r) 
