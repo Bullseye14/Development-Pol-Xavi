@@ -37,6 +37,7 @@ public:
 	Animation* current_animation = nullptr;
 	Animation idle;
 	Animation run;
+	Animation run_left;
 	Animation jump;
 
 	Collider* playerHitbox;

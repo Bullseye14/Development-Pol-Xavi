@@ -26,19 +26,43 @@ j1Player::j1Player() : j1Module()
 	idle.PushBack({0, 256, 64, 64 });
 	idle.PushBack({ 64, 256, 64, 64 });*/
 
+	run.PushBack({ 128, 0, 64, 64 });
+	run.PushBack({ 192, 0, 64, 64 });
+	run.PushBack({ 128, 64, 64, 64 });
+	run.PushBack({ 192, 64, 64, 64 });
+	run.PushBack({ 128, 128, 64, 64 });
+	run.PushBack({ 192, 128, 64, 64 });
+	run.PushBack({ 128, 192, 64, 64 });
+	run.PushBack({ 192, 192, 64, 64 });
+	run.PushBack({ 128, 256, 64, 64 });
+	run.PushBack({ 192, 256, 64, 64 });
+	run.speed = 0.1f;
+	
+	run_left.PushBack({ 320, 0, 64, 64 });
+	run_left.PushBack({ 256, 0, 64, 64 });
+	run_left.PushBack({ 320, 64, 64, 64 });
+	run_left.PushBack({ 256, 64, 64, 64 });
+	run_left.PushBack({ 320, 128, 64, 64 });
+	run_left.PushBack({ 256, 128, 64, 64 });
+	run_left.PushBack({ 320, 192, 64, 64 });
+	run_left.PushBack({ 256, 192, 64, 64 });
+	run_left.PushBack({ 320, 256, 64, 64 });
+	run_left.PushBack({ 256, 256, 64, 64 });
+	run_left.speed = 0.1f;
 
-
-	/*run.PushBack({310, 499, 346, 475});
-	run.PushBack({656, 499, 363, 492});
-	run.PushBack({1020, 499, 367, 485});
-	run.PushBack({1395, 500, 402, 462});
-	run.PushBack({1799, 499, 401, 469});
-	run.PushBack({2199, 504, 342, 467});
-	run.PushBack({2540, 505, 350, 488});
-	run.PushBack({0, 993, 364, 473});
-	run.PushBack({365, 993, 358, 449});
-	run.PushBack({723, 993, 371, 464});*/
-
+	jump.PushBack({ 384, 0, 64, 64 });
+	jump.PushBack({ 448, 0, 64, 64 });
+	jump.PushBack({ 384, 64, 64, 64 });
+	jump.PushBack({ 448, 64, 64, 64 });
+	jump.PushBack({ 384, 128, 64, 64 });
+	jump.PushBack({ 448, 128, 64, 64 });
+	jump.PushBack({ 384, 192, 64, 64 });
+	jump.PushBack({ 448, 192, 64, 64 });
+	jump.PushBack({ 384, 256, 64, 64 });
+	jump.PushBack({ 448, 256, 64, 64 });
+	jump.speed = 0.1f;
+	jump.loop = false;
+	
 }
 j1Player::~j1Player()
 {}
@@ -52,7 +76,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 bool j1Player::Start()
 {
 	if (graphics == nullptr) {
-		graphics = App->tex->Load("textures/Idle.png");
+		graphics = App->tex->Load("textures/Spritesheet.png");
 	}
 
 	current_animation = &idle;
@@ -66,8 +90,6 @@ bool j1Player::Start()
 	jumping = false;
 	contact = false;
 
-	current_animation = &idle;
-
 	playerHitbox = App->collision->AddCollider({ pos.x, pos.y, 64, 64 }, COLLIDER_PLAYER, this);
 
 	return true;
@@ -79,8 +101,6 @@ bool j1Player::CleanUp()
 }
 bool j1Player::Update(float dt)
 {
-	
-
 	from_up = false;
 	from_left = false;
 	from_right = false;
@@ -88,7 +108,7 @@ bool j1Player::Update(float dt)
 
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		speed.x = 4;
+		speed.x = 2;
 		if (current_animation == &idle) 
 		{
 			current_animation = &run;
@@ -96,10 +116,10 @@ bool j1Player::Update(float dt)
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		speed.x = -4;
+		speed.x = -2;
 		if (current_animation == &idle) 
 		{
-			current_animation = &run;
+			current_animation = &run_left;
 		}
 	}
 
@@ -110,13 +130,17 @@ bool j1Player::Update(float dt)
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && falling == false && jumping == false)
-	{
-		current_animation = &jump;
-		speed.y = -25;
+	{	
+		
+		for (int i = -2; i = 2; i++)
+		{
+			speed.y = i;
+			current_animation = &jump;
+		}
+		
+		//speed.y = 0;
 
 	}
-
-	//ChangeDirection();
 
 	playerHitbox->setPos(pos.x, pos.y);
 
@@ -140,10 +164,7 @@ bool j1Player::Update(float dt)
 }
 bool j1Player::PostUpdate()
 {
-	if (changeJump == false)
-		App->render->Blit(graphics, pos.x, pos.y, &current_animation->GetCurrentFrame(), SDL_FLIP_NONE);
-	else
-		App->render->Blit(graphics, pos.x, pos.y, &current_animation->GetCurrentFrame(), SDL_FLIP_HORIZONTAL);
+	App->render->Blit(graphics, pos.x, pos.y, &current_animation->GetCurrentFrame());
 
 	//Check_Collision();
 	
