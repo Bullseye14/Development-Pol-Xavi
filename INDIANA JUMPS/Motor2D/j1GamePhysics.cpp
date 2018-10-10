@@ -4,6 +4,7 @@
 #include "j1GamePhysics.h"
 #include "p2Log.h"
 #include "j1Player.h"
+#include "j1Map.h"
 
 j1GamePhysics::j1GamePhysics() 
 {

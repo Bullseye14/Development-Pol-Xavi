@@ -212,7 +212,7 @@ bool j1Map::Load(const char* file_name)
 	pugi::xml_node colliders_node;
 	for (colliders_node = map_file.child("map").child("objectgroup"); colliders_node && ret; colliders_node = colliders_node.next_sibling("objectgroup")) 
 	{
-		//LoadColliders(colliders_node);
+		LoadColliders(colliders_node);
 	}
 
 	if(ret == true)
@@ -444,41 +444,44 @@ bool j1Map::LoadLayerImage(pugi::xml_node& node, ImageLayer* img)
 	return ret;
 }
 
-//bool j1Map::LoadColliders(pugi::xml_node &node) {
-//
-//	bool ret = true;
-//
-//	pugi::xml_node col = node.child("object");
-//
-//	if (col == NULL) {
-//		LOG("Error parsing map xml file: Cannot find 'objectgroup/object' tag.");
-//		ret = false;
-//	}
-//
-//	COLLIDER_TYPE collidertype;
-//	p2SString name;
-//	
-//
-//	for (col = node.child("object"); col; col = col.next_sibling("object")) {
-//
-//		name = col.attribute("name").as_string();
-//
-//		if (name == "cactus") {
-//			collidertype = COLLIDER_DEATH;
-//		}
-//			else if(name == "wall") {
-//				collidertype = COLLIDER_WALL;
-//			}
-//
-//		//applying all colliders to each attribute of the xml
-//		SDL_Rect colliders_rect;
-//		colliders_rect.x = col.attribute("x").as_int();
-//		colliders_rect.y = col.attribute("y").as_int();
-//		colliders_rect.h = col.attribute("height").as_int();
-//		colliders_rect.w = col.attribute("width").as_int();
-//
-//		App->collision->AddCollider(colliders_rect, collidertype);
-//		}
-//	return ret;
-//	}
+bool j1Map::LoadColliders(pugi::xml_node &node)
+{
+
+	bool ret = true;
+
+	pugi::xml_node col = node.child("object");
+
+	if (col == NULL) {
+		LOG("Error parsing map xml file: Cannot find 'objectgroup/object' tag.");
+		ret = false;
+	}
+
+	COLLIDER_TYPE collidertype;
+	p2SString name;
+
+
+	for (col = node.child("object"); col; col = col.next_sibling("object")) 
+	{
+
+		name = col.attribute("name").as_string();
+		
+		SDL_Rect colliders_rect;
+		colliders_rect.x = col.attribute("x").as_int();
+		colliders_rect.y = col.attribute("y").as_int();
+		colliders_rect.h = col.attribute("height").as_int();
+		colliders_rect.w = col.attribute("width").as_int();
+
+
+		//applying all colliders to each attribute of the xml
+		if (name == "cactus") {
+			collidertype = COLLIDER_TYPE::COLLIDER_DEATH;
+			App->collision->AddCollider(colliders_rect, collidertype);
+		}
+		else if (name == "wall") {
+			collidertype = COLLIDER_TYPE::COLLIDER_WALL;
+			App->collision->AddCollider(colliders_rect, collidertype);
+		}
+	}
+	return ret;
+}
 

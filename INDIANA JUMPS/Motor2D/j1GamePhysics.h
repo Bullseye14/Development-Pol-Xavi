@@ -5,7 +5,6 @@
 #include "j1Module.h"
 #include "p2List.h"
 #include "p2Point.h"
-#include "j1Map.h"
 
 #define MAX_COLLIDERS 600
 
