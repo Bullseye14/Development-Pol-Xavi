@@ -17,14 +17,14 @@ j1Player::j1Player() : j1Module()
 	//MUST CALCULATE THE RECT
 	idle.PushBack({0, 0, 64, 64});
 	idle.PushBack({64, 0, 64, 64});
-	idle.PushBack({ 0, 64, 64, 64 });
+	/*idle.PushBack({ 0, 64, 64, 64 });
 	idle.PushBack({ 64, 64, 64, 64 });
 	idle.PushBack({0, 128, 64, 64 });
 	idle.PushBack({ 64, 128, 64, 64 });
 	idle.PushBack({ 0, 192, 64, 64 });
 	idle.PushBack({ 64, 192, 64, 64 });
 	idle.PushBack({0, 256, 64, 64 });
-	idle.PushBack({ 64, 256, 64, 64 });
+	idle.PushBack({ 64, 256, 64, 64 });*/
 
 
 
@@ -57,13 +57,14 @@ bool j1Player::Start()
 	speed.x = 0;
 	speed.y = 0;
 	pos.x = 5;
-	pos.y = 10;
+	pos.y = 350;
 	yspeed = 7;
 	changeJump = false;
 	from_above = false;
 	from_left = false;
 	from_right = false;
 	jumping = false;
+	contact = false;
 
 	current_animation = &idle;
 
@@ -78,7 +79,7 @@ bool j1Player::CleanUp()
 }
 bool j1Player::Update(float dt)
 {
-	// Here we declare the GetKet(SCANCODE) for moving the player
+	
 
 	from_above = false;
 	from_left = false;
@@ -116,7 +117,7 @@ bool j1Player::Update(float dt)
 
 	//ChangeDirection();
 
-	//playerHitbox->SetPos(pos.x, pos.y);
+	playerHitbox->setPos(pos.x, pos.y);
 
 	if (speed.y > 0) //falling
 	{

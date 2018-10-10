@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1GamePhysics.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -242,6 +243,30 @@ bool j1Map::Load(const char* file_name)
 
 	return ret;
 }
+
+// Load all types of collisions
+	pugi::xml_node colliders_node;
+	for(colliders_node = map_file.child("map").child("objectgroup"); colliders_node && ret; colliders_node = colliders_node.next_sibling("objectgroup")) {
+		LoadColliders(colliders_node);
+	}
+
+	if (ret == true) {
+		LOG("Successfully parsed map XML file: %s", file_name);
+		LOG("width: %d height: %d", data.width, data.height);
+		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
+
+		p2List_item<TileSet*>* item = data.tilesets.start;
+
+		while (item != NULL)
+		{
+			TileSet* s = item->data;
+			LOG("Tileset ----");
+			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
+			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
+			LOG("spacing: %d margin: %d", s->spacing, s->margin);
+			item = item->next;
+		}
+	}
 
 // Load map general properties
 bool j1Map::LoadMap()

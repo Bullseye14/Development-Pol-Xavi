@@ -45,5 +45,6 @@ public:
 	bool from_left;
 	bool jumping;
 	bool falling;
+	bool contact;
 };
 #endif
