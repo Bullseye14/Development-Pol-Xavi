@@ -69,8 +69,8 @@ j1Player::~j1Player()
 
 bool j1Player::Awake(pugi::xml_node& config)
 {
-	pos.x = config.child("pos").attribute("x").as_int();
-	pos.y = config.child("pos").attribute("y").as_int();
+	pos_player.x = config.child("pos").attribute("x").as_int();
+	pos_player.y = config.child("pos").attribute("y").as_int();
 	return true;
 }
 bool j1Player::Start()
@@ -90,7 +90,7 @@ bool j1Player::Start()
 	jumping = false;
 	contact = false;
 
-	playerHitbox = App->collision->AddCollider({ pos.x, pos.y, 64, 64 }, COLLIDER_PLAYER, this);
+	playerHitbox = App->collision->AddCollider({ pos_player.x, pos_player.y, 64, 64 }, COLLIDER_PLAYER, this);
 
 	return true;
 }
@@ -142,7 +142,7 @@ bool j1Player::Update(float dt)
 
 	}
 
-	playerHitbox->setPos(pos.x, pos.y);
+	playerHitbox->setPos(pos_player.x, pos_player.y);
 
 	if (speed.y > 0) //falling
 	{
@@ -164,18 +164,21 @@ bool j1Player::Update(float dt)
 }
 bool j1Player::PostUpdate()
 {
-	App->render->Blit(graphics, pos.x, pos.y, &current_animation->GetCurrentFrame());
+	App->render->Blit(graphics, pos_player.x, pos_player.y, &current_animation->GetCurrentFrame());
 
 	//Check_Collision();
 	
-	pos.x += speed.x;
-	pos.y += speed.y;
+	pos_player.x += speed.x;
+	pos_player.y += speed.y;
 
 
 	return true;
 }
 
-void j1Player::OnCollision(Collider* c1, Collider* c2) 
+bool j1Player::Check_Collision(const SDL_Rect &r) 
 {
-
+	return !(rect_player.y + rect_player.h < r.y ||
+			rect_player.y > r.y + r.h ||
+			rect_player.x + rect_player.w < r.x ||
+			rect_player.x > r.x + r.w);
 }

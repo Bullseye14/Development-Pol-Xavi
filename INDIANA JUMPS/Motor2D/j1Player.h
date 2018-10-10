@@ -18,14 +18,14 @@ public:
 	bool CleanUp();
 
 	//void ChangeDirection();
-	void OnCollision(Collider* c1, Collider* c2);
-	//void Check_Collision();
+	//void OnCollision(Collider* c1, Collider* c2);
+	bool Check_Collision(const SDL_Rect &r);
 
 
 public:
 	SDL_Texture* graphics = nullptr;
 
-	iPoint pos;
+	iPoint pos_player;
 	iPoint speed;
 	int playerheight;
 	int playerwidth;

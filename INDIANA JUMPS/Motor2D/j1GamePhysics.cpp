@@ -80,7 +80,7 @@ bool j1GamePhysics::Update(float dt)
 
 void j1GamePhysics::DebugDraw()
 {
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
 		debug = !debug;
 	}
@@ -104,6 +104,9 @@ void j1GamePhysics::DebugDraw()
 			break;
 		case COLLIDER_WALL:
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
+			break;
+		case COLLIDER_DEATH:
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 		}
 	}

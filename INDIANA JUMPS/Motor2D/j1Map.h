@@ -120,7 +120,7 @@ public:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadLayerImage(pugi::xml_node& node, ImageLayer* img);
-	bool LoadColliders(pugi::xml_node& node);
+	//bool LoadColliders(pugi::xml_node& node);
 	// TODO 3: Create a method that loads a single layer
 	
 public:
