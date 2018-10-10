@@ -83,7 +83,7 @@ bool j1Player::Start()
 	speed.x = 0;
 	speed.y = 0;
 	yspeed = 7;
-	changeJump = false;
+	//changeJump = false;
 	from_up = false;
 	from_left = false;
 	from_right = false;
@@ -174,7 +174,8 @@ bool j1Player::PostUpdate()
 
 void j1Player::Jump() 
 {
-		
+	// TODO JUMP
+	// Make the jumping function work properly
 	int inicial_height = pos_player.y;
 
 	int maximum_jump = playerheight * 2;
@@ -199,4 +200,19 @@ bool j1Player::Check_Collision(const SDL_Rect &r)
 			rect_player.y > r.y + r.h ||
 			rect_player.x + rect_player.w < r.x ||
 			rect_player.x > r.x + r.w);
+}
+
+void j1Player::OnCollision(Collider* c1, Collider* c2) 
+{
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL) 
+	{
+		// TODO COLLISION
+		// Collision between player and wall has to work
+	}
+	
+	
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
+	{
+		//Die();
+	}
 }

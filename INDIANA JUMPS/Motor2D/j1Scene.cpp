@@ -33,6 +33,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->Load("desert_map_new.tmx");
+	//App->map->Load("forest_map_new.tmx");
 	img = App->player->graphics;
 	return true;
 }

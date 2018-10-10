@@ -2615,7 +2615,7 @@
    <tile gid="2"/>
    <tile gid="2"/>
    <tile gid="2"/>
-   <tile gid="40"/>
+   <tile gid="2"/>
    <tile gid="2"/>
    <tile gid="4"/>
    <tile gid="16"/>
@@ -3109,8 +3109,5 @@
   <object id="173" name="cactus" x="5856" y="224" width="32" height="32"/>
   <object id="174" name="cactus" x="6016" y="160" width="64" height="64"/>
   <object id="175" name="cactus" x="5856" y="448" width="224" height="32"/>
- </objectgroup>
- <objectgroup color="#00ff00" id="8" name="COLLIDER_Personatge">
-  <object id="121" x="32" y="352" width="64" height="64"/>
  </objectgroup>
 </map>

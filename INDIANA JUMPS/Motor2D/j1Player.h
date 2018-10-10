@@ -20,7 +20,7 @@ public:
 	void Jump();
 
 	//void ChangeDirection();
-	//void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(Collider* c1, Collider* c2);
 	bool Check_Collision(const SDL_Rect &r);
 
 
@@ -45,11 +45,16 @@ public:
 
 	Collider* playerHitbox;
 
-	bool changeJump;
+	//bool changeJump;
+
+	// TODO SIDES
+	// Different type of collisions if they come from different sides
 	bool from_up;
 	bool from_right;
 	bool from_left;
 	bool from_down;
+	// --------------------------------------------------------------
+
 	bool jumping;
 	bool falling;
 	bool contact;
