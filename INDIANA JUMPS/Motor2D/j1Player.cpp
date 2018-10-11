@@ -7,7 +7,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Audio.h"
-#include "j1GamePhysics.h"
+#include "j1Collision.h"
 #include <stdio.h>
 
 j1Player::j1Player() : j1Module()
@@ -148,7 +148,8 @@ bool j1Player::Update(float dt)
 	}
 	else { speed.y = 0; }
 
-	playerHitbox->setPos(pos_player.x + 16, pos_player.y);
+	playerHitbox->SetPos(pos_player.x + 16, pos_player.y);
+
 	Check_Collision(rect_player);
 
 	if (speed.y > 0) //falling

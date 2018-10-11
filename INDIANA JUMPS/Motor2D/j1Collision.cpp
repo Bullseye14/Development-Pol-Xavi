@@ -1,79 +1,89 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
-#include "j1GamePhysics.h"
-#include "p2Log.h"
 #include "j1Player.h"
-#include "j1Map.h"
+#include "j1Collision.h"
+#include "p2Log.h"
 
-j1GamePhysics::j1GamePhysics() 
+j1Collision::j1Collision()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
-	matrix[COLLIDER_DEATH][COLLIDER_DEATH] = false;
-	matrix[COLLIDER_DEATH][COLLIDER_WALL] = false;
-	matrix[COLLIDER_DEATH][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_DEATH][COLLIDER_END] = false;
-
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_WALL][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_WALL][COLLIDER_END] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_END] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 
+	matrix[COLLIDER_DEATH][COLLIDER_WALL] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_DEATH][COLLIDER_END] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_DEATH] = false;
+
+	matrix[COLLIDER_END][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_END][COLLIDER_WALL] = false;
+	matrix[COLLIDER_END][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_END][COLLIDER_END] = false;
+
 
 }
 
-j1GamePhysics::~j1GamePhysics() { }
+// Destructor
+j1Collision::~j1Collision()
+{}
 
-bool j1GamePhysics::PreUpdate() 
+bool j1Collision::PreUpdate()
 {
-	for (uint i = 0; i < MAX_COLLIDERS; ++i) 
+	// Remove all colliders scheduled for deletion
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
-		if (colliders[i] != nullptr && colliders[i]->to_delete == true) 
+		if (colliders[i] != nullptr && colliders[i]->to_delete == true)
 		{
 			delete colliders[i];
 			colliders[i] = nullptr;
 		}
 	}
+
 	return true;
 }
 
-bool j1GamePhysics::Update(float dt) 
+// Called before render is available
+bool j1Collision::Update(float dt)
 {
 	Collider* c1;
 	Collider* c2;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
-		if (colliders[i] == nullptr) { continue; }
-			
+		// skip empty colliders
+		if (colliders[i] == nullptr)
+			continue;
 
 		c1 = colliders[i];
 		c1->Update();
 
-		for (uint h = i + 1; h < MAX_COLLIDERS; ++h)
+		// avoid checking collisions already checked
+		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
 		{
-			if (colliders[h] == nullptr)
+			// skip empty colliders
+			if (colliders[k] == nullptr)
 				continue;
 
-			c2 = colliders[h];
+			c2 = colliders[k];
 			c2->Update();
 
 			if (c1->CheckCollision(c2->rect) == true)
 			{
 				if (matrix[c1->type][c2->type] && c1->callback)
-				{
 					c1->callback->OnCollision(c1, c2);
-				}
 
 				if (matrix[c2->type][c1->type] && c2->callback)
-				{
 					c2->callback->OnCollision(c2, c1);
-				}
 			}
 
 		}
@@ -84,7 +94,7 @@ bool j1GamePhysics::Update(float dt)
 	return true;
 }
 
-void j1GamePhysics::DebugDraw()
+void j1Collision::DebugDraw()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
@@ -102,25 +112,28 @@ void j1GamePhysics::DebugDraw()
 
 		switch (colliders[i]->type)
 		{
-		case COLLIDER_NONE:
+		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
 		case COLLIDER_PLAYER:
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
 		case COLLIDER_WALL:
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
-			break;
-		case COLLIDER_DEATH:
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			App->render->DrawQuad(colliders[i]->rect, 255, 100, 255, alpha);
 			break;
 		case COLLIDER_END:
-			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			break;
+		case COLLIDER_DEATH:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
 		}
+
 	}
 }
 
-bool j1GamePhysics::CleanUp()
+// Called before quitting
+bool j1Collision::CleanUp()
 {
 	LOG("Freeing all colliders");
 
@@ -136,7 +149,7 @@ bool j1GamePhysics::CleanUp()
 	return true;
 }
 
-Collider* j1GamePhysics::AddCollider(SDL_Rect rect, COLLIDER_TYPE coltype, j1Module* callback)
+Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
 {
 	Collider* ret = nullptr;
 
@@ -144,7 +157,7 @@ Collider* j1GamePhysics::AddCollider(SDL_Rect rect, COLLIDER_TYPE coltype, j1Mod
 	{
 		if (colliders[i] == nullptr)
 		{
-			ret = colliders[i] = new Collider(rect, coltype, callback);
+			ret = colliders[i] = new Collider(rect, type, callback);
 			break;
 		}
 	}
@@ -152,11 +165,11 @@ Collider* j1GamePhysics::AddCollider(SDL_Rect rect, COLLIDER_TYPE coltype, j1Mod
 	return ret;
 }
 
-bool j1GamePhysics::EraseCollider(Collider* collider)
+bool j1Collision::EraseCollider(Collider* collider)
 {
 	if (collider != nullptr)
 	{
-		
+		// we still search for it in case we received a dangling pointer
 		for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		{
 			if (colliders[i] == collider)
@@ -166,10 +179,12 @@ bool j1GamePhysics::EraseCollider(Collider* collider)
 			}
 		}
 	}
+
+
 	return false;
 }
 
-void j1GamePhysics::OnCollision(Collider* c1, Collider* c2) { }
+// -----------------------------------------------------
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
@@ -181,5 +196,6 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 
 bool Collider::Update()
 {
+
 	return true;
 }

@@ -9,7 +9,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Player.h"
-#include "j1GamePhysics.h"
+#include "j1Collision.h"
 
 j1Scene::j1Scene() : j1Module()
 {

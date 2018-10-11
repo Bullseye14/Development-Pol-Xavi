@@ -5,7 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include <math.h>
-#include "j1GamePhysics.h"
+#include "j1Collision.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
