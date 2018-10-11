@@ -14,11 +14,16 @@ j1GamePhysics::j1GamePhysics()
 	matrix[COLLIDER_DEATH][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_WALL] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_DEATH][COLLIDER_END] = false;
 
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_WALL][COLLIDER_END] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_END] = true;
+
+	matrix[COLLIDER_END][COLLIDER_END] = false;
 
 }
 
@@ -109,6 +114,8 @@ void j1GamePhysics::DebugDraw()
 		case COLLIDER_DEATH:
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
+		case COLLIDER_END:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
 		}
 	}
 }

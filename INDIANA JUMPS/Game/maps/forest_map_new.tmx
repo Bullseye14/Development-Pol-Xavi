@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="78">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextobjectid="80">
  <tileset firstgid="1" name="Tileset_Forest" tilewidth="32" tileheight="32" tilecount="98" columns="14">
   <image source="Tileset_Forest.png" width="448" height="224"/>
  </tileset>
- <imagelayer id="1" name="Capa de Imagen 1">
+ <imagelayer name="Capa de Imagen 1">
   <image source="BG_forest.png" width="6400" height="500"/>
  </imagelayer>
- <layer id="3" name="Capa de Patrones 1" width="200" height="15">
+ <layer name="Capa de Patrones 1" width="200" height="15">
   <data>
    <tile/>
    <tile/>
@@ -3010,60 +3010,60 @@
    <tile gid="43"/>
   </data>
  </layer>
- <objectgroup color="#ffff00" id="2" name="COLLIDER_Walls2">
-  <object id="1" x="0" y="320" width="416" height="96"/>
-  <object id="2" x="288" y="256" width="128" height="64"/>
-  <object id="3" x="512" y="320" width="64" height="96"/>
-  <object id="4" x="672" y="256" width="96" height="14.6667"/>
-  <object id="5" x="960" y="160" width="64" height="15.3333"/>
-  <object id="6" x="832" y="352" width="288" height="128"/>
-  <object id="7" x="960" y="256" width="160" height="96"/>
-  <object id="8" x="1120" y="128" width="126.667" height="11.3333"/>
-  <object id="9" x="1312" y="288" width="64.6667" height="12.6667"/>
-  <object id="10" x="1472" y="192" width="64" height="11.3333"/>
-  <object id="11" x="1568" y="320" width="128" height="160"/>
-  <object id="12" x="1760" y="288" width="63.3333" height="10.6667"/>
-  <object id="13" x="1888" y="224" width="64" height="11.3333"/>
-  <object id="14" x="2016" y="320" width="256" height="160"/>
-  <object id="15" x="2176" y="224" width="96" height="96"/>
-  <object id="16" x="2272" y="384" width="96" height="96"/>
-  <object id="17" x="2304" y="160" width="64" height="10"/>
-  <object id="18" x="2400" y="96" width="64" height="192"/>
-  <object id="19" x="2400" y="384" width="64" height="96"/>
-  <object id="20" x="2560" y="192" width="64" height="64"/>
+ <objectgroup color="#ffff00" name="COLLIDER_Walls2">
+  <object id="1" name="wall" x="0" y="320" width="416" height="96"/>
+  <object id="2" name="wall" x="288" y="256" width="128" height="64"/>
+  <object id="3" name="wall" x="512" y="320" width="64" height="96"/>
+  <object id="4" name="wall" x="672" y="256" width="96" height="14.6667"/>
+  <object id="5" name="wall" x="960" y="160" width="64" height="15.3333"/>
+  <object id="6" name="wall" x="832" y="352" width="288" height="128"/>
+  <object id="7" name="wall" x="960" y="256" width="160" height="96"/>
+  <object id="8" name="wall" x="1120" y="128" width="126.667" height="11.3333"/>
+  <object id="9" name="wall" x="1312" y="288" width="64.6667" height="12.6667"/>
+  <object id="10" name="wall" x="1472" y="192" width="64" height="11.3333"/>
+  <object id="11" name="wall" x="1568" y="320" width="128" height="160"/>
+  <object id="12" name="wall" x="1760" y="288" width="63.3333" height="10.6667"/>
+  <object id="13" name="wall" x="1888" y="224" width="64" height="11.3333"/>
+  <object id="14" name="wall" x="2016" y="320" width="256" height="160"/>
+  <object id="15" name="wall" x="2176" y="224" width="96" height="96"/>
+  <object id="16" name="wall" x="2272" y="384" width="96" height="96"/>
+  <object id="17" name="wall" x="2304" y="160" width="64" height="10"/>
+  <object id="18" name="wall" x="2400" y="96" width="64" height="192"/>
+  <object id="19" name="wall" x="2400" y="384" width="64" height="96"/>
+  <object id="20" name="wall" x="2560" y="192" width="64" height="64"/>
   <object id="21" x="2528" y="384" width="128" height="12"/>
-  <object id="22" x="2720" y="160" width="64" height="64"/>
-  <object id="23" x="2752" y="384" width="384" height="96"/>
-  <object id="24" x="2880" y="288" width="256" height="96"/>
-  <object id="25" x="3264" y="256" width="96" height="224"/>
-  <object id="26" x="3360" y="416" width="96" height="64"/>
-  <object id="27" x="3456" y="448" width="160" height="32"/>
-  <object id="28" x="3424" y="320" width="63.3333" height="10"/>
-  <object id="29" x="3552" y="224" width="63.3333" height="12"/>
-  <object id="30" x="3680" y="352" width="64" height="64"/>
-  <object id="31" x="3840" y="320" width="288" height="160"/>
-  <object id="32" x="4000" y="256" width="128" height="64"/>
-  <object id="33" x="4128" y="384" width="64.6667" height="10"/>
-  <object id="34" x="4192" y="192" width="193.333" height="11.3333"/>
-  <object id="35" x="4192" y="64" width="192" height="64"/>
+  <object id="22" name="wall" x="2720" y="160" width="64" height="64"/>
+  <object id="23" name="wall" x="2752" y="384" width="384" height="96"/>
+  <object id="24" name="wall" x="2880" y="288" width="256" height="96"/>
+  <object id="25" name="wall" x="3264" y="256" width="96" height="224"/>
+  <object id="26" name="wall" x="3360" y="416" width="96" height="64"/>
+  <object id="27" name="wall" x="3456" y="448" width="160" height="32"/>
+  <object id="28" name="wall" x="3424" y="320" width="63.3333" height="10"/>
+  <object id="29" name="wall" x="3552" y="224" width="63.3333" height="12"/>
+  <object id="30" name="wall" x="3680" y="352" width="64" height="64"/>
+  <object id="31" name="wall" x="3840" y="320" width="288" height="160"/>
+  <object id="32" name="wall" x="4000" y="256" width="128" height="64"/>
+  <object id="33" name="wall" x="4128" y="384" width="64.6667" height="10"/>
+  <object id="34" name="wall" x="4192" y="192" width="193.333" height="11.3333"/>
+  <object id="35" name="wall" x="4192" y="64" width="192" height="64"/>
   <object id="36" x="4320" y="384" width="96" height="10"/>
-  <object id="37" x="4480" y="160" width="64.6667" height="12"/>
-  <object id="38" x="4576" y="384" width="160" height="96"/>
-  <object id="39" x="4736" y="288" width="128" height="192"/>
-  <object id="40" x="4864" y="192" width="128" height="288"/>
-  <object id="41" x="5152" y="256" width="64" height="128"/>
-  <object id="42" x="5216" y="320" width="96" height="64"/>
-  <object id="43" x="5312" y="256" width="64" height="128"/>
-  <object id="44" x="5216" y="128" width="96" height="12"/>
-  <object id="45" x="5408" y="384" width="64" height="10.6667"/>
-  <object id="46" x="5440" y="192" width="96" height="10.6667"/>
-  <object id="47" x="5536" y="320" width="64" height="11.3333"/>
-  <object id="48" x="5632" y="256" width="64" height="224"/>
+  <object id="37" name="wall" x="4480" y="160" width="64.6667" height="12"/>
+  <object id="38" name="wall" x="4576" y="384" width="160" height="96"/>
+  <object id="39" name="wall" x="4736" y="288" width="128" height="192"/>
+  <object id="40" name="wall" x="4864" y="192" width="128" height="288"/>
+  <object id="41" name="wall" x="5152" y="256" width="64" height="128"/>
+  <object id="42" name="wall" x="5216" y="320" width="96" height="64"/>
+  <object id="43" name="wall" x="5312" y="256" width="64" height="128"/>
+  <object id="44" name="wall" x="5216" y="128" width="96" height="12"/>
+  <object id="45" name="wall" x="5408" y="384" width="64" height="10.6667"/>
+  <object id="46" name="wall" x="5440" y="192" width="96" height="10.6667"/>
+  <object id="47" name="wall" x="5536" y="320" width="64" height="11.3333"/>
+  <object id="48" name="wall" x="5632" y="256" width="64" height="224"/>
   <object id="49" x="5792" y="224" width="64" height="9.33333"/>
-  <object id="50" x="5920" y="224" width="160" height="256"/>
-  <object id="51" x="6080" y="320" width="128" height="160"/>
-  <object id="52" x="6016" y="128" width="96" height="11.3333"/>
-  <object id="53" x="6144" y="96" width="96" height="9.33333"/>
+  <object id="50" name="wall" x="5920" y="224" width="160" height="256"/>
+  <object id="51" name="wall" x="6080" y="320" width="128" height="160"/>
+  <object id="52" name="wall" x="6016" y="128" width="96" height="11.3333"/>
+  <object id="53" name="wall" x="6144" y="96" width="96" height="9.33333"/>
   <object id="55" x="6304" y="224" width="64" height="96"/>
   <object id="67" name="death" x="0" y="416" width="832" height="64"/>
   <object id="68" name="death" x="1120" y="352" width="448" height="128"/>
@@ -3076,5 +3076,6 @@
   <object id="75" name="death" x="4992" y="416" width="640" height="64"/>
   <object id="76" name="death" x="5696" y="256" width="224" height="224"/>
   <object id="77" name="death" x="6208" y="320" width="192" height="160"/>
+  <object id="78" name="end" x="6304" y="160" width="64" height="64"/>
  </objectgroup>
 </map>

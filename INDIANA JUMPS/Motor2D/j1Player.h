@@ -30,7 +30,7 @@ public:
 	iPoint pos_player;
 	iPoint speed;
 	int playerheight = 64;
-	int playerwidth;
+	int playerwidth = 32;
 	int doublejump = 2;
 
 	int yspeed;

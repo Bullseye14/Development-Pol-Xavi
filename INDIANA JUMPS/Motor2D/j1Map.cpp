@@ -473,12 +473,16 @@ bool j1Map::LoadColliders(pugi::xml_node &node)
 
 
 		//applying all colliders to each attribute of the xml
-		if (name == "cactus") {
+		if (name == "cactus" || name == "death") {
 			collidertype = COLLIDER_TYPE::COLLIDER_DEATH;
 			App->collision->AddCollider(colliders_rect, collidertype);
 		}
 		else if (name == "wall") {
 			collidertype = COLLIDER_TYPE::COLLIDER_WALL;
+			App->collision->AddCollider(colliders_rect, collidertype);
+		}
+		else if (name == "end") {
+			collidertype = COLLIDER_TYPE::COLLIDER_END;
 			App->collision->AddCollider(colliders_rect, collidertype);
 		}
 	}

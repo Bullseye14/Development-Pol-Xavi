@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Render.h"
+#include "j1Player.h"
 
 #define VSYNC true
 
@@ -69,6 +70,10 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
+	if (200 <= App->player->pos_player.x < 6200)
+	{
+		camera.x = -(App->player->pos_player.x - 200);
+	}
 	return true;
 }
 

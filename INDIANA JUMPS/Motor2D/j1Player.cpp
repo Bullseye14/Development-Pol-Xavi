@@ -107,7 +107,7 @@ bool j1Player::Update(float dt)
 	from_down = false;
 
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pos_player.x < 6400 - 64) {
 		speed.x = 1;
 		if (current_animation == &idle) 
 		{
@@ -115,11 +115,12 @@ bool j1Player::Update(float dt)
 		}
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		speed.x = -1;
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pos_player.x > 0) {
+		
 		if (current_animation == &idle) 
 		{
-			current_animation = &run_left;
+				speed.x = -1;
+				current_animation = &run_left;
 		}
 	}
 
@@ -208,6 +209,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	{
 		// TODO COLLISION
 		// Collision between player and wall has to work
+		//if(c1->rect.x)
 	}
 	
 	

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="176">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextobjectid="178">
  <tileset firstgid="1" name="desert_tileset_new.png" tilewidth="32" tileheight="32" tilecount="84" columns="12">
   <image source="desert_tileset_new.png" width="384" height="224"/>
  </tileset>
- <imagelayer id="3" name="Background">
+ <imagelayer name="Background">
   <image source="BG_new.png" width="6400" height="500"/>
  </imagelayer>
- <layer id="4" name="Tiles" width="200" height="15">
+ <layer name="Tiles" width="200" height="15">
   <data>
    <tile/>
    <tile/>
@@ -3010,7 +3010,7 @@
    <tile gid="14"/>
   </data>
  </layer>
- <objectgroup color="#ff0000" id="6" name="COLLIDER_Walls">
+ <objectgroup color="#ff0000" name="COLLIDER_Walls">
   <object id="19" name="wall" x="0" y="416" width="608" height="64"/>
   <object id="20" name="wall" x="320" y="352" width="96" height="64"/>
   <object id="21" name="wall" x="480" y="256" width="128" height="160"/>
@@ -3109,5 +3109,6 @@
   <object id="173" name="cactus" x="5856" y="224" width="32" height="32"/>
   <object id="174" name="cactus" x="6016" y="160" width="64" height="64"/>
   <object id="175" name="cactus" x="5856" y="448" width="224" height="32"/>
+  <object id="176" name="end" x="6304" y="288" width="64" height="64"/>
  </objectgroup>
 </map>
