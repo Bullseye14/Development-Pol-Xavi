@@ -86,7 +86,7 @@ bool j1GamePhysics::Update(float dt)
 
 void j1GamePhysics::DebugDraw()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
 		debug = !debug;
 	}

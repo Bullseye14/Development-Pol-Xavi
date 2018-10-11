@@ -107,19 +107,22 @@ bool j1Player::Update(float dt)
 	from_down = false;
 
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pos_player.x < 6400 - 64) {
-		speed.x = 1;
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && pos_player.x < 6400 - 64 && from_left == false) {
+		
 		if (current_animation == &idle) 
 		{
+			speed.x = 1;
+			from_left = true;
 			current_animation = &run;
 		}
 	}
 
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pos_player.x > 0) {
+	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && pos_player.x > 0 && from_right == false) {
 		
 		if (current_animation == &idle) 
 		{
 				speed.x = -1;
+				from_right = true;
 				current_animation = &run_left;
 		}
 	}
@@ -141,6 +144,7 @@ bool j1Player::Update(float dt)
 	}
 
 	playerHitbox->setPos(pos_player.x + 16, pos_player.y);
+	Check_Collision(rect_player);
 
 	if (speed.y > 0) //falling
 	{
@@ -164,7 +168,7 @@ bool j1Player::PostUpdate()
 {
 	App->render->Blit(graphics, pos_player.x, pos_player.y, &current_animation->GetCurrentFrame());
 
-	//Check_Collision();
+	Check_Collision(rect_player);
 	
 	pos_player.x += speed.x;
 	pos_player.y += speed.y;
@@ -209,7 +213,25 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	{
 		// TODO COLLISION
 		// Collision between player and wall has to work
-		//if(c1->rect.x)
+		if(from_left)
+		{
+			speed.x = 0;
+			current_animation = &idle;
+		}
+		else if (from_right) 
+		{
+			speed.x = 0;
+			current_animation = &idle;
+		}
+
+		if(from_down)
+		{
+
+		}
+		else if (from_up)
+		{
+
+		}
 	}
 	
 	
