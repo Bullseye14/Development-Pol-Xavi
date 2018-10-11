@@ -169,6 +169,8 @@ bool j1GamePhysics::EraseCollider(Collider* collider)
 	return false;
 }
 
+void j1GamePhysics::OnCollision(Collider* c1, Collider* c2) { }
+
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
 	return (rect.x < r.x + r.w &&

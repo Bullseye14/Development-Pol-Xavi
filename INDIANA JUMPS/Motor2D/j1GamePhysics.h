@@ -56,7 +56,7 @@ public:
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
 	bool EraseCollider(Collider* collider);
 	void DebugDraw();
-
+	void OnCollision(Collider* c1, Collider* c2);
 	bool debug = false;
 
 private:

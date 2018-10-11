@@ -17,9 +17,6 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	void Jump();
-
-	//void ChangeDirection();
 	void OnCollision(Collider* c1, Collider* c2);
 	bool Check_Collision(const SDL_Rect &r);
 
@@ -33,7 +30,7 @@ public:
 	int playerwidth = 32;
 	int doublejump = 2;
 
-	int yspeed;
+	int gravity = 1;
 
 	SDL_Rect rect_player;
 
@@ -42,6 +39,7 @@ public:
 	Animation run;
 	Animation run_left;
 	Animation jump;
+	Animation jump_left;
 
 	Collider* playerHitbox;
 
@@ -57,6 +55,6 @@ public:
 
 	bool jumping;
 	bool falling;
-	bool contact;
+	bool onfloor;
 };
 #endif

@@ -82,13 +82,12 @@ bool j1Player::Start()
 	current_animation = &idle;
 	speed.x = 0;
 	speed.y = 0;
-	yspeed = 7;
 	//changeJump = false;
 	from_up = false;
 	from_left = false;
 	from_right = false;
 	jumping = false;
-	contact = false;
+	onfloor = false;
 
 	playerHitbox = App->collision->AddCollider({ pos_player.x, pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
 
@@ -105,6 +104,10 @@ bool j1Player::Update(float dt)
 	from_left = false;
 	from_right = false;
 	from_down = false;
+
+	
+
+	//Check collisions
 
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && pos_player.x < 6400 - 64 && from_left == false) {
@@ -133,15 +136,17 @@ bool j1Player::Update(float dt)
 		if (current_animation != &jump) { current_animation = &idle; }
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && falling == false && jumping == false && doublejump > 0)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && onfloor == true && doublejump > 0)
 	{	
-		
-		//Jump();	
+		onfloor = false;
+		speed.y = -10;
 		doublejump--;
-		
-		//speed.y = 0;
-
 	}
+	if (onfloor == false) 
+	{
+		pos_player.y += speed.y;
+	}
+	else { speed.y = 0; }
 
 	playerHitbox->setPos(pos_player.x + 16, pos_player.y);
 	Check_Collision(rect_player);
@@ -168,35 +173,18 @@ bool j1Player::PostUpdate()
 {
 	App->render->Blit(graphics, pos_player.x, pos_player.y, &current_animation->GetCurrentFrame());
 
-	Check_Collision(rect_player);
+	/*if (!onfloor) 
+	{
+		speed.y += 1;
+		if (speed.y > gravity) { speed.y = gravity; }
+	}
+	else speed.y = 0;*/
 	
 	pos_player.x += speed.x;
 	pos_player.y += speed.y;
 
 
 	return true;
-}
-
-void j1Player::Jump() 
-{
-	// TODO JUMP
-	// Make the jumping function work properly
-	int inicial_height = pos_player.y;
-
-	int maximum_jump = playerheight * 2;
-
-	current_animation = &jump;
-
-	for (int i = 0; i < maximum_jump; i++) 
-	{
-		pos_player.y = inicial_height - i;
-	}
-
-
-	if (pos_player.y < inicial_height) 
-	{
-		speed.y = 0;
-	}
 }
 
 bool j1Player::Check_Collision(const SDL_Rect &r) 
@@ -209,31 +197,13 @@ bool j1Player::Check_Collision(const SDL_Rect &r)
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) 
 {
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL) 
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL)
 	{
-		// TODO COLLISION
-		// Collision between player and wall has to work
-		if(from_left)
-		{
-			speed.x = 0;
-			current_animation = &idle;
-		}
-		else if (from_right) 
-		{
-			speed.x = 0;
-			current_animation = &idle;
-		}
-
-		if(from_down)
-		{
-
-		}
-		else if (from_up)
-		{
-
-		}
+		//touches from above
+		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10)) { from_up = true; }
+		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10)) { from_right = true; }
+		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10)) { from_left = true; }
 	}
-	
 	
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
 	{

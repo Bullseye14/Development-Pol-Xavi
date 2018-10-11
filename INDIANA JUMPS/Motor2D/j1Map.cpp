@@ -465,26 +465,24 @@ bool j1Map::LoadColliders(pugi::xml_node &node)
 
 		name = col.attribute("name").as_string();
 		
-		SDL_Rect colliders_rect;
-		colliders_rect.x = col.attribute("x").as_int();
-		colliders_rect.y = col.attribute("y").as_int();
-		colliders_rect.h = col.attribute("height").as_int();
-		colliders_rect.w = col.attribute("width").as_int();
-
-
+		
 		//applying all colliders to each attribute of the xml
 		if (name == "cactus" || name == "death") {
-			collidertype = COLLIDER_TYPE::COLLIDER_DEATH;
-			App->collision->AddCollider(colliders_rect, collidertype);
+			collidertype = COLLIDER_DEATH;
 		}
 		else if (name == "wall") {
-			collidertype = COLLIDER_TYPE::COLLIDER_WALL;
-			App->collision->AddCollider(colliders_rect, collidertype);
+			collidertype = COLLIDER_WALL;
 		}
 		else if (name == "end") {
-			collidertype = COLLIDER_TYPE::COLLIDER_END;
-			App->collision->AddCollider(colliders_rect, collidertype);
+			collidertype = COLLIDER_END;
 		}
+
+		SDL_Rect rect;
+		rect.x = col.attribute("x").as_int();
+		rect.y = col.attribute("y").as_int();
+		rect.h = col.attribute("height").as_int();
+		rect.w = col.attribute("width").as_int();
+		App->collision->AddCollider(rect, collidertype);
 	}
 	return ret;
 }
