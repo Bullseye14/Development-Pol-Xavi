@@ -19,7 +19,7 @@
   </window>
   
   <player>
-	<pos x="5" y="200" />
+	<pos x="5" y="10" />
   </player>
   
   <file_system>

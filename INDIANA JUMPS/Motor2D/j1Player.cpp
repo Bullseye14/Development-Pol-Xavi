@@ -150,8 +150,6 @@ bool j1Player::Update(float dt)
 
 	playerHitbox->SetPos(pos_player.x + 16, pos_player.y);
 
-	Check_Collision(rect_player);
-
 	if (speed.y > 0) //falling
 	{
 		falling = true;
@@ -168,6 +166,7 @@ bool j1Player::Update(float dt)
 		current_animation = &jump;
 	}
 
+
 	return true;
 }
 bool j1Player::PostUpdate()
@@ -180,6 +179,8 @@ bool j1Player::PostUpdate()
 		if (speed.y > gravity) { speed.y = gravity; }
 	}
 	else speed.y = 0;*/
+
+	Check_Collision();
 	
 	pos_player.x += speed.x;
 	pos_player.y += speed.y;
@@ -188,26 +189,82 @@ bool j1Player::PostUpdate()
 	return true;
 }
 
-bool j1Player::Check_Collision(const SDL_Rect &r) 
-{
-	return !(rect_player.y + rect_player.h < r.y ||
-			rect_player.y > r.y + r.h ||
-			rect_player.x + rect_player.w < r.x ||
-			rect_player.x > r.x + r.w);
-}
-
 void j1Player::OnCollision(Collider* c1, Collider* c2) 
 {
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL)
 	{
 		//touches from above
-		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10)) { from_up = true; }
-		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10)) { from_right = true; }
-		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10)) { from_left = true; }
+		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10)) 
+		{ 
+			from_up = true; 
+		}
+		//touches from right
+		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10)) 
+		{ 
+			from_right = true; 
+		}
+		//touches from left
+		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10)) 
+		{ 
+			from_left = true; 
+		}
+		//touches from bottom
+		else if ((c2->rect.y + (c2->rect.h)) < (c1->rect.y + 10)) 
+		{
+			from_down = true;
+		}
 	}
 	
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
 	{
 		//Die();
 	}
+	
+}
+
+void j1Player::Check_Collision() 
+{
+	if (!from_up) 
+	{
+		pos_player.y += 1.0f;
+	}
+	else if (from_up&&falling)
+	{
+		speed.y = 0;
+		falling = false;
+		current_animation = &idle;
+		doublejump = 2;
+	}
+	
+	
+	
+	/*if (touching_above == false)
+	{
+		if (invert_gravity == false)
+		{
+			speed.y += 1; //Aplying "gravity"
+			if (speed.y > maxSpeed_y)
+				speed.y = maxSpeed_y;
+		}
+		else
+		{
+			speed.y -= 1; //Aplying "gravity inverted"
+			if (speed.y < -maxSpeed_y)
+				speed.y = -maxSpeed_y;
+		}
+		
+	}
+	else if (touching_above == true && is_falling == true)
+	{
+		speed.y = 0;
+		is_falling = false;
+		SetIdleAnimation(); //set animation to idle when player lands
+		jumping.Reset(); //jumping frame reset to frame number 1
+	}*/
+
+
+	/*return !(rect_player.y + rect_player.h < r.y ||
+			rect_player.y > r.y + r.h ||
+			rect_player.x + rect_player.w < r.x ||
+			rect_player.x > r.x + r.w);*/
 }

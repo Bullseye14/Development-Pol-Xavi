@@ -18,7 +18,7 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* c1, Collider* c2);
-	bool Check_Collision(const SDL_Rect &r);
+	void Check_Collision();
 
 
 public:
