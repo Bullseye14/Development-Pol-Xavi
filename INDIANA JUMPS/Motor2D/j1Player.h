@@ -29,8 +29,8 @@ public:
 	int playerheight = 64;
 	int playerwidth = 32;
 	int doublejump = 2;
-
-	int gravity = 1;
+	float jumpVel = 0.0f;
+	float gravity = 0.5f;
 
 	SDL_Rect rect_player;
 
@@ -51,6 +51,7 @@ public:
 	bool from_right;
 	bool from_left;
 	bool from_down;
+	bool isdeath;
 	// --------------------------------------------------------------
 
 	bool jumping;
