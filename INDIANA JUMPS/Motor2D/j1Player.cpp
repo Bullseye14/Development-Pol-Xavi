@@ -27,29 +27,30 @@ j1Player::j1Player() : j1Module()
 	idle.PushBack({0, 256, 64, 64 });
 	idle.PushBack({ 64, 256, 64, 64 });*/
 
-	run.PushBack({ 128, 0, 64, 64 });
-	run.PushBack({ 192, 0, 64, 64 });
-	run.PushBack({ 128, 64, 64, 64 });
-	run.PushBack({ 192, 64, 64, 64 });
-	run.PushBack({ 128, 128, 64, 64 });
-	run.PushBack({ 192, 128, 64, 64 });
-	run.PushBack({ 128, 192, 64, 64 });
-	run.PushBack({ 192, 192, 64, 64 });
-	run.PushBack({ 128, 256, 64, 64 });
-	run.PushBack({ 192, 256, 64, 64 });
-	run.speed = 0.03f;
-	
-	run_left.PushBack({ 320, 0, 64, 64 });
-	run_left.PushBack({ 256, 0, 64, 64 });
-	run_left.PushBack({ 320, 64, 64, 64 });
-	run_left.PushBack({ 256, 64, 64, 64 });
-	run_left.PushBack({ 320, 128, 64, 64 });
-	run_left.PushBack({ 256, 128, 64, 64 });
-	run_left.PushBack({ 320, 192, 64, 64 });
-	run_left.PushBack({ 256, 192, 64, 64 });
-	run_left.PushBack({ 320, 256, 64, 64 });
-	run_left.PushBack({ 256, 256, 64, 64 });
-	run_left.speed = 0.03f;
+	run.PushBack({ 192, 0, 60, 64 });
+	run.PushBack({ 128, 0, 60, 64 });
+	run.PushBack({ 128, 64, 60, 64 });
+	run.PushBack({ 192, 64, 60, 64 });
+	run.PushBack({ 128, 128, 60, 64 });
+	run.PushBack({ 192, 128, 60, 64 });
+	run.PushBack({ 128, 192, 60, 64 });
+	run.PushBack({ 192, 192, 60, 64 });
+	run.PushBack({ 128, 256, 60, 64 });
+	run.PushBack({ 192, 256, 60, 64 });
+	run.speed = 0.02f;
+
+	run_left.PushBack({ 328, 0, 54, 64 });
+	run_left.PushBack({ 256, 0, 54, 64 });
+	run_left.PushBack({ 328, 64, 54, 64 });
+	run_left.PushBack({ 252, 64, 61, 64 });
+	run_left.PushBack({ 323, 128, 60, 64 });
+	run_left.PushBack({ 256, 128, 53, 64 });
+	run_left.PushBack({ 328, 192, 52, 64 });
+	run_left.PushBack({ 256, 192, 56, 64 });
+	run_left.PushBack({ 325, 256, 57, 64 });
+	run_left.PushBack({ 256, 256, 58, 64 });
+	run_left.speed = 0.02f;
+
 
 	jump.PushBack({ 384, 0, 64, 64 });
 	jump.PushBack({ 448, 0, 64, 64 });
