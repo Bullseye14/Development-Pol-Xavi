@@ -27,8 +27,8 @@ j1Player::j1Player() : j1Module()
 	idle.PushBack({0, 256, 64, 64 });
 	idle.PushBack({ 64, 256, 64, 64 });*/
 
-	run.PushBack({ 192, 0, 60, 64 });
 	run.PushBack({ 128, 0, 60, 64 });
+	run.PushBack({ 192, 0, 60, 64 });
 	run.PushBack({ 128, 64, 60, 64 });
 	run.PushBack({ 192, 64, 60, 64 });
 	run.PushBack({ 128, 128, 60, 64 });
