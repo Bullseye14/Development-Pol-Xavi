@@ -34,6 +34,8 @@ public:
 	float pos_initial;
 	float pos_final;
 
+	bool GodMode = false;
+
 	SDL_Rect rect_player;
 
 	Animation* current_animation = nullptr;
@@ -53,7 +55,8 @@ public:
 	bool from_right;
 	bool from_left;
 	bool from_down;
-	bool isdeath;
+	
+	bool death;
 	// --------------------------------------------------------------
 
 	bool jumping;

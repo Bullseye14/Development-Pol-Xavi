@@ -87,7 +87,7 @@ bool j1Player::Start()
 	from_right = false;
 	jumping = false;
 	onfloor = false;
-	isdeath = false;
+	death = true;
 
 	playerHitbox = App->collision->AddCollider({ (int)pos_player.x, (int)pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
 
@@ -172,6 +172,16 @@ bool j1Player::Update(float dt)
 		current_animation = &jump;
 	}
 
+	//god mode
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		GodMode = !GodMode;
+		if (GodMode == true) {
+			playerHitbox->type = COLLIDER_GOD;
+		}
+		else if (GodMode == false) {
+			playerHitbox->type = COLLIDER_PLAYER;
+		}
+	}
 
 	return true;
 }
@@ -221,18 +231,66 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		}
 	}
 	
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
+	/*if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
 	{
-		isdeath = true;
+		if (!GodMode) {
+			
+			if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10) || 
+				(c2->rect.x) > (c1->rect.x + c1->rect.w - 10) ||
+				(c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10) ||
+				(c2->rect.y + (c2->rect.h)) < (c1->rect.y + 10)
+)
+			{
+				death = false;
+				death_from_up = true;
+				death_from_right = true;
+				death_from_left = true;
+				death_from_down = true;
+			}
+		
+		}
+		else {
+			GodMode = false;
+			death = true;
+			//Respawn 
+		}
+	}*/
+	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_WALL)
+	{
+		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
+		{
+			from_up = true;
+		}
+		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10))
+		{
+			from_right = true;
+		}
+		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10))
+		{
+			from_left = true;
+		}
+	}
+	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_DEATH) {
+		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
+		{
+			from_up = true;
+		}
+		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10))
+		{
+			from_right = true;
+		}
+		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10))
+		{
+			from_left = true;
+		}
 	}
 	
 }
 
 void j1Player::Check_Collision() 
 {
-	if (!from_up) 
-	{
-		pos_player.y += 0.7f;
+	if (!from_up) {
+		pos_player.y += 0.8f;
 	}
 	else if (from_up)
 	{
@@ -243,14 +301,16 @@ void j1Player::Check_Collision()
 		//from_up = false;
 	}
 
-	if (from_left) 
-	{
-		if (speed.x < 0) { speed.x = 0; }
+	if (from_left) {
+		if (speed.x < 0) { 
+			speed.x = 0; 
+		}
 	}
 	
-	if (from_right)
-	{
-		if (speed.x > 0) { speed.x = 0; }
+	if (from_right){
+		if (speed.x > 0) { 
+			speed.x = 0; 
+		}
 	}
-	
+
 }

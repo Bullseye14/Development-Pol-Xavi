@@ -30,7 +30,11 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_END][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_END][COLLIDER_END] = false;
 
-
+	matrix[COLLIDER_GOD][COLLIDER_GOD] = false;
+	matrix[COLLIDER_GOD][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_GOD][COLLIDER_WALL] = true;
+	matrix[COLLIDER_GOD][COLLIDER_DEATH] = true;
+	matrix[COLLIDER_GOD][COLLIDER_END] = true;
 }
 
 // Destructor
@@ -112,24 +116,29 @@ void j1Collision::DebugDraw()
 
 		switch (colliders[i]->type)
 		{
-		case COLLIDER_NONE: // white
-			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+		case COLLIDER_NONE: // black
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 0, alpha);
 			break;
-		case COLLIDER_PLAYER:
+		case COLLIDER_PLAYER: //green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
-		case COLLIDER_WALL:
-			App->render->DrawQuad(colliders[i]->rect, 255, 100, 255, alpha);
+		case COLLIDER_WALL: //white
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
-		case COLLIDER_END:
+		case COLLIDER_END: //blue
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
-		case COLLIDER_DEATH:
+		case COLLIDER_DEATH: //red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
+		case COLLIDER_GOD: //yellow
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			break;
 		}
-
+		
 	}
+
+	
 }
 
 // Called before quitting
