@@ -96,6 +96,11 @@ bool j1Player::Start()
 bool j1Player::CleanUp()
 {
 	App->tex->UnLoad(graphics); 
+	if (playerHitbox != nullptr)
+	{
+		playerHitbox->to_delete = true;
+		playerHitbox = nullptr;
+	}
 	return true;
 }
 bool j1Player::Update(float dt)
