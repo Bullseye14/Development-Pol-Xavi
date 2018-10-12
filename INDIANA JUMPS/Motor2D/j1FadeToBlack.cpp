@@ -13,7 +13,7 @@
 
 j1FadeToBlack::j1FadeToBlack()
 {
-	screen = { 0, 0, SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE };
+	screen = { 0, 0, 1024 * SCREEN_SIZE, 480 * SCREEN_SIZE };
 }
 
 j1FadeToBlack::~j1FadeToBlack()

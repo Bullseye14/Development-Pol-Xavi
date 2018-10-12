@@ -17,6 +17,7 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 	void Respawn();
+	void Win();
 
 	void OnCollision(Collider* c1, Collider* c2);
 	void Check_Collision();
@@ -60,6 +61,7 @@ public:
 	
 	
 	bool death;
+	bool won = false;
 	// --------------------------------------------------------------
 
 	bool jumping;

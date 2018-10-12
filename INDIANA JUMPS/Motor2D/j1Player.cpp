@@ -141,7 +141,7 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN/* && onfloor == true */&& falling == false && doublejump > 0)
 	{	
-		 jumping = true;
+		jumping = true;
 		onfloor = false;
 		doublejump--;
 
@@ -151,7 +151,6 @@ bool j1Player::Update(float dt)
 		{
 			current_animation = &jump;
 			pos_player.y -= 0.7f;
-
 		}
 
 	}
@@ -251,6 +250,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		}
 	}
 
+	if ((c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_GOD) && c2->type == COLLIDER_END)
+	{
+		Win();
+	}
+
 	//GOD && WALL
 	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_WALL)
 	{
@@ -316,9 +320,13 @@ void j1Player::Check_Collision()
 	}
 }
 void j1Player::Respawn() {
-		//App->fade->FadeToBlack(App->scene, App->scene, 2.0f);
+	App->fade->FadeToBlack(App->scene, App->scene, 1.0f);
+	pos_player = start_pos;
 
-		pos_player.x = start_pos.x;
-		pos_player.y = start_pos.y;
+}
 
+void j1Player::Win() 
+{
+	won = true;
+	Respawn();
 }

@@ -51,20 +51,7 @@ bool j1Scene::Update(float dt)
 		App->LoadGame();
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		App->SaveGame();
-
-	//if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		//App->render->camera.y -= 1;
-
-	//if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		//App->render->camera.y += 1;
-
-		//if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-			//App->render->camera.x -= 1;
-
-	//if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		//if (App->render->camera.x < 0) { App->render->camera.x += 1; }
-		
+		App->SaveGame();		
 		
 	App->map->Draw();
 	App->render->Blit(img, 0, 0);
@@ -95,6 +82,11 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
+	App->player->graphics = nullptr;
+	App->player->current_animation = nullptr;
+	App->player->playerHitbox->to_delete = true;
+	App->player->playerHitbox = nullptr;
+
 
 	return true;
 }
