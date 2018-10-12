@@ -8,6 +8,7 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "j1Collision.h"
+#include "j1FadeToBlack.h"
 #include <stdio.h>
 
 j1Player::j1Player() : j1Module()
@@ -87,7 +88,7 @@ bool j1Player::Start()
 	from_right = false;
 	jumping = false;
 	onfloor = false;
-	death = true;
+	death = false;
 
 	playerHitbox = App->collision->AddCollider({ (int)pos_player.x, (int)pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
 
@@ -207,6 +208,7 @@ bool j1Player::PostUpdate()
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) 
 {
+	// PLAYER & WALL
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL)
 	{
 		//touches from above
@@ -231,30 +233,24 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		}
 	}
 	
-	/*if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
+	//PLAYER && DEATH
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
 	{
-		if (!GodMode) {
-			
-			if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10) || 
-				(c2->rect.x) > (c1->rect.x + c1->rect.w - 10) ||
-				(c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10) ||
-				(c2->rect.y + (c2->rect.h)) < (c1->rect.y + 10)
-)
-			{
-				death = false;
-				death_from_up = true;
-				death_from_right = true;
-				death_from_left = true;
-				death_from_down = true;
-			}
-		
-		}
-		else {
-			GodMode = false;
+		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
+		{
 			death = true;
-			//Respawn 
 		}
-	}*/
+		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10))
+		{
+			death = true;
+		}
+		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10))
+		{
+			death = true;
+		}
+	}
+
+	//GOD && WALL
 	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_WALL)
 	{
 		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
@@ -270,6 +266,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 			from_left = true;
 		}
 	}
+
+	//GOD && DEATH
 	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_DEATH) {
 		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
 		{
@@ -300,17 +298,26 @@ void j1Player::Check_Collision()
 		doublejump = 2;
 		//from_up = false;
 	}
-
 	if (from_left) {
 		if (speed.x < 0) { 
 			speed.x = 0; 
 		}
 	}
-	
 	if (from_right){
 		if (speed.x > 0) { 
 			speed.x = 0; 
 		}
 	}
+	if (death == true) {
+		death = false;
+		Respawn();
+		
+	}
+}
+void j1Player::Respawn() {
+		//App->fade->FadeToBlack(App->scene, App->scene, 2.0f);
+
+		pos_player.x = start_pos.x;
+		pos_player.y = start_pos.y;
 
 }

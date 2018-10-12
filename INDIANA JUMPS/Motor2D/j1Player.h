@@ -16,6 +16,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+	void Respawn();
 
 	void OnCollision(Collider* c1, Collider* c2);
 	void Check_Collision();
@@ -24,6 +25,7 @@ public:
 public:
 	SDL_Texture* graphics = nullptr;
 
+	fPoint start_pos;
 	fPoint pos_player;
 	iPoint speed;
 	int playerheight = 64;
@@ -55,6 +57,7 @@ public:
 	bool from_right;
 	bool from_left;
 	bool from_down;
+	
 	
 	bool death;
 	// --------------------------------------------------------------
