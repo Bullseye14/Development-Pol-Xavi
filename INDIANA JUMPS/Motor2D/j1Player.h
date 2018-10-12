@@ -24,13 +24,15 @@ public:
 public:
 	SDL_Texture* graphics = nullptr;
 
-	iPoint pos_player;
+	fPoint pos_player;
 	iPoint speed;
 	int playerheight = 64;
 	int playerwidth = 32;
 	int doublejump = 2;
-	float jumpVel = 0.0f;
-	float gravity = 0.5f;
+	float gravity = 0.0005f;
+	float pos_jump;
+	float pos_initial;
+	float pos_final;
 
 	SDL_Rect rect_player;
 

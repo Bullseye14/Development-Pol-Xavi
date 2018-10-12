@@ -36,7 +36,7 @@ j1Player::j1Player() : j1Module()
 	run.PushBack({ 192, 192, 64, 64 });
 	run.PushBack({ 128, 256, 64, 64 });
 	run.PushBack({ 192, 256, 64, 64 });
-	run.speed = 0.1f;
+	run.speed = 0.03f;
 	
 	run_left.PushBack({ 320, 0, 64, 64 });
 	run_left.PushBack({ 256, 0, 64, 64 });
@@ -48,7 +48,7 @@ j1Player::j1Player() : j1Module()
 	run_left.PushBack({ 256, 192, 64, 64 });
 	run_left.PushBack({ 320, 256, 64, 64 });
 	run_left.PushBack({ 256, 256, 64, 64 });
-	run_left.speed = 0.1f;
+	run_left.speed = 0.03f;
 
 	jump.PushBack({ 384, 0, 64, 64 });
 	jump.PushBack({ 448, 0, 64, 64 });
@@ -60,7 +60,7 @@ j1Player::j1Player() : j1Module()
 	jump.PushBack({ 448, 192, 64, 64 });
 	jump.PushBack({ 384, 256, 64, 64 });
 	jump.PushBack({ 448, 256, 64, 64 });
-	jump.speed = 0.1f;
+	jump.speed = 0.03f;
 	jump.loop = false;
 	
 }
@@ -82,7 +82,6 @@ bool j1Player::Start()
 	current_animation = &idle;
 	speed.x = 0;
 	speed.y = 0;
-	//changeJump = false;
 	from_up = false;
 	from_left = false;
 	from_right = false;
@@ -90,7 +89,7 @@ bool j1Player::Start()
 	onfloor = false;
 	isdeath = false;
 
-	playerHitbox = App->collision->AddCollider({ pos_player.x, pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
+	playerHitbox = App->collision->AddCollider({ (int)pos_player.x, (int)pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
 
 	return true;
 }
@@ -133,21 +132,21 @@ bool j1Player::Update(float dt)
 		if (current_animation != &jump) { current_animation = &idle; }
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && onfloor == true && falling == false && doublejump > 0)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN/* && onfloor == true */&& falling == false && doublejump > 0)
 	{	
-		/*current_animation = &jump;
-		//onfloor = false;
-		speed.y = -1;
-		doublejump--;*/
-		current_animation = &jump;
-		jumping = true;
+		 jumping = true;
+		onfloor = false;
+		doublejump--;
 
-		if (jumping == true) 
+		pos_final = pos_player.y - playerheight * 2;
+
+		while (pos_player.y > pos_final)
 		{
-			onfloor = false;
-			pos_player.y -= jumpVel;
-			jumpVel += gravity;
+			current_animation = &jump;
+			pos_player.y -= 0.7f;
+
 		}
+
 	}
 	
 	playerHitbox->SetPos(pos_player.x + 16, pos_player.y);
@@ -228,7 +227,7 @@ void j1Player::Check_Collision()
 {
 	if (!from_up) 
 	{
-		pos_player.y += 1.0f;
+		pos_player.y += 0.7f;
 	}
 	else if (from_up)
 	{
@@ -241,7 +240,7 @@ void j1Player::Check_Collision()
 
 	if (from_left) 
 	{
-		if (speed.x > 0) { speed.x = 0; }
+		if (speed.x < 0) { speed.x = 0; }
 	}
 	
 	if (from_right)
