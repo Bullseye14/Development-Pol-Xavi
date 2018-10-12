@@ -82,11 +82,10 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	App->player->graphics = nullptr;
+	/*App->player->graphics = nullptr;
 	App->player->current_animation = nullptr;
 	App->player->playerHitbox->to_delete = true;
-	App->player->playerHitbox = nullptr;
-
+	App->player->playerHitbox = nullptr;*/
 
 	return true;
 }
