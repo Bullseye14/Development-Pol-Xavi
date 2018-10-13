@@ -104,6 +104,8 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && falling == false && doublejump > 0)
 	{	
+		App->audio->PlayFx(App->audio->jump);
+
 		jumping = true;
 		onfloor = false;
 		doublejump--;
@@ -149,7 +151,9 @@ bool j1Player::Update(float dt)
 			playerHitbox->type = COLLIDER_PLAYER;
 		}
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+		Respawn();
+	}
 	return true;
 }
 bool j1Player::PostUpdate()
