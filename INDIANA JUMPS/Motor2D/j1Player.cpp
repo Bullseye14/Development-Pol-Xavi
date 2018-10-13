@@ -15,56 +15,14 @@ j1Player::j1Player() : j1Module()
 {
 	name.create("player");
 
-	//MUST CALCULATE THE RECT
-	idle.PushBack({0, 0, 64, 64});
-	idle.PushBack({64, 0, 64, 64});
-	/*idle.PushBack({ 0, 64, 64, 64 });
-	idle.PushBack({ 64, 64, 64, 64 });
-	idle.PushBack({0, 128, 64, 64 });
-	idle.PushBack({ 64, 128, 64, 64 });
-	idle.PushBack({ 0, 192, 64, 64 });
-	idle.PushBack({ 64, 192, 64, 64 });
-	idle.PushBack({0, 256, 64, 64 });
-	idle.PushBack({ 64, 256, 64, 64 });*/
+	current_animation = NULL;
 
-	run.PushBack({ 128, 0, 60, 64 });
-	run.PushBack({ 192, 0, 60, 64 });
-	run.PushBack({ 128, 64, 60, 64 });
-	run.PushBack({ 192, 64, 60, 64 });
-	run.PushBack({ 128, 128, 60, 64 });
-	run.PushBack({ 192, 128, 60, 64 });
-	run.PushBack({ 128, 192, 60, 64 });
-	run.PushBack({ 192, 192, 60, 64 });
-	run.PushBack({ 128, 256, 60, 64 });
-	run.PushBack({ 192, 256, 60, 64 });
-	run.speed = 0.02f;
+	idle.LoadAnimation("idle");
+	run.LoadAnimation("run");
+	run_left.LoadAnimation("run_left");
+	jump.LoadAnimation("jump");
 
-	run_left.PushBack({ 328, 0, 54, 64 });
-	run_left.PushBack({ 256, 0, 54, 64 });
-	run_left.PushBack({ 328, 64, 54, 64 });
-	run_left.PushBack({ 252, 64, 61, 64 });
-	run_left.PushBack({ 323, 128, 60, 64 });
-	run_left.PushBack({ 256, 128, 53, 64 });
-	run_left.PushBack({ 328, 192, 52, 64 });
-	run_left.PushBack({ 256, 192, 56, 64 });
-	run_left.PushBack({ 325, 256, 57, 64 });
-	run_left.PushBack({ 256, 256, 58, 64 });
-	run_left.speed = 0.02f;
-
-
-	jump.PushBack({ 384, 0, 64, 64 });
-	jump.PushBack({ 448, 0, 64, 64 });
-	jump.PushBack({ 384, 64, 64, 64 });
-	jump.PushBack({ 448, 64, 64, 64 });
-	jump.PushBack({ 384, 128, 64, 64 });
-	jump.PushBack({ 448, 128, 64, 64 });
-	jump.PushBack({ 384, 192, 64, 64 });
-	jump.PushBack({ 448, 192, 64, 64 });
-	jump.PushBack({ 384, 256, 64, 64 });
-	jump.PushBack({ 448, 256, 64, 64 });
-	jump.speed = 0.003f;
-	jump.loop = false;
-	
+	//current_animation = &idle;
 }
 j1Player::~j1Player()
 {}
@@ -113,39 +71,44 @@ bool j1Player::Update(float dt)
 	from_down = false;
 
 	//Check collisions
-
+	DoAnimations();
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && pos_player.x < 6400 - 64 && from_left == false) {
 		
-		if (current_animation == &idle) 
-		{
-			speed.x = 1;
-			current_animation = &run;
-		}
+		mov = MOVING;
+		dir_x = RIGHT;
+		/*if (current_animation == &idle)
+		{*/
+		speed.x = 1;
+		/*current_animation = &run;
+	}*/
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && pos_player.x > 0 && from_right == false) {
 		
-		if (current_animation == &idle) 
-		{
-				speed.x = -1;
-				current_animation = &run_left;
-		}
+		mov = MOVING;
+		dir_x = LEFT;
+		/*if (current_animation == &idle)
+		{*/
+		speed.x = -1;
+		/*current_animation = &run_left;
+}*/
 	}
 
 	else
 	{
+		mov = STOPPED;
 		speed.x = 0;
-		if (current_animation != &jump) { current_animation = &idle; }
+		//if (current_animation != &jump) { current_animation = &idle; }
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN/* && onfloor == true */&& falling == false && doublejump > 0)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && falling == false && doublejump > 0)
 	{	
 		jumping = true;
 		onfloor = false;
 		doublejump--;
 		
-		gravity = 100.0f;
+		gravity = 130.0f;
 
 		pos_final = pos_player.y - playerheight * 2;
 
@@ -153,7 +116,7 @@ bool j1Player::Update(float dt)
 		{
 			current_animation = &jump;
 			pos_player.y -= gravity;
-			gravity -= 0.001f;
+			gravity -= 1.0f;
 		}
 
 	}
@@ -332,4 +295,33 @@ void j1Player::Win()
 {
 	won = true;
 	Respawn();
+}
+
+void j1Player::DoAnimations() {
+
+	if (onfloor == true) {
+		switch (dir_x)
+		{
+		case LEFT:
+			current_animation = &run_left;
+			break;
+		case RIGHT:
+			current_animation = &run;
+			break;
+		default:
+			break;
+		}
+	}
+	else {
+		current_animation = &jump;
+	}
+
+	if (mov == STOPPED)
+	{
+		current_animation = &idle;
+		if (onfloor == false)
+		{
+			current_animation = &jump;
+		}
+	}
 }

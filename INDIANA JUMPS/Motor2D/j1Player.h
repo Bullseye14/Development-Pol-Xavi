@@ -5,6 +5,9 @@
 #include "Animation.h"
 
 struct SDL_Texture;
+enum MOVEMENT { STOPPED, MOVING };
+enum DIRECTION_X { CENTER_X, LEFT, RIGHT };
+enum DIRECTION_Y { CENTER_Y, UP, DOWN };
 
 class j1Player : public j1Module
 {
@@ -17,7 +20,9 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 	void Respawn();
+	void DoAnimations();
 	void Win();
+	
 
 	void OnCollision(Collider* c1, Collider* c2);
 	void Check_Collision();
@@ -25,6 +30,10 @@ public:
 
 public:
 	SDL_Texture* graphics = nullptr;
+
+	MOVEMENT mov = STOPPED;
+	DIRECTION_X dir_x = CENTER_X;
+	DIRECTION_Y dir_y = CENTER_Y;
 
 	fPoint start_pos;
 	fPoint pos_player;
