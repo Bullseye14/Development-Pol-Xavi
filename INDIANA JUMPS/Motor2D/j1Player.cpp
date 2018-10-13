@@ -62,7 +62,7 @@ j1Player::j1Player() : j1Module()
 	jump.PushBack({ 448, 192, 64, 64 });
 	jump.PushBack({ 384, 256, 64, 64 });
 	jump.PushBack({ 448, 256, 64, 64 });
-	jump.speed = 0.03f;
+	jump.speed = 0.003f;
 	jump.loop = false;
 	
 }
@@ -144,13 +144,16 @@ bool j1Player::Update(float dt)
 		jumping = true;
 		onfloor = false;
 		doublejump--;
+		
+		gravity = 100.0f;
 
 		pos_final = pos_player.y - playerheight * 2;
 
-		while (pos_player.y > pos_final)
+		while (gravity <= 0);
 		{
 			current_animation = &jump;
-			pos_player.y -= 0.7f;
+			pos_player.y -= gravity;
+			gravity -= 0.001f;
 		}
 
 	}

@@ -32,7 +32,7 @@ public:
 	int playerheight = 64;
 	int playerwidth = 32;
 	int doublejump = 2;
-	float gravity = 0.0005f;
+	float gravity;
 	float pos_jump;
 	float pos_initial;
 	float pos_final;
