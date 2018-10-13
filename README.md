@@ -3,6 +3,8 @@ It is a project made by CITM (Centre de la Imatge i la Tecnologia Multimedia) st
 
 Indiana Jumps is a platformer game where you put yourself in the shoes of an adventurer, with the objective of arriving to the end of each level avoiding all the obstacles and impediments that you will find across the map.
 
+You won't complete the levels if you bump into cactus or if you fall into the water, so be careful while jumping through the map!
+
 ## Information
 ### Controls
 - Move: LEFT/RIGHT
@@ -23,3 +25,11 @@ Indiana Jumps is a platformer game where you put yourself in the shoes of an adv
   
 * Xavi Marín
   - Github [Xavimarin35](https://github.com/xavimarin35)
+  
+* Group's Github link
+  - [Indiana Jumps](https://github.com/Bullseye14/Development-Pol-Xavi)
+  
+
+## License
+
+Licensed under the [MIT License](LICENSE)
