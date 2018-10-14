@@ -45,6 +45,7 @@ bool j1Player::Start()
 	}
 
 	pos_player = pos_initial;
+
 	// Initial values
 	current_animation = &idle;
 	speed.x = 0;
@@ -151,19 +152,6 @@ bool j1Player::Update(float dt)
 		else if (GodMode == false) {
 			playerHitbox->type = COLLIDER_PLAYER;
 		}
-	}
-	
-	// Start from the beginning of the first level
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		// TODO
-		Respawn();
-	}
-
-	// Start from the beginning of this level
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
-	{
-		Respawn();
 	}
 
 	return true;
@@ -296,7 +284,7 @@ void j1Player::Check_Collision()
 }
 void j1Player::Respawn() 
 {
-	App->fade->FadeToBlack(App->scene, App->scene, 1.0f);
+	//App->fade->FadeToBlack(App->scene, App->scene, 1.0f);
 
 	pos_player = start_pos;
 }

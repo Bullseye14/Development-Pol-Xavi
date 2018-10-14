@@ -42,8 +42,6 @@ bool j1Scene::Start()
 {
 	App->map->Load(mapList.start->data->map_name.GetString());
 	
-	//App->map->Load("desert_map_new.tmx");
-	//App->map->Load("forest_map_new.tmx");
 	img = App->player->graphics;
 	return true;
 }
@@ -57,11 +55,25 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		App->LoadGame();
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) { App->LoadGame(); }
+		
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { App->SaveGame(); }
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		App->SaveGame();		
+		
+	// Start from the beginning of the first level
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		// TODO
+		LoadLevel(1);
+	}
+
+	// Start from the beginning of this level
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		App->player->Respawn();
+	}
+
+	
 		
 	App->map->Draw();
 	App->render->Blit(img, 0, 0);
@@ -97,10 +109,12 @@ bool j1Scene::CleanUp()
 void j1Scene::LoadLevel(int number)
 {
 	p2List_item<map*>* level = mapList.start;
-	
-	for (int i = 1; i < number; i++)
+
+	/*for (int i = 1; i < number; i++)*/
+	while (choose_level < number)
 	{
 		level = level->next;
+		choose_level++;
 	}
 	current_level = level;
 
@@ -114,9 +128,5 @@ void j1Scene::LoadLevel(int number)
 		App->map->Load(current_level->data->map_name.GetString());
 		App->player->playerHitbox = nullptr;
 		App->player->Start();
-	}
-	else
-	{
-		LOG("Current level is nullptr", number);
 	}
 }

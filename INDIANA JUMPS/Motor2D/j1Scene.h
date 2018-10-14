@@ -54,6 +54,8 @@ public:
 	p2List<map*> mapList;
 	p2List_item<map*> *current_level;
 
+	int choose_level = 1;
+
 private:
 	SDL_Texture * img;
 };
