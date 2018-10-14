@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextobjectid="178">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="180">
  <tileset firstgid="1" name="desert_tileset_new.png" tilewidth="32" tileheight="32" tilecount="84" columns="12">
   <image source="desert_tileset_new.png" width="384" height="224"/>
  </tileset>
- <imagelayer name="Background">
+ <imagelayer id="1" name="Background">
   <image source="BG_new.png" width="6400" height="500"/>
  </imagelayer>
- <layer name="Tiles" width="200" height="15">
+ <layer id="2" name="Tiles" width="200" height="15">
   <data>
    <tile/>
    <tile/>
@@ -1574,8 +1574,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="51"/>
-   <tile gid="52"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile gid="13"/>
    <tile gid="14"/>
@@ -1774,8 +1774,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="37"/>
-   <tile gid="39"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile gid="13"/>
    <tile gid="14"/>
@@ -3010,7 +3010,7 @@
    <tile gid="14"/>
   </data>
  </layer>
- <objectgroup color="#ff0000" name="COLLIDER_Walls">
+ <objectgroup color="#ff0000" id="3" name="COLLIDER_Walls">
   <object id="19" name="wall" x="0" y="416" width="608" height="64"/>
   <object id="20" name="wall" x="320" y="352" width="96" height="64"/>
   <object id="21" name="wall" x="480" y="256" width="128" height="160"/>
@@ -3052,7 +3052,6 @@
   <object id="57" name="wall" x="5088" y="384" width="64" height="64"/>
   <object id="58" name="wall" x="5120" y="224" width="96" height="14"/>
   <object id="59" name="wall" x="5248" y="160" width="64.5" height="14"/>
-  <object id="60" name="wall" x="5312" y="256" width="64.5" height="14.5"/>
   <object id="61" name="wall" x="5216" y="384" width="64" height="64"/>
   <object id="62" name="wall" x="5344" y="384" width="64" height="64"/>
   <object id="63" name="wall" x="5440" y="448" width="159.5" height="12.5"/>
@@ -3073,7 +3072,6 @@
   <object id="130" name="cactus" x="1728" y="416" width="64" height="64"/>
   <object id="131" name="cactus" x="1792" y="448" width="96" height="32"/>
   <object id="132" name="cactus" x="1600" y="320" width="64" height="64"/>
-  <object id="134" name="cactus" x="2112" y="416" width="192" height="64"/>
   <object id="135" name="cactus" x="2144" y="96" width="32" height="32"/>
   <object id="136" name="cactus" x="2464" y="448" width="64" height="32"/>
   <object id="137" name="cactus" x="2624" y="448" width="352" height="32"/>
@@ -3096,7 +3094,6 @@
   <object id="160" name="cactus" x="4672" y="416" width="64" height="64"/>
   <object id="161" name="cactus" x="4736" y="384" width="64" height="32"/>
   <object id="162" name="cactus" x="5184" y="192" width="32" height="32"/>
-  <object id="163" name="cactus" x="5312" y="224" width="64" height="32"/>
   <object id="164" name="cactus" x="5056" y="448" width="96" height="32"/>
   <object id="165" name="cactus" x="5152" y="416" width="64" height="64"/>
   <object id="166" name="cactus" x="5216" y="448" width="64" height="32"/>
@@ -3110,5 +3107,6 @@
   <object id="174" name="cactus" x="6016" y="160" width="64" height="64"/>
   <object id="175" name="cactus" x="5856" y="448" width="224" height="32"/>
   <object id="176" name="end" x="6304" y="288" width="64" height="64"/>
+  <object id="179" name="cactus" x="2112" y="448" width="192" height="32"/>
  </objectgroup>
 </map>
