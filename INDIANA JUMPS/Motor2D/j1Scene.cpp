@@ -15,6 +15,7 @@ j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
 
+	// Creating a list with 2 the two maps
 	map* map1 = new map(1, "desert_map_new.tmx");
 	map* map2 = new map(2, "forest_map_new.tmx");
 
@@ -40,6 +41,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	// Calling the function to load the map
 	App->map->Load(mapList.start->data->map_name.GetString());
 	
 	img = App->player->graphics;
@@ -55,8 +57,10 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	// Load game
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) { App->LoadGame(); }
-		
+	
+	// Save game
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { App->SaveGame(); }
 
 		
@@ -73,17 +77,9 @@ bool j1Scene::Update(float dt)
 		App->player->Respawn();
 	}
 
-	
-		
 	App->map->Draw();
 	App->render->Blit(img, 0, 0);
 
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count());
-
-	App->win->SetTitle(title.GetString());
 	return true;
 }
 
@@ -108,9 +104,9 @@ bool j1Scene::CleanUp()
 
 void j1Scene::LoadLevel(int number)
 {
+	// Loading the current level
 	p2List_item<map*>* level = mapList.start;
 
-	/*for (int i = 1; i < number; i++)*/
 	while (choose_level < number)
 	{
 		level = level->next;
@@ -124,7 +120,7 @@ void j1Scene::LoadLevel(int number)
 		App->collision->CleanUp();
 		App->map->CleanUp();
 
-		////Starting the level & player
+		//Starting the level & player
 		App->map->Load(current_level->data->map_name.GetString());
 		App->player->playerHitbox = nullptr;
 		App->player->Start();

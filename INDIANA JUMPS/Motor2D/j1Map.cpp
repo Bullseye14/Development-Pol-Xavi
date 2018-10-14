@@ -32,6 +32,7 @@ void j1Map::Draw()
 	if (map_loaded == false)
 		return;
 
+	// Image layer list, to draw the background
 	p2List_item<ImageLayer*>* image;
 	for (image = data.image_layers.start; image; image = image->next)
 	{
@@ -50,7 +51,7 @@ void j1Map::Draw()
 	p2List_item<MapLayer*>* layer;
 	layer = data.map_layers.start;
 
-	// TODO 5: Prepare the loop to draw all tilesets + Blit
+	// Printing the map
 	for (uint i = 0; i < data.height; ++i)
 	{
 		for (uint j = 0; j < data.width; ++j)
@@ -58,18 +59,14 @@ void j1Map::Draw()
 			uint id = layer->data->Get(j, i);
 			id = layer->data->data[id];
 
-			if (id != 0) {
+			if (id != 0) 
+			{
 				SDL_Rect *rect = &item->data->GetTileRect(id);
 				iPoint pos = MapToWorld(j, i);
 				App->render->Blit(item->data->texture, pos.x, pos.y, rect);
 			}
 		}
-
-
-		// TODO 9: Complete the draw function
-
 	}
-
 }
 
 
@@ -111,9 +108,6 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
 
-	//  TODO 2: clean up all layer data
-	// Remove all layers
-
 	p2List_item<MapLayer*>* map_item;
 	map_item = data.map_layers.start;
 
@@ -154,13 +148,13 @@ bool j1Map::Load(const char* file_name)
 		ret = false;
 	}
 
-	// Load general info ----------------------------------------------
+	// Load general info
 	if(ret == true)
 	{
 		ret = LoadMap();
 	}
 
-	// Load all tilesets info ----------------------------------------------
+	// Load all tilesets info
 	pugi::xml_node tileset;
 	for(tileset = map_file.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
 	{
@@ -179,8 +173,7 @@ bool j1Map::Load(const char* file_name)
 		data.tilesets.add(set);
 	}
 
-	// TODO 4: Iterate all layers and load each of them
-	// Load layer info ----------------------------------------------
+	// Load layer info
 	pugi::xml_node lay;
 	for (lay = map_file.child("map").child("layer"); lay&&ret; lay = lay.next_sibling("imagelayer")) 
 	{
@@ -192,10 +185,9 @@ bool j1Map::Load(const char* file_name)
 		{
 			data.map_layers.add(layer);
 		}
-
 	}
 
-	//Load ImageLayer info -------------------------------------------
+	//Load ImageLayer info
 	pugi::xml_node img_layer_node;
 	for (img_layer_node = map_file.child("map").child("imagelayer"); img_layer_node && ret; img_layer_node = img_layer_node.next_sibling("imagelayer"))
 	{
@@ -231,9 +223,6 @@ bool j1Map::Load(const char* file_name)
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
 			item = item->next;
 		}
-
-		// TODO 4: Add info here about your loaded layers
-		// Adapt this vcode with your own variables
 		
 		p2List_item<MapLayer*>* item_layer = data.map_layers.start;
 		while(item_layer != NULL)
@@ -380,7 +369,6 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-// TODO 3: Create the definition for a function that loads a single layer
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
@@ -402,7 +390,6 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		memset(layer->data, 0, sizeof(uint)*(layer->width)*(layer->height));
 	}
 
-
 	int i = 0;
 
 	for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"))
@@ -410,9 +397,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		layer->data[i++] = tile.attribute("gid").as_int(0);
 	}
 
-
 	return ret;
-
 }
 
 bool j1Map::LoadLayerImage(pugi::xml_node& node, ImageLayer* img)
@@ -446,7 +431,6 @@ bool j1Map::LoadLayerImage(pugi::xml_node& node, ImageLayer* img)
 
 bool j1Map::LoadColliders(pugi::xml_node &node)
 {
-
 	bool ret = true;
 
 	pugi::xml_node col = node.child("object");
@@ -459,14 +443,11 @@ bool j1Map::LoadColliders(pugi::xml_node &node)
 	COLLIDER_TYPE collidertype;
 	p2SString name;
 
-
 	for (col = node.child("object"); col; col = col.next_sibling("object")) 
 	{
-
 		name = col.attribute("name").as_string();
 		
-		
-		//applying all colliders to each attribute of the xml
+		// Applying all colliders to each attribute of the xml
 		if (name == "cactus" || name == "death") {
 			collidertype = COLLIDER_DEATH;
 		}

@@ -29,6 +29,7 @@ j1Player::~j1Player()
 
 bool j1Player::Awake(pugi::xml_node& config)
 {
+	// Reading initial position from xml
 	pos_player.x = config.child("pos").attribute("x").as_int();
 	pos_player.y = config.child("pos").attribute("y").as_int();
 
@@ -44,6 +45,7 @@ bool j1Player::Start()
 		graphics = App->tex->Load("textures/Spritesheet.png");
 	}
 
+	// When loading a new level, initial postition
 	pos_player = pos_initial;
 
 	// Initial values
@@ -81,9 +83,9 @@ bool j1Player::Update(float dt)
 	from_right = false;
 	from_down = false;
 
+	// Animations from xml
 	DoAnimations();
-
-	
+		
 	//MOVEMENT OF THE PLAYER
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && pos_player.x < 6400 - 64 && from_left == false) 
 	{
@@ -111,11 +113,11 @@ bool j1Player::Update(float dt)
 		App->audio->PlayFx(App->audio->jump);
 
 		jumping = true;
-		onfloor = false;
-		doublejump--;
+		onfloor = false;			// Player jumping
+		doublejump--;				// Double jump
 		pos_final = pos_player.y - playerheight * 2;
 		
-		gravity = 6.0f;				// Player jumping
+		gravity = 6.0f;
 
 		// TO FINISH (player is appearing from above, not moving upwards)
 
@@ -129,8 +131,6 @@ bool j1Player::Update(float dt)
 
 		if (gravity <= 0) 
 		{
-			/*from_up == false;
-			falling = true;*/
 			speed.y = 0.0f;
 		}
 	}
@@ -144,12 +144,15 @@ bool j1Player::Update(float dt)
 	}
 
 	// God mode
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) 
+	{
 		GodMode = !GodMode;
-		if (GodMode == true) {
+		if (GodMode == true) 
+		{
 			playerHitbox->type = COLLIDER_GOD;
 		}
-		else if (GodMode == false) {
+		else if (GodMode == false) 
+		{
 			playerHitbox->type = COLLIDER_PLAYER;
 		}
 	}
@@ -158,9 +161,10 @@ bool j1Player::Update(float dt)
 }
 bool j1Player::PostUpdate()
 {
-	
+	// Drawing the player
 	App->render->Blit(graphics, pos_player.x, pos_player.y, &current_animation->GetCurrentFrame());
 
+	// Checking collisions
 	Check_Collision();
 	
 	pos_player.x += speed.x;
@@ -226,10 +230,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	}
 
 	// GOD && DEATH
-	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_DEATH) {
+	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_DEATH) 
+	{
 		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
 		{
-			from_up = true;
+			from_up = true;				// In god mode, death can be walked through
 		}
 		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10))
 		{
@@ -277,21 +282,19 @@ void j1Player::Check_Collision()
 	{
 		if (App->scene->current_level->data->level == 1) 
 		{
-			App->scene->LoadLevel(2);
+			App->scene->LoadLevel(2);		// Switching between levels when winning
 		}
 		else App->scene->LoadLevel(1);
 	}
 }
 void j1Player::Respawn() 
 {
-	//App->fade->FadeToBlack(App->scene, App->scene, 1.0f);
-
-	pos_player = start_pos;
+	pos_player = start_pos;					// Player respawns
 }
 
 void j1Player::DoAnimations() 
 {
-
+	// If the player is touching the ground
 	if (onfloor == true) 
 	{
 		switch (dir_x)
@@ -306,8 +309,10 @@ void j1Player::DoAnimations()
 			break;
 		}
 	}
+	// If he is jumping
 	else current_animation = &jump;
 
+	// If he is not moving
 	if (mov == STOPPED)
 	{
 		current_animation = &idle;
