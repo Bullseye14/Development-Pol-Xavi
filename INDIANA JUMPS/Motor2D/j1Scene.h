@@ -2,11 +2,24 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "p2List.h"
 
 struct SDL_Texture;
 
 class Collider;
 class Player;
+
+struct map 
+{
+	map(int number, char* name) 
+	{
+		this->map_name.create(name);
+		level = number;
+	}
+	
+	p2SString map_name;
+	int level;
+};
 
 class j1Scene : public j1Module
 {
@@ -23,6 +36,8 @@ public:
 	// Called before the first frame
 	bool Start();
 
+	void LoadLevel(int num);
+
 	// Called before all Updates
 	bool PreUpdate();
 
@@ -34,6 +49,10 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+
+	p2List<map*> mapList;
+	p2List_item<map*> *current_level;
 
 private:
 	SDL_Texture * img;

@@ -21,7 +21,7 @@ public:
 	bool CleanUp();
 	void Respawn();
 	void DoAnimations();
-	void Win();
+	//void Win();
 	
 
 	void OnCollision(Collider* c1, Collider* c2);
@@ -37,13 +37,13 @@ public:
 
 	fPoint start_pos;
 	fPoint pos_player;
+	fPoint pos_initial;
 	iPoint speed;
 	int playerheight = 64;
 	int playerwidth = 32;
 	int doublejump = 2;
 	float gravity;
 	float pos_jump;
-	float pos_initial;
 	float pos_final;
 
 	bool GodMode = false;

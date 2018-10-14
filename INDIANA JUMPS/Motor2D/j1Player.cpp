@@ -31,6 +31,9 @@ bool j1Player::Awake(pugi::xml_node& config)
 {
 	pos_player.x = config.child("pos").attribute("x").as_int();
 	pos_player.y = config.child("pos").attribute("y").as_int();
+
+	pos_initial = pos_player;
+
 	return true;
 }
 bool j1Player::Start()
@@ -41,6 +44,7 @@ bool j1Player::Start()
 		graphics = App->tex->Load("textures/Spritesheet.png");
 	}
 
+	pos_player = pos_initial;
 	// Initial values
 	current_animation = &idle;
 	speed.x = 0;
@@ -213,7 +217,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	// PLAYER && END
 	if ((c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_GOD) && c2->type == COLLIDER_END)
 	{
-		Win();
+		won = true;
 	}
 
 	// GOD && WALL
@@ -280,18 +284,21 @@ void j1Player::Check_Collision()
 		death = false;
 		Respawn();
 	}
+
+	if (won == true) 
+	{
+		if (App->scene->current_level->data->level == 1) 
+		{
+			App->scene->LoadLevel(2);
+		}
+		else App->scene->LoadLevel(1);
+	}
 }
 void j1Player::Respawn() 
 {
 	App->fade->FadeToBlack(App->scene, App->scene, 1.0f);
 
 	pos_player = start_pos;
-}
-
-void j1Player::Win() 
-{
-	won = true;
-	Respawn();
 }
 
 void j1Player::DoAnimations() 

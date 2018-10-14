@@ -14,6 +14,14 @@
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
+
+	map* map1 = new map(1, "desert_map_new.tmx");
+	map* map2 = new map(2, "forest_map_new.tmx");
+
+	mapList.add(map1);
+	mapList.add(map2);
+
+	current_level = mapList.start;
 }
 
 // Destructor
@@ -32,7 +40,9 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load("desert_map_new.tmx");
+	App->map->Load(mapList.start->data->map_name.GetString());
+	
+	//App->map->Load("desert_map_new.tmx");
 	//App->map->Load("forest_map_new.tmx");
 	img = App->player->graphics;
 	return true;
@@ -56,8 +66,6 @@ bool j1Scene::Update(float dt)
 	App->map->Draw();
 	App->render->Blit(img, 0, 0);
 
-	// TODO 7: Set the window title like
-	// "Map:%dx%d Tiles:%dx%d Tilesets:%d"
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 					App->map->data.width, App->map->data.height,
 					App->map->data.tile_width, App->map->data.tile_height,
@@ -82,10 +90,33 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	/*App->player->graphics = nullptr;
-	App->player->current_animation = nullptr;
-	App->player->playerHitbox->to_delete = true;
-	App->player->playerHitbox = nullptr;*/
 
 	return true;
+}
+
+void j1Scene::LoadLevel(int number)
+{
+	p2List_item<map*>* level = mapList.start;
+	
+	for (int i = 1; i < number; i++)
+	{
+		level = level->next;
+	}
+	current_level = level;
+
+	if (current_level != nullptr)
+	{
+		//Clean up the level
+		App->collision->CleanUp();
+		App->map->CleanUp();
+
+		////Starting the level & player
+		App->map->Load(current_level->data->map_name.GetString());
+		App->player->playerHitbox = nullptr;
+		App->player->Start();
+	}
+	else
+	{
+		LOG("Current level is nullptr", number);
+	}
 }
