@@ -99,6 +99,8 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
+	SuperClean();	//Calling CleanUp() of collisions module (in a future the map module too)
+
 	return true;
 }
 
@@ -125,4 +127,10 @@ void j1Scene::LoadLevel(int number)
 		App->player->playerHitbox = nullptr;
 		App->player->Start();
 	}
+}
+
+void j1Scene::SuperClean() {
+
+	//App->map->CleanUp();
+	App->collision->CleanUp();
 }

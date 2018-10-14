@@ -50,6 +50,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void SuperClean();
 
 	p2List<map*> mapList;
 	p2List_item<map*> *current_level;
