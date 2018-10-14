@@ -59,19 +59,14 @@ public:
 
 	Collider* playerHitbox;
 
-	//bool changeJump;
-
-	// TODO SIDES
-	// Different type of collisions if they come from different sides
+	
 	bool from_up;
 	bool from_right;
 	bool from_left;
 	bool from_down;
 	
-	
 	bool death;
-	bool won = false;
-	// --------------------------------------------------------------
+	bool won;
 
 	bool jumping;
 	bool falling;

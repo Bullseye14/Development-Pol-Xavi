@@ -1,5 +1,5 @@
 <sprites>
-	<player anim_speed = "0.03f">
+	<player anim_speed = "0.2f">
 		<idle loop = "true">
 		
 			<sprite x="0" y= "0" w= "64" h="64"/>
