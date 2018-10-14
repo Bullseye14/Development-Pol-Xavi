@@ -71,5 +71,6 @@ public:
 	bool jumping;
 	bool falling;
 	bool onfloor;
+	
 };
 #endif

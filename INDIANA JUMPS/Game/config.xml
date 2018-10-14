@@ -20,6 +20,14 @@
   
   <player>
 	<pos x="5" y="10" />
+	<speed x="0" y="0"/>
+	<fromup value ="false"/>
+	<fromdown value = "false"/>
+	<fromleft value = "false"/>
+	<fromright value = "false"/>
+	<jumping value = "false"/>
+	<onfloor value = "false"/>
+	
   </player>
   
   <file_system>

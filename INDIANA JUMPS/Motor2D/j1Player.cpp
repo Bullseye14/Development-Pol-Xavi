@@ -29,9 +29,17 @@ j1Player::~j1Player()
 
 bool j1Player::Awake(pugi::xml_node& config)
 {
-	// Reading initial position from xml
+	// Reading initial values from xml
 	pos_player.x = config.child("pos").attribute("x").as_int();
 	pos_player.y = config.child("pos").attribute("y").as_int();
+	speed.x = config.child("speed").attribute("x").as_int();
+	speed.y = config.child("speed").attribute("y").as_int();
+	from_up = config.child("fromup").attribute("value").as_bool();
+	from_down = config.child("fromdown").attribute("value").as_bool();
+	from_left = config.child("fromleft").attribute("value").as_bool();
+	from_right = config.child("fromright").attribute("value").as_bool();
+	jumping = config.child("jumping").attribute("value").as_bool();
+	onfloor = config.child("onfloor").attribute("value").as_bool();
 
 	pos_initial = pos_player;
 
@@ -50,13 +58,6 @@ bool j1Player::Start()
 
 	// Initial values
 	current_animation = &idle;
-	speed.x = 0;
-	speed.y = 0;
-	from_up = false;
-	from_left = false;
-	from_right = false;
-	jumping = false;
-	onfloor = false;
 	death = false;
 	won = false;
 
@@ -182,6 +183,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10)) 
 		{ 
 			from_up = true; 
+			
 		}
 		// touches from right
 		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10)) 
@@ -284,12 +286,14 @@ void j1Player::Check_Collision()
 		{
 			App->scene->LoadLevel(2);		// Switching between levels when winning
 		}
-		else App->scene->LoadLevel(1);
+		else if(App->scene->current_level->data->level == 2)
+			App->scene->LoadLevel(1);
 	}
 }
 void j1Player::Respawn() 
 {
-	pos_player = start_pos;					// Player respawns
+	pos_player = start_pos;		// Player respawns
+	
 }
 
 void j1Player::DoAnimations() 
