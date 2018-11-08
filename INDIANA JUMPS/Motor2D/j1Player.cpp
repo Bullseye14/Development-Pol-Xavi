@@ -60,6 +60,7 @@ bool j1Player::Start()
 	current_animation = &idle;
 	death = false;
 	won = false;
+	max_speed_y = -20.0f;
 
 	// Player hitbox
 	playerHitbox = App->collision->AddCollider({ (int)pos_player.x, (int)pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
@@ -111,29 +112,10 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && falling == false && doublejump > 0)
 	{	
-		App->audio->PlayFx(App->audio->jump);
-
-		jumping = true;
-		onfloor = false;			// Player jumping
 		doublejump--;				// Double jump
-		pos_final = pos_player.y - playerheight * 2;
-		
-		gravity = 6.0f;
-
-		// TO FINISH (player is appearing from above, not moving upwards)
-
-		while (gravity > 0)
-		{
-			current_animation = &jump;
-			speed.y -= gravity;
-			pos_player.y += speed.y;
-			gravity -= 1.0f;
-		}
-
-		if (gravity <= 0) 
-		{
-			speed.y = 0.0f;
-		}
+		App->audio->PlayFx(App->audio->jump);
+		jumping = true;
+		onfloor = false;
 	}
 	
 	// Updating the hitbox
@@ -160,6 +142,7 @@ bool j1Player::Update(float dt)
 
 	return true;
 }
+
 bool j1Player::PostUpdate()
 {
 	// Drawing the player
@@ -247,14 +230,22 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 			from_left = true;
 		}
 	}
-	
 }
 
 void j1Player::Check_Collision() 
 {
-	if (!from_up)
+	if (jumping == true)
 	{
-		pos_player.y += 5.0f;			// Falling
+		current_animation = &jump;
+		speed.y -= 3.0f;
+		if (speed.y <= max_speed_y) 
+		{
+			jumping = false;
+		}
+	}
+	else if (!from_up)
+	{
+		speed.y = 5.0f;			// Falling
 	}
 	else if (from_up)
 	{
@@ -290,6 +281,7 @@ void j1Player::Check_Collision()
 			App->scene->LoadLevel(1);
 	}
 }
+
 void j1Player::Respawn() 
 {
 	pos_player = start_pos;		// Player respawns
