@@ -27,7 +27,8 @@
 	<fromright value = "false"/>
 	<jumping value = "false"/>
 	<onfloor value = "false"/>
-	
+	<max_speed_y value = "-20.0f"/>
+	<jumpforce value = "4.0f"/>
   </player>
   
   <file_system>

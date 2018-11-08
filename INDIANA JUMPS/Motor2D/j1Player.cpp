@@ -40,6 +40,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 	from_right = config.child("fromright").attribute("value").as_bool();
 	jumping = config.child("jumping").attribute("value").as_bool();
 	onfloor = config.child("onfloor").attribute("value").as_bool();
+	max_speed_y = config.child("max_speed_y").attribute("value").as_float();
+	jumpforce = config.child("jumpforce").attribute("value").as_float();
 
 	pos_initial = pos_player;
 
@@ -60,8 +62,7 @@ bool j1Player::Start()
 	current_animation = &idle;
 	death = false;
 	won = false;
-	max_speed_y = -20.0f;
-
+	
 	// Player hitbox
 	playerHitbox = App->collision->AddCollider({ (int)pos_player.x, (int)pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
 
@@ -116,6 +117,7 @@ bool j1Player::Update(float dt)
 		App->audio->PlayFx(App->audio->jump);
 		jumping = true;
 		onfloor = false;
+		speed.y = -jumpforce;
 	}
 	
 	// Updating the hitbox
@@ -237,15 +239,16 @@ void j1Player::Check_Collision()
 	if (jumping == true)
 	{
 		current_animation = &jump;
-		speed.y -= 3.0f;
+		speed.y -= 2.0f;
 		if (speed.y <= max_speed_y) 
 		{
 			jumping = false;
+			
 		}
 	}
 	else if (!from_up)
 	{
-		speed.y = 5.0f;			// Falling
+		speed.y = 7.0f;			// Falling
 	}
 	else if (from_up)
 	{

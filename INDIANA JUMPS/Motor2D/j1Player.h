@@ -46,6 +46,7 @@ public:
 	float pos_jump;
 	float pos_final;
 	float max_speed_y;
+	float jumpforce;
 
 	bool GodMode = false;
 
