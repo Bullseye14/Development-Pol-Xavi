@@ -45,6 +45,10 @@ bool j1Scene::Start()
 	App->map->Load(mapList.start->data->map_name.GetString());
 	
 	img = App->player->graphics;
+
+	/*limitcamera_left = 0;
+	limitcamera_right = 6000;
+	limitplayer = 600;*/
 	return true;
 }
 
@@ -76,6 +80,16 @@ bool j1Scene::Update(float dt)
 	{
 		App->player->Respawn();
 	}
+
+	/*if (App->render->camera.x * (-1) < limitcamera_left)
+	{
+		App->render->camera.x = -limitcamera_left;
+	}
+
+	if (App->render->camera.x * (-1) > limitcamera_right)
+	{
+		App->render->camera.x = -limitcamera_right;
+	}*/
 
 	App->map->Draw();
 	App->render->Blit(img, 0, 0);

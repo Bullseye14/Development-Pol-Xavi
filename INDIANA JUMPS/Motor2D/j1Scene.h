@@ -57,6 +57,10 @@ public:
 
 	int choose_level = 1;
 
+	int limitcamera_left;
+	int limitcamera_right;
+	int limitplayer;
+
 private:
 	SDL_Texture * img;
 };

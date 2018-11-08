@@ -86,6 +86,16 @@ bool j1Player::Update(float dt)
 	from_right = false;
 	from_down = false;
 
+	// Camera stuff
+	if (App->render->camera.x < 0)
+	{
+		App->render->camera.x = 0;
+	}
+	if (App->render->camera.x > 6000) // HARDCODED, MUST ASK POL THAT HE REMEMBERS THE WIDTH
+	{
+		App->render->camera.x = 6000;
+	}
+
 	// Animations from xml
 	DoAnimations();
 		
@@ -153,8 +163,8 @@ bool j1Player::PostUpdate()
 	// Checking collisions
 	Check_Collision();
 	
-	pos_player.x += speed.x;
-	pos_player.y += speed.y;
+	// Moving the player
+	Move();
 	
 	return true;
 }
@@ -318,4 +328,9 @@ void j1Player::DoAnimations()
 
 		if (onfloor == false) { current_animation = &jump; }
 	}
+}
+
+void j1Player::Move() {
+	pos_player.x += speed.x;
+	pos_player.y += speed.y;
 }

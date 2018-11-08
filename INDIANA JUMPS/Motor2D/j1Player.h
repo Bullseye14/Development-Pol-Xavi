@@ -21,6 +21,7 @@ public:
 	bool CleanUp();
 	void Respawn();
 	void DoAnimations();
+	void Move();
 	//void Win();
 	
 
