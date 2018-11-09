@@ -35,6 +35,13 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_GOD][COLLIDER_WALL] = true;
 	matrix[COLLIDER_GOD][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_GOD][COLLIDER_END] = true;
+
+	matrix[COLLIDER_SLIDE][COLLIDER_SLIDE] = false;
+	matrix[COLLIDER_SLIDE][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_SLIDE][COLLIDER_GOD] = false;
+	matrix[COLLIDER_SLIDE][COLLIDER_WALL] = true;
+	matrix[COLLIDER_SLIDE][COLLIDER_DEATH] = true;
+	matrix[COLLIDER_SLIDE][COLLIDER_END] = true;
 }
 
 // Destructor
@@ -89,7 +96,6 @@ bool j1Collision::Update(float dt)
 				if (matrix[c2->type][c1->type] && c2->callback)
 					c2->callback->OnCollision(c2, c1);
 			}
-
 		}
 	}
 
@@ -134,11 +140,10 @@ void j1Collision::DebugDraw()
 		case COLLIDER_GOD: //yellow
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
+		case COLLIDER_SLIDE:
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
 		}
-		
 	}
-
-	
 }
 
 // Called before quitting
@@ -189,7 +194,6 @@ bool j1Collision::EraseCollider(Collider* collider)
 		}
 	}
 
-
 	return false;
 }
 
@@ -205,6 +209,5 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 
 bool Collider::Update()
 {
-
 	return true;
 }

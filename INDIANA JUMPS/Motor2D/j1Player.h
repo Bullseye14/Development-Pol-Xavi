@@ -6,7 +6,7 @@
 
 struct SDL_Texture;
 enum MOVEMENT { STOPPED, MOVING };
-enum DIRECTION_X { CENTER_X, LEFT, RIGHT };
+enum DIRECTION_X { CENTER_X, LEFT, RIGHT, SLIDE_L, SLIDE_R };
 enum DIRECTION_Y { CENTER_Y, UP, DOWN };
 
 class j1Player : public j1Module
@@ -40,17 +40,18 @@ public:
 	fPoint pos_player;
 	fPoint pos_initial;
 	iPoint speed;
-	int playerheight = 64;
-	int playerwidth = 32;
-	int doublejump = 2;
-	float gravity;
-	float pos_jump;
-	float pos_final;
-	float max_speed_y;
-	float jumpforce;
-	int max_speed_x;
-	int slidingforce;
-	float speed_slide;
+	int		playerheight = 64;
+	int		playerwidth = 32;
+	int		doublejump = 2;
+	float	gravity;
+	float	pos_jump;
+	float	pos_final;
+	float	max_speed_y;
+	float	jumpforce;
+	float	max_speed_x;
+	float	slidingforce;
+	float	speed_slide;
+	float	pos_slide;
 
 	bool GodMode = false;
 
@@ -62,6 +63,8 @@ public:
 	Animation run_left;
 	Animation jump;
 	Animation jump_left;
+	Animation slide_l;
+	Animation slide_r;
 
 	Collider* playerHitbox;
 

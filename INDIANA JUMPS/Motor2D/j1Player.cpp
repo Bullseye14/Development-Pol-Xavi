@@ -23,6 +23,8 @@ j1Player::j1Player() : j1Module()
 	run_left.LoadAnimation("run_left");
 	jump.LoadAnimation("jump");
 	jump_left.LoadAnimation("jump_left");
+	slide_l.LoadAnimation("slide_l");
+	slide_r.LoadAnimation("slide_r");
 }
 
 j1Player::~j1Player()
@@ -64,8 +66,8 @@ bool j1Player::Start()
 	death = false;
 	won = false;
 	sliding = false;
-	max_speed_x = 20;
-	slidingforce = 2;
+	max_speed_x = 20.0f;
+	slidingforce = 7.0f;
 	start_freefalling = true;
 	speed_slide = 5.0f;
 
@@ -95,21 +97,52 @@ bool j1Player::Update(float dt)
 	// Animations from xml
 	DoAnimations();
 	
-	if (start_freefalling == false) {
+	if (start_freefalling == false)
+	{
 		//MOVEMENT OF THE PLAYER
+		
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && pos_player.x < 6400 - 64 && from_left == false)
 		{
-			mov = MOVING;
-			dir_x = RIGHT;				// Player moving to the right
-			speed.x = 5;
-
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && onfloor == true && from_left == false)
+			{
+				mov = MOVING;
+				dir_x = SLIDE_R;
+				speed.x = slidingforce;
+				sliding = true;
+			}
+			else 
+			{
+				sliding = false;
+				mov = MOVING;
+				dir_x = RIGHT;				// Player moving to the right
+				speed.x = 5;
+			}
 		}
-
+		
 		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && pos_player.x > 0 && from_right == false)
 		{
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && onfloor == true && from_left == false)
+			{
+				mov = MOVING;
+				dir_x = SLIDE_L;
+				speed.x = -slidingforce;
+				sliding = true;
+			}
+			else 
+			{
+				sliding = false;
+				mov = MOVING;
+				dir_x = LEFT;				// Player moving to the left
+				speed.x = -5;
+			}
+		}
+
+		else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && onfloor == true && from_left == false)
+		{
 			mov = MOVING;
-			dir_x = LEFT;				// Player moving to the left
-			speed.x = -5;
+			dir_x = SLIDE_R;
+			speed.x = slidingforce;
+			sliding = true;
 		}
 
 		else
@@ -120,29 +153,23 @@ bool j1Player::Update(float dt)
 
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && falling == false && doublejump > 0)
 		{
-			if (GodMode == false) {
+			if (GodMode == false) 
+			{
 				doublejump--;				// Double jump
 				App->audio->PlayFx(App->audio->jump);
 				jumping = true;
 				onfloor = false;
 				speed.y = -jumpforce;
 			}
-			else if (GodMode == true) {
+			else if (GodMode == true) 
+			{
 				App->audio->PlayFx(App->audio->jump);
 				jumping = true;
 				onfloor = false;
 				speed.y = -jumpforce;
 			}
 		}
-
-		// Sliding to kill enemies implementation
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN && onfloor == true && from_left == false)
-		{
-			sliding = true;
-		}
 	}
-
-	
 	
 	// Updating the hitbox
 	playerHitbox->SetPos(pos_player.x + 16, pos_player.y);
@@ -168,6 +195,12 @@ bool j1Player::Update(float dt)
 			playerHitbox->type = COLLIDER_PLAYER;
 		}
 	}
+
+	if (sliding == true) 
+	{
+		playerHitbox->type = COLLIDER_SLIDE;
+	}
+	else playerHitbox->type = COLLIDER_PLAYER;
 
 	return true;
 }
@@ -195,7 +228,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10)) 
 		{ 
 			from_up = true; 
-			
 		}
 		// touches from right
 		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10)) 
@@ -221,9 +253,40 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	}
 	
 	// PLAYER && END
-	if ((c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_GOD) && c2->type == COLLIDER_END)
+	if ((c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_GOD || c1->type==COLLIDER_SLIDE) && c2->type == COLLIDER_END)
 	{
 		won = true;
+	}
+
+	// SLIDE & WALL
+	if (c1->type == COLLIDER_SLIDE && c2->type == COLLIDER_WALL)
+	{
+		// touches from above
+		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
+		{
+			from_up = true;
+		}
+		// touches from right
+		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10))
+		{
+			from_right = true;
+		}
+		// touches from left
+		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10))
+		{
+			from_left = true;
+		}
+		// touches from bottom
+		else if ((c2->rect.y + (c2->rect.h)) < (c1->rect.y + 10))
+		{
+			from_down = true;
+		}
+	}
+
+	// SLIDE && DEATH
+	if (c1->type == COLLIDER_SLIDE && c2->type == COLLIDER_DEATH)
+	{
+		death = true;
 	}
 
 	// GOD && WALL
@@ -263,17 +326,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 
 void j1Player::Check_Collision() 
 {
-	if (sliding == true) 
-	{
-		speed.x = slidingforce;
-		speed.x += 2;
-
-		if (speed.x >= max_speed_x) {
-			speed.x = 0;
-			sliding = false;
-		}
-	}
-	
 	if (jumping == true)
 	{
 		current_animation = &jump;
@@ -347,6 +399,12 @@ void j1Player::DoAnimations()
 				break;
 			case RIGHT:
 				current_animation = &run;
+				break;
+			case SLIDE_L:
+				current_animation = &slide_l;
+				break;
+			case SLIDE_R:
+				current_animation = &slide_r;
 				break;
 			default:
 				break;
