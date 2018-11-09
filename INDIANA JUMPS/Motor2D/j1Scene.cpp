@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Collision.h"
+#include "j1PathFinding.h"
 
 j1Scene::j1Scene() : j1Module()
 {
