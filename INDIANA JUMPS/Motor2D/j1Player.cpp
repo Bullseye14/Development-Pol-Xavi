@@ -18,12 +18,13 @@ j1Player::j1Player() : j1Module()
 	current_animation = NULL;
 
 	// Loading all animations
-
 	idle.LoadAnimation("idle");
 	run.LoadAnimation("run");
 	run_left.LoadAnimation("run_left");
 	jump.LoadAnimation("jump");
+	jump_left.LoadAnimation("jump_left");
 }
+
 j1Player::~j1Player()
 {}
 
@@ -125,7 +126,10 @@ bool j1Player::Update(float dt)
 
 	if (falling == true && current_animation != &jump)
 	{
-		current_animation = &jump;
+		if (dir_x == RIGHT)
+			current_animation = &jump;
+		else
+			current_animation = &jump_left;
 	}
 
 	// God mode
@@ -293,30 +297,58 @@ void j1Player::Respawn()
 
 void j1Player::DoAnimations() 
 {
-	// If the player is touching the ground
-	if (onfloor == true) 
+	// If the player is moving
+	if (mov == MOVING)
 	{
-		switch (dir_x)
+		//  is touching the ground
+		if (onfloor == true)
 		{
-		case LEFT:
-			current_animation = &run_left;
-			break;
-		case RIGHT:
-			current_animation = &run;
-			break;
-		default:
-			break;
+			switch (dir_x)
+			{
+			case LEFT:
+				current_animation = &run_left;
+				break;
+			case RIGHT:
+				current_animation = &run;
+				break;
+			default:
+				break;
+			}
+		}
+		// is jumping
+		else if (onfloor == false)
+		{
+			switch (dir_x) {
+			case LEFT:
+				current_animation = &jump_left;
+				break;
+			case RIGHT:
+				current_animation = &jump;
+				break;
+			default:
+				break;
+			}
 		}
 	}
-	// If he is jumping
-	else current_animation = &jump;
-
 	// If he is not moving
 	if (mov == STOPPED)
 	{
+		// is on the floot
 		current_animation = &idle;
 
-		if (onfloor == false) { current_animation = &jump; }
+		// is jumping
+		if (onfloor == false) { 
+			switch (dir_x) {
+			case LEFT:
+				current_animation = &jump_left;
+				break;
+			case RIGHT:
+				current_animation = &jump;
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }
 

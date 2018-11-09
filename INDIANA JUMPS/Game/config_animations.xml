@@ -52,6 +52,21 @@
 
 		</jump>
 		
+		<jump_left loop = "false">
+
+			<sprite x="576" y= "0" w= "64" h="64"/>
+			<sprite x="512" y= "0" w= "64" h="64"/>
+			<sprite x="576" y= "64" w= "64" h="64"/>
+			<sprite x="512" y= "64" w= "64" h="64"/>
+			<sprite x="576" y= "128" w= "64" h="64"/>
+			<sprite x="512" y= "128" w= "64" h="64"/>
+			<sprite x="576" y= "192" w= "64" h="64"/>
+			<sprite x="512" y= "192" w= "64" h="64"/>
+			<sprite x="576" y= "256" w= "64" h="64"/>
+			<sprite x="512" y= "256" w= "64" h="64"/>
+
+		</jump_left>
+		
 	</player>
 
 </sprites>
