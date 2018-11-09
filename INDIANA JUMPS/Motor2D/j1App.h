@@ -4,6 +4,8 @@
 #include "p2List.h"
 #include "j1Module.h"
 #include "PugiXml\src\pugixml.hpp"
+#include "j1Timer.h"
+#include "j1PerfTimer.h"
 
 // Modules
 class j1Window;
@@ -105,6 +107,14 @@ private:
 	bool				want_to_load;
 	p2SString			load_game;
 	mutable p2SString	save_game;
+
+	j1PerfTimer			ptimer;
+	uint64				frame_count = 0;
+	j1Timer				startup_time;
+	j1Timer				frame_time;
+	j1Timer				last_sec_frame_time;
+	uint32				last_sec_frame_count = 0;
+	uint32				prev_last_sec_frame_count = 0;
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S
