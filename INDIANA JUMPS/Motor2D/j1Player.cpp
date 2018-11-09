@@ -86,16 +86,6 @@ bool j1Player::Update(float dt)
 	from_right = false;
 	from_down = false;
 
-	// Camera stuff
-	if (App->render->camera.x < 0)
-	{
-		App->render->camera.x = 0;
-	}
-	if (App->render->camera.x > 6000) // HARDCODED, MUST ASK POL THAT HE REMEMBERS THE WIDTH
-	{
-		App->render->camera.x = 6000;
-	}
-
 	// Animations from xml
 	DoAnimations();
 		
