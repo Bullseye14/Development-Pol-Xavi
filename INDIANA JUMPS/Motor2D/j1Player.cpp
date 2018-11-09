@@ -63,7 +63,12 @@ bool j1Player::Start()
 	current_animation = &idle;
 	death = false;
 	won = false;
-	
+	sliding = false;
+	max_speed_x = 20;
+	slidingforce = 2;
+	start_freefalling = true;
+	speed_slide = 5.0f;
+
 	// Player hitbox
 	playerHitbox = App->collision->AddCollider({ (int)pos_player.x, (int)pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
 
@@ -89,45 +94,54 @@ bool j1Player::Update(float dt)
 
 	// Animations from xml
 	DoAnimations();
-		
-	//MOVEMENT OF THE PLAYER
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && pos_player.x < 6400 - 64 && from_left == false) 
-	{
-		mov = MOVING;
-		dir_x = RIGHT;				// Player moving to the right
-		speed.x = 5;
-		
-	}
+	
+	if (start_freefalling == false) {
+		//MOVEMENT OF THE PLAYER
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && pos_player.x < 6400 - 64 && from_left == false)
+		{
+			mov = MOVING;
+			dir_x = RIGHT;				// Player moving to the right
+			speed.x = 5;
 
-	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && pos_player.x > 0 && from_right == false) 
-	{
-		mov = MOVING;
-		dir_x = LEFT;				// Player moving to the left
-		speed.x = -5;
-	}
-
-	else
-	{
-		mov = STOPPED;				// Player stopped
-		speed.x = 0;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && falling == false && doublejump > 0)
-	{	
-		if (GodMode == false) {
-			doublejump--;				// Double jump
-			App->audio->PlayFx(App->audio->jump);
-			jumping = true;
-			onfloor = false;
-			speed.y = -jumpforce;
 		}
-		else if(GodMode == true){
-			App->audio->PlayFx(App->audio->jump);
-			jumping = true;
-			onfloor = false;
-			speed.y = -jumpforce;
+
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && pos_player.x > 0 && from_right == false)
+		{
+			mov = MOVING;
+			dir_x = LEFT;				// Player moving to the left
+			speed.x = -5;
+		}
+
+		else
+		{
+			mov = STOPPED;				// Player stopped
+			speed.x = 0;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && falling == false && doublejump > 0)
+		{
+			if (GodMode == false) {
+				doublejump--;				// Double jump
+				App->audio->PlayFx(App->audio->jump);
+				jumping = true;
+				onfloor = false;
+				speed.y = -jumpforce;
+			}
+			else if (GodMode == true) {
+				App->audio->PlayFx(App->audio->jump);
+				jumping = true;
+				onfloor = false;
+				speed.y = -jumpforce;
+			}
+		}
+
+		// Sliding to kill enemies implementation
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN && onfloor == true && from_left == false)
+		{
+			sliding = true;
 		}
 	}
+
 	
 	
 	// Updating the hitbox
@@ -249,6 +263,17 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 
 void j1Player::Check_Collision() 
 {
+	if (sliding == true) 
+	{
+		speed.x = slidingforce;
+		speed.x += 2;
+
+		if (speed.x >= max_speed_x) {
+			speed.x = 0;
+			sliding = false;
+		}
+	}
+	
 	if (jumping == true)
 	{
 		current_animation = &jump;
@@ -256,11 +281,11 @@ void j1Player::Check_Collision()
 		if (speed.y <= max_speed_y) 
 		{
 			jumping = false;
-			
 		}
 	}
 	else if (!from_up)
 	{
+		current_animation = &jump;
 		if (GodMode == false)
 			speed.y = 7.0f;			// Falling
 		else
@@ -272,6 +297,7 @@ void j1Player::Check_Collision()
 		onfloor = true;
 		current_animation = &idle;		// Touching floor
 		doublejump = 2;
+		start_freefalling = false;
 	}
 	
 	if (from_left)						// Colliding from left
@@ -304,7 +330,6 @@ void j1Player::Check_Collision()
 void j1Player::Respawn() 
 {
 	pos_player = start_pos;		// Player respawns
-	
 }
 
 void j1Player::DoAnimations() 

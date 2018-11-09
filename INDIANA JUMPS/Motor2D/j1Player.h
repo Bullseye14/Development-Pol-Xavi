@@ -48,6 +48,9 @@ public:
 	float pos_final;
 	float max_speed_y;
 	float jumpforce;
+	int max_speed_x;
+	int slidingforce;
+	float speed_slide;
 
 	bool GodMode = false;
 
@@ -74,6 +77,8 @@ public:
 	bool jumping;
 	bool falling;
 	bool onfloor;
+	bool sliding;
+	bool start_freefalling;
 	
 };
 #endif
