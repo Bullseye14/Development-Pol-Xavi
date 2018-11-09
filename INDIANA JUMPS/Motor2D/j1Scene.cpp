@@ -155,6 +155,15 @@ void j1Scene::CameraToPlayer()
 	uint w, h;
 	App->win->GetWindowSize(w, h);
 
-	App->render->camera.x = -App->player->pos_player.x + w / 3;
+	if (App->player->pos_player.x < 350) 
+	{
+		App->render->camera.x = 0;
+	}
+	else if (App->player->pos_player.x > 4976) 
+	{
+		App->render->camera.x = -5350;
+	}
+	else 
+		App->render->camera.x = -App->player->pos_player.x + w / 3;
 	
 }
