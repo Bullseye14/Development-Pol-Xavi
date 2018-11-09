@@ -114,12 +114,21 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && falling == false && doublejump > 0)
 	{	
-		doublejump--;				// Double jump
-		App->audio->PlayFx(App->audio->jump);
-		jumping = true;
-		onfloor = false;
-		speed.y = -jumpforce;
+		if (GodMode == false) {
+			doublejump--;				// Double jump
+			App->audio->PlayFx(App->audio->jump);
+			jumping = true;
+			onfloor = false;
+			speed.y = -jumpforce;
+		}
+		else if(GodMode == true){
+			App->audio->PlayFx(App->audio->jump);
+			jumping = true;
+			onfloor = false;
+			speed.y = -jumpforce;
+		}
 	}
+	
 	
 	// Updating the hitbox
 	playerHitbox->SetPos(pos_player.x + 16, pos_player.y);
@@ -252,7 +261,10 @@ void j1Player::Check_Collision()
 	}
 	else if (!from_up)
 	{
-		speed.y = 7.0f;			// Falling
+		if (GodMode == false)
+			speed.y = 7.0f;			// Falling
+		else
+			speed.y = 2.5f;
 	}
 	else if (from_up)
 	{
