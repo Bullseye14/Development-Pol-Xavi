@@ -67,7 +67,8 @@ bool j1Scene::Update(float dt)
 	// Save game
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { App->SaveGame(); }
 
-		
+	CameraToPlayer();
+
 	// Start from the beginning of the first level
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
@@ -147,4 +148,13 @@ void j1Scene::SuperClean() {
 
 	//App->map->CleanUp();
 	App->collision->CleanUp();
+}
+
+void j1Scene::CameraToPlayer()
+{
+	uint w, h;
+	App->win->GetWindowSize(w, h);
+
+	App->render->camera.x = -App->player->pos_player.x + w / 3;
+	
 }

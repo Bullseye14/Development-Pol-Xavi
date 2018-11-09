@@ -70,16 +70,16 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
-	if ( 200 <= App->player->pos_player.x < 6200)
-	{
-		camera.x = -(App->player->pos_player.x - 200);
+	//if ( 200 <= App->player->pos_player.x < 6200)
+	//{
+	//	camera.x = -(App->player->pos_player.x - 200);
 
-		/*if (App->player->pos_player.x >= 210) {
-			camera.x = -(App->player->pos_player.x - 210);
-		}*/
-		
-		
-	}
+	//	/*if (App->player->pos_player.x >= 210) {
+	//		camera.x = -(App->player->pos_player.x - 210);
+	//	}*/
+	//	
+	//	
+	//}
 	return true;
 }
 

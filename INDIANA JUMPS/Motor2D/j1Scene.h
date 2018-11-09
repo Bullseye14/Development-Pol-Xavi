@@ -51,6 +51,8 @@ public:
 	bool CleanUp();
 
 	void SuperClean();
+	void CameraToPlayer();
+
 
 	p2List<map*> mapList;
 	p2List_item<map*> *current_level;
