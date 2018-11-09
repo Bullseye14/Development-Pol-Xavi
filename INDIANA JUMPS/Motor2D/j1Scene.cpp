@@ -159,9 +159,9 @@ void j1Scene::CameraToPlayer()
 	{
 		App->render->camera.x = 0;
 	}
-	else if (App->player->pos_player.x > 4976) 
+	else if (App->player->pos_player.x > 5710)
 	{
-		App->render->camera.x = -5350;
+		App->render->camera.x = -5375;
 	}
 	else 
 		App->render->camera.x = -App->player->pos_player.x + w / 3;
