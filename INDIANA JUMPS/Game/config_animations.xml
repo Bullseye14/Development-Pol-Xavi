@@ -69,15 +69,13 @@
 		
 		<slide_l loop = "true">
 		
-			<sprite x="0" y= "0" w= "64" h="64"/>
-			<sprite x="64" y= "0" w= "64" h="64"/>
+			<sprite x="640" y= "64" w= "64" h="64"/>
 			
 		</slide_l>
 		
 		<slide_r loop = "true">
 		
-			<sprite x="0" y= "0" w= "64" h="64"/>
-			<sprite x="64" y= "0" w= "64" h="64"/>
+			<sprite x="640" y= "0" w= "64" h="64"/>
 			
 		</slide_r>
 		
