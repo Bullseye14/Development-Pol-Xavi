@@ -139,9 +139,11 @@ void j1Scene::LoadLevel(int number)
 		App->map->CleanUp();
 
 		//Starting the level & player
+
 		App->map->Load(current_level->data->map_name.GetString());
 		App->player->playerHitbox = nullptr;
 		App->player->Start();
+
 	}
 }
 

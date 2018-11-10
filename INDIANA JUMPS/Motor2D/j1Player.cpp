@@ -59,10 +59,12 @@ bool j1Player::Start()
 	}
 
 	// When loading a new level, initial postition
-	pos_player = pos_initial;
+	pos_player.x = pos_initial.x;
+	pos_player.y = pos_initial.y;
 
+	
 	// Initial values
-	current_animation = &idle;
+	current_animation = &jump;
 	death = false;
 	won = false;
 	sliding = false;
@@ -70,6 +72,12 @@ bool j1Player::Start()
 	slidingforce = 7.0f;
 	start_freefalling = true;
 	speed_slide = 5.0f;
+	
+	if (start_freefalling == true) {
+		speed.x = 0;
+		current_animation = &jump;
+	}
+		
 
 	// Player hitbox
 	playerHitbox = App->collision->AddCollider({ (int)pos_player.x, (int)pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
@@ -200,7 +208,13 @@ bool j1Player::Update(float dt)
 	{
 		playerHitbox->type = COLLIDER_SLIDE;
 	}
-	else playerHitbox->type = COLLIDER_PLAYER;
+	else if (GodMode == true) {
+		playerHitbox->type = COLLIDER_GOD;
+	}
+	else{
+		playerHitbox->type = COLLIDER_PLAYER;
+	}
+		
 
 	return true;
 }
@@ -255,6 +269,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	// PLAYER && END
 	if ((c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_GOD || c1->type==COLLIDER_SLIDE) && c2->type == COLLIDER_END)
 	{
+		start_freefalling = true;
+		current_animation = &jump;
 		won = true;
 	}
 
@@ -370,12 +386,14 @@ void j1Player::Check_Collision()
 
 	if (won == true) 
 	{
+
 		if (App->scene->current_level->data->level == 1) 
 		{
-			App->scene->LoadLevel(2);		// Switching between levels when winning
+			App->scene->LoadLevel(2); // Switching between levels when winning
 		}
 		else if(App->scene->current_level->data->level == 2)
 			App->scene->LoadLevel(1);
+			
 	}
 }
 
