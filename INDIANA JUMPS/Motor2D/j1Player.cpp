@@ -73,12 +73,12 @@ bool j1Player::Start()
 	start_freefalling = true;
 	speed_slide = 5.0f;
 	
-	if (start_freefalling == true) {
+	if (start_freefalling == true) 
+	{
 		speed.x = 0;
 		current_animation = &jump;
 	}
 		
-
 	// Player hitbox
 	playerHitbox = App->collision->AddCollider({ (int)pos_player.x, (int)pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
 
@@ -113,9 +113,11 @@ bool j1Player::Update(float dt)
 		{
 			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && onfloor == true && from_left == false)
 			{
+				// TODO : Timer
 				mov = MOVING;
 				dir_x = SLIDE_R;
 				speed.x = slidingforce;
+				App->audio->PlayFx(App->audio->slide);
 				sliding = true;
 			}
 			else 
@@ -134,6 +136,7 @@ bool j1Player::Update(float dt)
 				mov = MOVING;
 				dir_x = SLIDE_L;
 				speed.x = -slidingforce;
+				App->audio->PlayFx(App->audio->slide);
 				sliding = true;
 			}
 			else 
@@ -150,6 +153,7 @@ bool j1Player::Update(float dt)
 			mov = MOVING;
 			dir_x = SLIDE_R;
 			speed.x = slidingforce;
+			App->audio->PlayFx(App->audio->slide);
 			sliding = true;
 		}
 
@@ -236,7 +240,7 @@ bool j1Player::PostUpdate()
 void j1Player::OnCollision(Collider* c1, Collider* c2) 
 {
 	// PLAYER & WALL
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_WALL)
+	if (c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_SLIDE || c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL)
 	{
 		// touches from above
 		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10)) 
@@ -261,11 +265,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	}
 	
 	// PLAYER && DEATH
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH)
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH || c2->type == COLLIDER_ENEMY)
 	{
 		death = true;
 	}
-	
+
 	// PLAYER && END
 	if ((c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_GOD || c1->type==COLLIDER_SLIDE) && c2->type == COLLIDER_END)
 	{
@@ -273,30 +277,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		current_animation = &jump;
 		won = true;
 	}
-
-	// SLIDE & WALL
-	if (c1->type == COLLIDER_SLIDE && c2->type == COLLIDER_WALL)
+	
+	if (c1->type == COLLIDER_SLIDE && c2->type == COLLIDER_ENEMY) 
 	{
-		// touches from above
-		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
-		{
-			from_up = true;
-		}
-		// touches from right
-		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10))
-		{
-			from_right = true;
-		}
-		// touches from left
-		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10))
-		{
-			from_left = true;
-		}
-		// touches from bottom
-		else if ((c2->rect.y + (c2->rect.h)) < (c1->rect.y + 10))
-		{
-			from_down = true;
-		}
+		death = false;
+		c2->to_delete = true;
+		// Still not created:
+		// App->enemy->Dies();
 	}
 
 	// SLIDE && DEATH
@@ -305,29 +292,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		death = true;
 	}
 
-	// GOD && WALL
-	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_WALL)
+	// GOD && WALL or DEATH (is the same, GOD can walk through death)
+	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_WALL || c2->type == COLLIDER_DEATH)
 	{
 		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
 		{
 			from_up = true;
-		}
-		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10))
-		{
-			from_right = true;
-		}
-		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10))
-		{
-			from_left = true;
-		}
-	}
-
-	// GOD && DEATH
-	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_DEATH) 
-	{
-		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
-		{
-			from_up = true;				// In god mode, death can be walked through
 		}
 		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10))
 		{
@@ -386,14 +356,12 @@ void j1Player::Check_Collision()
 
 	if (won == true) 
 	{
-
 		if (App->scene->current_level->data->level == 1) 
 		{
 			App->scene->LoadLevel(2); // Switching between levels when winning
 		}
 		else if(App->scene->current_level->data->level == 2)
 			App->scene->LoadLevel(1);
-			
 	}
 }
 

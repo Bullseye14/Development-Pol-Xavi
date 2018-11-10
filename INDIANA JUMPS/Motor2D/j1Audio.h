@@ -35,6 +35,7 @@ public:
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
 	int jump;
+	int slide;
 
 private:
 

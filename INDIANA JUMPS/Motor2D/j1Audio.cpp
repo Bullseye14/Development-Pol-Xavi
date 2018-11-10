@@ -50,9 +50,10 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-	//FX
+	// FX
 	jump = LoadFx("audio/fx/jump_air.wav");
-
+	slide = LoadFx("audio/fx/slide.wav");
+	
 	//MUSIC
 	//PlayMusic("audio/music/IndianaJump_audio.ogg");
 

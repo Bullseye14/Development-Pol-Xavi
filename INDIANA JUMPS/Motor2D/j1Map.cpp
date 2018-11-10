@@ -448,14 +448,21 @@ bool j1Map::LoadColliders(pugi::xml_node &node)
 		name = col.attribute("name").as_string();
 		
 		// Applying all colliders to each attribute of the xml
-		if (name == "cactus" || name == "death") {
+		if (name == "cactus" || name == "death") 
+		{
 			collidertype = COLLIDER_DEATH;
 		}
-		else if (name == "wall") {
+		else if (name == "wall") 
+		{
 			collidertype = COLLIDER_WALL;
 		}
-		else if (name == "end") {
+		else if (name == "end") 
+		{
 			collidertype = COLLIDER_END;
+		}
+		else if (name == "enemy") 
+		{
+			collidertype = COLLIDER_ENEMY;
 		}
 
 		SDL_Rect rect;
