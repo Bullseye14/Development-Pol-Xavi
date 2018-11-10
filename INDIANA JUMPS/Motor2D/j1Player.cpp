@@ -380,7 +380,12 @@ void j1Player::Check_Collision()
 }
 
 void j1Player::Respawn() 
-{
+{ 
+	if (App->scene->current_level->data->level == 1) 
+	{
+		start_pos.y = 340;
+	}
+	else start_pos.y = 250;
 	pos_player = start_pos;		// Player respawns
 }
 
