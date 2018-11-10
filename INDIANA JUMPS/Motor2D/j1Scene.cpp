@@ -63,10 +63,16 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	// Load game
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) { App->LoadGame(); }
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
+	{
+		App->LoadGame("save_game.xml"); 
+	}
 	
 	// Save game
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { App->SaveGame(); }
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) 
+	{
+		App->SaveGame("save_game.xml"); 
+	}
 
 	CameraToPlayer();
 
@@ -82,16 +88,6 @@ bool j1Scene::Update(float dt)
 	{
 		App->player->Respawn();
 	}
-
-	/*if (App->render->camera.x * (-1) < limitcamera_left)
-	{
-		App->render->camera.x = -limitcamera_left;
-	}
-
-	if (App->render->camera.x * (-1) > limitcamera_right)
-	{
-		App->render->camera.x = -limitcamera_right;
-	}*/
 
 	App->map->Draw();
 	App->render->Blit(img, 0, 0);
@@ -116,6 +112,21 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	SuperClean();	//Calling CleanUp() of collisions module (in a future the map module too)
+
+	return true;
+}
+
+bool j1Scene::Load(pugi::xml_node& data) 
+{
+	current_level->data->level = data.child("level").attribute("num").as_int();
+	
+	return true;
+}
+
+bool j1Scene::Save(pugi::xml_node& data) const 
+{
+	pugi::xml_node level = data.append_child("level");
+	level.append_attribute("num") = current_level->data->level;
 
 	return true;
 }

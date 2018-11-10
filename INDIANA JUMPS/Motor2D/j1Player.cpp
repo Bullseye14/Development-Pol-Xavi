@@ -84,6 +84,7 @@ bool j1Player::Start()
 
 	return true;
 }
+
 bool j1Player::CleanUp()
 {
 	// Unloading everything
@@ -95,6 +96,32 @@ bool j1Player::CleanUp()
 	}
 	return true;
 }
+
+bool j1Player::Load(pugi::xml_node& data) 
+{
+	// Player position
+	pos_player.x = data.child("position").attribute("x").as_int();
+	pos_player.y = data.child("position").attribute("y").as_int();
+
+	// God Mode
+	GodMode = data.child("GodMode").attribute("active").as_bool();
+
+	return true;
+}
+
+bool j1Player::Save(pugi::xml_node& data) const 
+{
+	pugi::xml_node position = data.append_child("position");
+
+	position.append_attribute("x") = pos_player.x;
+	position.append_attribute("y") = pos_player.y;
+
+	pugi::xml_node god_mode = data.append_child("god_mode");
+	god_mode.append_attribute("active") = GodMode;
+
+	return true;
+}
+
 bool j1Player::Update(float dt)
 {
 	from_up = false;

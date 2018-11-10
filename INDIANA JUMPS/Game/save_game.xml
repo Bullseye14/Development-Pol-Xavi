@@ -1,9 +1,21 @@
-<!-- Save game for the game -->
-
+<?xml version="1.0"?>
 <game_state>
-
-  <renderer>
-    <camera x="100" y="0"/>
-  </renderer>
-
+	<input />
+	<window />
+	<textures />
+	<audio />
+	<map />
+	<scene>
+		<level num="1" />
+	</scene>
+	<player>
+		<position x="1645" y="129" />
+		<god_mode active="false" />
+	</player>
+	<:anonymous />
+	<:anonymous />
+	<pathfinding />
+	<renderer>
+		<camera x="-1309" y="0" />
+	</renderer>
 </game_state>

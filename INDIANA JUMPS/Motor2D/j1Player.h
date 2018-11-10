@@ -24,6 +24,9 @@ public:
 	void Move();
 	//void Win();
 	
+	// Save and Load
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
 	void Check_Collision();

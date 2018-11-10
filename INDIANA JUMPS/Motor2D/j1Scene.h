@@ -53,6 +53,9 @@ public:
 	void SuperClean();
 	void CameraToPlayer();
 
+	// Save and Load
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 	p2List<map*> mapList;
 	p2List_item<map*> *current_level;
