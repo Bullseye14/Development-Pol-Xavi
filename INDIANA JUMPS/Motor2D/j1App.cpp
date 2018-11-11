@@ -181,23 +181,10 @@ void j1App::FinishUpdate()
 
 	want_to_save = false;
 	want_to_load = false;
+	
+	TimeControl();
 
-	if (last_sec_frame_time.Read() > 1000)
-	{
-		last_sec_frame_time.Start();
-		prev_last_sec_frame_count = last_sec_frame_count;
-		last_sec_frame_count = 0;
-	}
 
-	float avg_fps = float(frame_count) / startup_time.ReadSec();
-	float seconds_since_startup = startup_time.ReadSec();
-	uint32 last_frame_ms = frame_time.Read();
-	uint32 frames_on_last_update = prev_last_sec_frame_count;
-
-	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
-		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
-	App->win->SetTitle(title);
 }
 
 // Call modules before each loop iteration
@@ -402,4 +389,24 @@ bool j1App::SavegameNow() const
 	data.reset();
 	want_to_save = false;
 	return ret;
+}
+
+void j1App::TimeControl() {
+
+	if (last_sec_frame_time.Read() > 1000)
+	{
+		last_sec_frame_time.Start();
+		prev_last_sec_frame_count = last_sec_frame_count;
+		last_sec_frame_count = 0;
+	}
+
+	float avg_fps = float(frame_count) / startup_time.ReadSec();
+	float seconds_since_startup = startup_time.ReadSec();
+	uint32 last_frame_ms = frame_time.Read();
+	uint32 frames_on_last_update = prev_last_sec_frame_count;
+
+	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
+		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
+	App->win->SetTitle(title);
 }

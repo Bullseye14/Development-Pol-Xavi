@@ -50,6 +50,7 @@ public:
 	const char* GetArgv(int index) const;
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
+	void TimeControl();
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;

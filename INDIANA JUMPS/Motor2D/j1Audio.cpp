@@ -52,7 +52,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 
 	// FX
 	jump = LoadFx("audio/fx/jump_air.wav");
-	slide = LoadFx("audio/fx/slide.wav");
+	slide = LoadFx("audio/fx/Slide2.wav");
 	
 	// MUSIC
 	PlayMusic("audio/music/IndianaJump_audio.ogg");
