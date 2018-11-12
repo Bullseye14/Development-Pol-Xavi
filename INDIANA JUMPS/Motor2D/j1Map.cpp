@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1Player.h"
 #include "j1Map.h"
 #include <math.h>
 #include "j1Collision.h"
@@ -42,7 +43,7 @@ void j1Map::Draw()
 		{
 			image->data->position.x = image->data->width;
 		}
-		App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect);
+		App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.5f);
 	}
 
 	p2List_item<TileSet*>* item;
