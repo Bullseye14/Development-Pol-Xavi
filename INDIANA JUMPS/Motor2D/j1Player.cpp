@@ -45,6 +45,13 @@ bool j1Player::Awake(pugi::xml_node& config)
 	onfloor = config.child("onfloor").attribute("value").as_bool();
 	max_speed_y = config.child("max_speed_y").attribute("value").as_float();
 	jumpforce = config.child("jumpforce").attribute("value").as_float();
+	death = config.child("death").attribute("value").as_bool();
+	won = config.child("won").attribute("value").as_bool();
+	sliding = config.child("sliding").attribute("value").as_bool();
+	max_speed_x = config.child("max_speed_x").attribute("value").as_float();
+	slidingforce = config.child("slidingforce").attribute("value").as_float();
+	start_freefalling = config.child("start_freefalling").attribute("value").as_bool();
+	speed_slide = config.child("speed_slide").attribute("value").as_float();
 
 	pos_initial = pos_player;
 
@@ -65,13 +72,13 @@ bool j1Player::Start()
 	
 	// Initial values
 	current_animation = &jump;
-	death = false;
+	/*death = false;
 	won = false;
 	sliding = false;
 	max_speed_x = 20.0f;
 	slidingforce = 7.0f;
 	start_freefalling = true;
-	speed_slide = 5.0f;
+	speed_slide = 5.0f;*/
 	
 	if (start_freefalling == true) 
 	{
@@ -166,7 +173,7 @@ bool j1Player::Update(float dt)
 				App->audio->PlayFx(App->audio->slide);
 				sliding = true;
 			}
-			else 
+			else
 			{
 				sliding = false;
 				mov = MOVING;
@@ -180,7 +187,7 @@ bool j1Player::Update(float dt)
 			mov = MOVING;
 			dir_x = SLIDE_R;
 			speed.x = slidingforce;
-			App->audio->PlayFx(App->audio->slide);
+			App->audio->PlayFx(App->audio->slide, 1);
 			sliding = true;
 		}
 
@@ -234,6 +241,7 @@ bool j1Player::Update(float dt)
 			playerHitbox->type = COLLIDER_PLAYER;
 		}
 	}
+
 
 	if (sliding == true) 
 	{
