@@ -29,6 +29,13 @@
 	<onfloor value = "false"/>
 	<max_speed_y value = "-20.0f"/>
 	<jumpforce value = "4.0f"/>
+	<death value = "false"/>
+	<won value = "false"/>
+	<sliding value = "false"/>
+	<max_speed_x value = "20.0f"/>
+	<slidingforce value = "7.0f"/>;
+	<start_freefalling value = "true"/>
+	<speed_slide value = "5.0f"/>
   </player>
   
   <file_system>
