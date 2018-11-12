@@ -3,7 +3,7 @@
  <tileset firstgid="1" name="Tileset_Forest" tilewidth="32" tileheight="32" tilecount="98" columns="14">
   <image source="Tileset_Forest.png" width="448" height="224"/>
  </tileset>
- <imagelayer id="1" name="Capa de Imagen 1">
+ <imagelayer id="1" name="Background">
   <image source="BG_forest.png" width="6400" height="500"/>
  </imagelayer>
  <layer id="2" name="Capa de Patrones 1" width="200" height="15">

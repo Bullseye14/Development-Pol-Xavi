@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="238">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="238">
  <tileset firstgid="1" name="desert_tileset_new.png" tilewidth="32" tileheight="32" tilecount="84" columns="12">
   <image source="desert_tileset_new.png" width="384" height="224"/>
  </tileset>
  <imagelayer id="1" name="Background">
-  <image source="BG_new.png" width="6400" height="500"/>
+  <image source="Back.png" width="6000" height="500"/>
+ </imagelayer>
+ <imagelayer id="10" name="Sky">
+  <image source="Sky.png" width="6000" height="120"/>
+ </imagelayer>
+ <imagelayer id="11" name="Sky_1" offsetx="0" offsety="8">
+  <image source="Sky_1.png" width="6000" height="60"/>
+ </imagelayer>
+ <imagelayer id="13" name="Waves_4" offsetx="0" offsety="248">
+  <image source="Waves_4.png" width="6000" height="140"/>
+ </imagelayer>
+ <imagelayer id="9" name="Waves_3" offsetx="0" offsety="273">
+  <image source="Waves_3.png" width="6000" height="160"/>
+ </imagelayer>
+ <imagelayer id="8" name="Waves_2" offsetx="0" offsety="346">
+  <image source="Waves_2.png" width="6000" height="126"/>
+ </imagelayer>
+ <imagelayer id="7" name="Waves_1" offsetx="0" offsety="370">
+  <image source="Waves_1.png" width="6400" height="126"/>
  </imagelayer>
  <layer id="2" name="Tiles" width="200" height="15">
   <data>

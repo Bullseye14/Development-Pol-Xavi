@@ -43,7 +43,35 @@ void j1Map::Draw()
 		{
 			image->data->position.x = image->data->width;
 		}
-		App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.5f);
+		if (image->data->name == "Background") 
+		{
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.1f);
+		}
+		else if (image->data->name == "Sky")
+		{
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.3f);
+		}
+		else if (image->data->name == "Sky_1")
+		{
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.6f);
+		}
+		else if (image->data->name == "Waves_4")
+		{
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.4f);
+		}
+		else if (image->data->name == "Waves_3")
+		{
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.5f);
+		}
+		else if (image->data->name == "Waves_2")
+		{
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.7f);
+		}
+		else if (image->data->name == "Waves_1")
+		{
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.9f);
+		}
+		
 	}
 
 	p2List_item<TileSet*>* item;
