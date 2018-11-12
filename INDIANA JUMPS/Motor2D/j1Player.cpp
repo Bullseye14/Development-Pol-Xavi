@@ -46,11 +46,11 @@ bool j1Player::Awake(pugi::xml_node& config)
 	max_speed_y = config.child("max_speed_y").attribute("value").as_float();
 	jumpforce = config.child("jumpforce").attribute("value").as_float();
 	death = config.child("death").attribute("value").as_bool();
-	won = config.child("won").attribute("value").as_bool();
+//	won = config.child("won").attribute("value").as_bool();
+//	start_freefalling = config.child("start_freefalling").attribute("value").as_bool();
 	sliding = config.child("sliding").attribute("value").as_bool();
 	max_speed_x = config.child("max_speed_x").attribute("value").as_float();
 	slidingforce = config.child("slidingforce").attribute("value").as_float();
-	start_freefalling = config.child("start_freefalling").attribute("value").as_bool();
 	speed_slide = config.child("speed_slide").attribute("value").as_float();
 
 	pos_initial = pos_player;
@@ -65,20 +65,15 @@ bool j1Player::Start()
 		graphics = App->tex->Load("textures/Spritesheet.png");
 	}
 
+	start_freefalling = true;
+	won = false;
+
 	// When loading a new level, initial postition
 	pos_player.x = pos_initial.x;
 	pos_player.y = pos_initial.y;
 
-	
 	// Initial values
 	current_animation = &jump;
-	/*death = false;
-	won = false;
-	sliding = false;
-	max_speed_x = 20.0f;
-	slidingforce = 7.0f;
-	start_freefalling = true;
-	speed_slide = 5.0f;*/
 	
 	if (start_freefalling == true) 
 	{
@@ -308,9 +303,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	// PLAYER && END
 	if ((c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_GOD || c1->type==COLLIDER_SLIDE) && c2->type == COLLIDER_END)
 	{
+		won = true;
 		start_freefalling = true;
 		current_animation = &jump;
-		won = true;
 	}
 	
 	if (c1->type == COLLIDER_SLIDE && c2->type == COLLIDER_ENEMY) 
@@ -473,7 +468,8 @@ void j1Player::DoAnimations()
 	}
 }
 
-void j1Player::Move() {
+void j1Player::Move() 
+{
 	pos_player.x += speed.x;
 	pos_player.y += speed.y;
 }
