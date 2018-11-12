@@ -2,6 +2,7 @@
 
 #include "p2Defs.h"
 #include "p2Log.h"
+#include "p2SString.h"
 
 #include "j1Window.h"
 #include "j1Input.h"
@@ -90,6 +91,16 @@ bool j1App::Awake()
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
+
+		max_cap = app_config.attribute("framerate_cap").as_int();
+
+		if (max_cap > 0) {
+			cap_ms = 1000 / max_cap;
+		}
+
+		if(max_cap == 0) {
+			cap_ms = 0;
+		}
 	}
 
 	if(ret == true)
@@ -167,6 +178,7 @@ void j1App::PrepareUpdate()
 	last_sec_frame_count++;
 	int frame_time_read = frame_time.Read();
 
+	dt = frame_time.ReadSec();
 	frame_time.Start();
 }
 
@@ -182,9 +194,33 @@ void j1App::FinishUpdate()
 	want_to_save = false;
 	want_to_load = false;
 	
-	TimeControl();
+	// Frames Control
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		FPSControl();
+	}
 
+	if (last_sec_frame_time.Read() > 1000)
+	{
+		last_sec_frame_time.Start();
+		prev_last_sec_frame_count = last_sec_frame_count;
+		last_sec_frame_count = 0;
+	}
 
+	float avg_fps = float(frame_count) / startup_time.ReadSec();
+	float seconds_since_startup = startup_time.ReadSec();
+	uint32 last_frame_ms = frame_time.Read();
+	uint32 frames_on_last_update = prev_last_sec_frame_count;
+
+	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f  Last Frame Ms: %02u  Last sec frames: %i  Time since startup: %.3f  Frame Count: %lu  Cap Mode: %s",
+		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count, state.GetString());
+	App->win->SetTitle(title);
+
+	if (cap_ms > 0 && last_frame_ms < cap_ms)
+	{
+		SDL_Delay(cap_ms - last_frame_ms);
+	}
 }
 
 // Call modules before each loop iteration
@@ -391,22 +427,16 @@ bool j1App::SavegameNow() const
 	return ret;
 }
 
-void j1App::TimeControl() {
+void j1App::FPSControl() {
 
-	if (last_sec_frame_time.Read() > 1000)
+	if (cap_ms > 0)
 	{
-		last_sec_frame_time.Start();
-		prev_last_sec_frame_count = last_sec_frame_count;
-		last_sec_frame_count = 0;
+		cap_ms = 0;
+		state = "OFF";
 	}
-
-	float avg_fps = float(frame_count) / startup_time.ReadSec();
-	float seconds_since_startup = startup_time.ReadSec();
-	uint32 last_frame_ms = frame_time.Read();
-	uint32 frames_on_last_update = prev_last_sec_frame_count;
-
-	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
-		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
-	App->win->SetTitle(title);
+	else
+	{
+		cap_ms = 1000 / max_cap;
+		state = "ON";
+	}
 }

@@ -1,6 +1,7 @@
 #ifndef __j1APP_H__
 #define __j1APP_H__
 
+#include "p2SString.h"
 #include "p2List.h"
 #include "j1Module.h"
 #include "PugiXml\src\pugixml.hpp"
@@ -50,7 +51,7 @@ public:
 	const char* GetArgv(int index) const;
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
-	void TimeControl();
+	void FPSControl();
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
@@ -118,6 +119,12 @@ private:
 	j1Timer				last_sec_frame_time;
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
+
+	// Capping
+	bool active_cap = true;
+	int max_cap;
+	int cap_ms = -1;
+	p2SString state = "ON";
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S
