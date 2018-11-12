@@ -46,8 +46,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 	max_speed_y = config.child("max_speed_y").attribute("value").as_float();
 	jumpforce = config.child("jumpforce").attribute("value").as_float();
 	death = config.child("death").attribute("value").as_bool();
-//	won = config.child("won").attribute("value").as_bool();
-//	start_freefalling = config.child("start_freefalling").attribute("value").as_bool();
+	won = config.child("won").attribute("value").as_bool();
+	start_freefalling = config.child("start_freefalling").attribute("value").as_bool();
 	sliding = config.child("sliding").attribute("value").as_bool();
 	max_speed_x = config.child("max_speed_x").attribute("value").as_float();
 	slidingforce = config.child("slidingforce").attribute("value").as_float();
@@ -242,13 +242,14 @@ bool j1Player::Update(float dt)
 	{
 		playerHitbox->type = COLLIDER_SLIDE;
 	}
-	else if (GodMode == true) {
+	else if (GodMode == true) 
+	{
 		playerHitbox->type = COLLIDER_GOD;
 	}
-	else{
+	else
+	{
 		playerHitbox->type = COLLIDER_PLAYER;
 	}
-		
 
 	return true;
 }
@@ -434,7 +435,8 @@ void j1Player::DoAnimations()
 		// is jumping
 		else if (onfloor == false)
 		{
-			switch (dir_x) {
+			switch (dir_x) 
+			{
 			case LEFT:
 				current_animation = &jump_left;
 				break;

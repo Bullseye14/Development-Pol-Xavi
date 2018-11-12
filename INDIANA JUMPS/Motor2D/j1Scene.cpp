@@ -47,9 +47,6 @@ bool j1Scene::Start()
 	
 	img = App->player->graphics;
 
-	/*limitcamera_left = 0;
-	limitcamera_right = 6000;
-	limitplayer = 600;*/
 	return true;
 }
 
@@ -154,7 +151,6 @@ void j1Scene::LoadLevel(int number)
 		App->map->Load(current_level->data->map_name.GetString());
 		App->player->playerHitbox = nullptr;
 		App->player->Start();
-
 	}
 }
 

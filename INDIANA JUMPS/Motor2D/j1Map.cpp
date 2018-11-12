@@ -49,11 +49,11 @@ void j1Map::Draw()
 		}
 		else if (image->data->name == "Sky" || image->data->name == "Cloud_1")
 		{
-			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.3f);
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.5f);
 		}
 		else if (image->data->name == "Sky_1"|| image->data->name == "Cloud_2")
 		{
-			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.6f);
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.8f);
 		}
 		else if (image->data->name == "Mountain") 
 		{
@@ -65,17 +65,16 @@ void j1Map::Draw()
 		}
 		else if (image->data->name == "Waves_3" || image->data->name == "Forest_3")
 		{
-			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.5f);
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.6f);
 		}
 		else if (image->data->name == "Waves_2" || image->data->name == "Forest_2")
 		{
-			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.7f);
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.8f);
 		}
 		else if (image->data->name == "Waves_1" || image->data->name == "Forest_1")
 		{
 			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.9f);
 		}
-		
 	}
 
 	p2List_item<TileSet*>* item;
