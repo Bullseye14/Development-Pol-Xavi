@@ -104,7 +104,7 @@ bool j1Player::Load(pugi::xml_node& data)
 	pos_player.y = data.child("position").attribute("y").as_int();
 
 	// God Mode
-	GodMode = data.child("GodMode").attribute("active").as_bool();
+	GodMode = data.child("god_mode").attribute("active").as_bool();
 
 	return true;
 }
