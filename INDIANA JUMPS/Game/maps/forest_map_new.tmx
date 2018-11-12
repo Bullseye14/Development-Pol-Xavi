@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="121">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="121">
  <tileset firstgid="1" name="Tileset_Forest" tilewidth="32" tileheight="32" tilecount="98" columns="14">
   <image source="Tileset_Forest.png" width="448" height="224"/>
  </tileset>
  <imagelayer id="1" name="Background">
-  <image source="BG_forest.png" width="6400" height="500"/>
+  <image source="Back_2.png" width="6400" height="500"/>
  </imagelayer>
- <layer id="2" name="Capa de Patrones 1" width="200" height="15">
+ <imagelayer id="4" name="Cloud_1">
+  <image source="Sky1.png" width="6400" height="200"/>
+ </imagelayer>
+ <imagelayer id="6" name="Mountain" offsetx="0" offsety="128">
+  <image source="Mountain.png" width="6400" height="200"/>
+ </imagelayer>
+ <imagelayer id="5" name="Cloud_2" offsetx="0" offsety="128">
+  <image source="Sky2.png" width="6800" height="200"/>
+ </imagelayer>
+ <imagelayer id="7" name="Forest_4" offsetx="0" offsety="265">
+  <image source="Forest_4.png" width="6400" height="150"/>
+ </imagelayer>
+ <imagelayer id="8" name="Forest_3" offsetx="0" offsety="290">
+  <image source="Forest_3.png" width="6400" height="170"/>
+ </imagelayer>
+ <imagelayer id="11" name="Forest_2" offsetx="0" offsety="223">
+  <image source="Bosque.png" width="6400" height="300"/>
+ </imagelayer>
+ <imagelayer id="10" name="Forest_1" offsetx="0" offsety="356">
+  <image source="Forest_1.png" width="6400" height="140"/>
+ </imagelayer>
+ <layer id="2" name="Capa de Patrones 1" width="200" height="15" visible="0">
   <data>
    <tile/>
    <tile/>
@@ -3010,7 +3031,7 @@
    <tile gid="43"/>
   </data>
  </layer>
- <objectgroup color="#ffff00" id="3" name="COLLIDER_Walls2">
+ <objectgroup color="#ffff00" id="3" name="COLLIDER_Walls2" visible="0">
   <object id="1" name="wall" x="0" y="320" width="416" height="96"/>
   <object id="2" name="wall" x="288" y="256" width="128" height="64"/>
   <object id="3" name="wall" x="512" y="320" width="64" height="96"/>

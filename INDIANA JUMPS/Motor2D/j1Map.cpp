@@ -47,27 +47,31 @@ void j1Map::Draw()
 		{
 			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.1f);
 		}
-		else if (image->data->name == "Sky")
+		else if (image->data->name == "Sky" || image->data->name == "Cloud_1")
 		{
 			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.3f);
 		}
-		else if (image->data->name == "Sky_1")
+		else if (image->data->name == "Sky_1"|| image->data->name == "Cloud_2")
 		{
 			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.6f);
 		}
-		else if (image->data->name == "Waves_4")
-		{
-			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.4f);
-		}
-		else if (image->data->name == "Waves_3")
+		else if (image->data->name == "Mountain") 
 		{
 			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.5f);
 		}
-		else if (image->data->name == "Waves_2")
+		else if (image->data->name == "Waves_4" || image->data->name == "Forest_4")
+		{
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.4f);
+		}
+		else if (image->data->name == "Waves_3" || image->data->name == "Forest_3")
+		{
+			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.5f);
+		}
+		else if (image->data->name == "Waves_2" || image->data->name == "Forest_2")
 		{
 			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.7f);
 		}
-		else if (image->data->name == "Waves_1")
+		else if (image->data->name == "Waves_1" || image->data->name == "Forest_1")
 		{
 			App->render->Blit(tex, image->data->position.x, image->data->position.y, &rect, 0.9f);
 		}
