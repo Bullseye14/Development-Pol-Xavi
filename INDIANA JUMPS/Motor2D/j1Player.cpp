@@ -11,9 +11,9 @@
 #include "j1FadeToBlack.h"
 #include <stdio.h>
 
-j1Player::j1Player() : j1Module()
+j1Player::j1Player() : Entity(PLAYER)
 {
-	name.create("player");
+//	name.create("player");
 
 	current_animation = NULL;
 
@@ -82,7 +82,7 @@ bool j1Player::Start()
 	}
 		
 	// Player hitbox
-	playerHitbox = App->collision->AddCollider({ (int)pos_player.x, (int)pos_player.y, 32, 64 }, COLLIDER_PLAYER, this);
+	playerHitbox = App->collision->AddCollider({ (int)pos_player.x, (int)pos_player.y, 32, 64 }, COLLIDER_PLAYER/*, this*/);
 
 	return true;
 }

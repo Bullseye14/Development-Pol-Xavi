@@ -3,13 +3,14 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "Animation.h"
+#include "j1Entity.h"
 
 struct SDL_Texture;
 enum MOVEMENT { STOPPED, MOVING };
 enum DIRECTION_X { CENTER_X, LEFT, RIGHT, SLIDE_L, SLIDE_R };
 enum DIRECTION_Y { CENTER_Y, UP, DOWN };
 
-class j1Player : public j1Module
+class j1Player : public Entity
 {
 public:
 	j1Player();
