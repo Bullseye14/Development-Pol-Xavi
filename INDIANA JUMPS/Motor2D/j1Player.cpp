@@ -126,6 +126,7 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 bool j1Player::Update(float dt)
 {
+
 	from_up = false;
 	from_left = false;
 	from_right = false;
@@ -258,7 +259,7 @@ bool j1Player::PostUpdate()
 {
 	// Drawing the player
 	App->render->Blit(graphics, pos_player.x, pos_player.y, &current_animation->GetCurrentFrame());
-
+	
 	// Checking collisions
 	Check_Collision();
 	
