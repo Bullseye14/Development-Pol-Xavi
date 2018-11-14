@@ -4,14 +4,14 @@
 #include "Animation.h"
 #include "p2Point.h"
 #include "j1Collision.h"
+#include "p2DynArray.h"
 
+struct SDL_Texture;
 
 class Entity 
 {
 protected:
-	int type;
-	Animation* current_animation = NULL;
-	Collider* collider;
+	Animation* current_animation = nullptr;
 
 public:
 	Entity(int x, int y);
@@ -19,11 +19,30 @@ public:
 
 	const Collider* GetCollider() const;
 
-	fPoint position;
-	char* name;
+	virtual bool Awake(pugi::xml_node&) { return true; }
 
-public:
-	
+	virtual void Draw(float dt) { }
+
+	virtual void OnCollision() { }
+
+	virtual void MoveEntity(float dt) {};
+
+	SDL_Texture* spritesheet = nullptr;
+
+	fPoint position;
+	fPoint collider_position;
+	fPoint initial_position;
+	fPoint speed;
+
+	Collider* collider = nullptr;
+
+	p2DynArray<iPoint> path;
+
+	int initial_pos;
+	int x_scale;
+	int y_scale;
+
+	bool flip;
 
 };
 

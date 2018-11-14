@@ -46,8 +46,10 @@ bool j1Scene::Start()
 {
 	// Calling the function to load the map
 	App->map->Load(mapList.start->data->map_name.GetString());
-
-	img = App->player->graphics;
+	App->entity_m->Start();
+	float dt;
+	
+	img = App->entity_m->player_entity->spritesheet;
 
 	return true;
 }
@@ -85,7 +87,7 @@ bool j1Scene::Update(float dt)
 	// Start from the beginning of this level
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		App->player->Respawn();
+//		App->player->Respawn();
 	}
 
 	App->map->Draw();
@@ -151,8 +153,8 @@ void j1Scene::LoadLevel(int number)
 		//Starting the level & player
 
 		App->map->Load(current_level->data->map_name.GetString());
-		App->player->playerHitbox = nullptr;
-		App->player->Start();
+//		App->player->playerHitbox = nullptr;
+//		App->player->Start();
 	}
 }
 
@@ -167,7 +169,7 @@ void j1Scene::CameraToPlayer()
 	uint w, h;
 	App->win->GetWindowSize(w, h);
 
-	if (App->player->pos_player.x < 350) 
+/*	if (App->player->pos_player.x < 350) 
 	{
 		App->render->camera.x = 0;
 	}
@@ -177,5 +179,5 @@ void j1Scene::CameraToPlayer()
 	}
 	else 
 		App->render->camera.x = -App->player->pos_player.x + w / 3;
-	
+*/	
 }

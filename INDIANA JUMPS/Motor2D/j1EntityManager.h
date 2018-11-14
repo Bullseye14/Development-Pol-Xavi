@@ -44,9 +44,12 @@ public:
 	void CreateEntity(const EntityInfo& info);
 
 public:
-	Entity * player_entity = nullptr;
+	j1Player * player_entity = nullptr;
 	EntityInfo queue[MAX_ENTITIES];
 	Entity* entities[MAX_ENTITIES];
+
+	pugi::xml_node entity_config;
+
 	p2List<Entity*> entities_list;
 
 	bool player_active = false;

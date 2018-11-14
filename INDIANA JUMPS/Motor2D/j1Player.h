@@ -18,24 +18,37 @@ public:
 	~j1Player();
 	bool Awake(pugi::xml_node& config);
 	bool Start();
-	bool Update(float dt);
-	bool PostUpdate();
-	bool CleanUp();
-	void Respawn();
-	void DoAnimations();
-	void Move();
-	//void Win();
-	
-	// Save and Load
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&) const;
+	void MoveEntity(float dt);
+	void Jump(float dt);
+	void Draw(float dt);
+//	bool Update(float dt);
+//	bool PostUpdate();
+//	bool CleanUp();
+//	void Respawn();
+//	void DoAnimations();
+//	void Move();
+//	void Win();
 
-	void OnCollision(Collider* c1, Collider* c2);
-	void Check_Collision();
+	void SetPos(float x, float y) 
+	{
+		position.x = x;
+		position.y = y;
+	}
+
+	float getX() { return position.x; }
+	float getY() { return position.y; }
+	
+//	 Save and Load
+//	bool Load(pugi::xml_node&);
+//	bool Save(pugi::xml_node&) const;
+
+//	void OnCollision(Collider* c1, Collider* c2);
+//	void Check_Collision();
 
 
 public:
-	SDL_Texture* graphics = nullptr;
+
+	Collider* playerHitbox = nullptr;
 
 	MOVEMENT mov = STOPPED;
 	DIRECTION_X dir_x = CENTER_X;
@@ -57,13 +70,15 @@ public:
 	float	slidingforce;
 	float	speed_slide;
 	float	pos_slide;
-	//int		past_ticks;
+//	int		past_ticks;
 
 	bool GodMode = false;
 
 	SDL_Rect rect_player;
 
-	Animation* current_animation = nullptr;
+private:
+
+//	Animation* current_animation = nullptr;
 	Animation idle;
 	Animation run;
 	Animation run_left;
@@ -72,9 +87,10 @@ public:
 	Animation slide_l;
 	Animation slide_r;
 
-	Collider* playerHitbox;
+	SDL_Texture* graphics = nullptr;
 
-	
+public:
+
 	bool from_up;
 	bool from_right;
 	bool from_left;

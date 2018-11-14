@@ -7,6 +7,7 @@
 #include "j1Textures.h"
 #include "j1App.h"
 #include "j1Render.h"
+#include "j1Scene.h"
 
 
 #define SPAWN_MARGIN 100
@@ -22,7 +23,19 @@ j1EntityManager::~j1EntityManager()
 
 bool j1EntityManager::Start() 
 {
-	enemy_sprites = App->tex->Load("Assets/Sprites/Enemies_and_projectiles/table_enemy_goodone.png");
+	
+	enemy_sprites = App->tex->Load("textures/Enemy_Spritesheet.png");
+
+	if (player_entity == nullptr)
+	{
+		player_entity = new j1Player(5, 10);
+		player_entity->Awake(entity_config);
+		player_entity->Start();
+	}
+	else
+		player_entity->Start();
+
+	return true;
 }
 
 bool j1EntityManager::PreUpdate() {
@@ -39,16 +52,17 @@ bool j1EntityManager::PreUpdate() {
 			}
 		}
 	}
+	return true;
 }
 
 bool j1EntityManager::Update() 
 {
-
+	return true;
 }
 
 bool j1EntityManager::CleanUp() 
 {
-
+	return true;
 }
 
 /*Entity* j1EntityManager::CreateEntity(Types type, iPoint pos) 

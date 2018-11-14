@@ -16,10 +16,10 @@ class j1PathFinding : public j1Module
 {
 public:
 
-	j1PathFinding();
+	j1PathFinding() { }
 
 	// Destructor
-	~j1PathFinding();
+	~j1PathFinding() { }
 
 	// Path
 	bool DoPath(Entity* enemy, Entity* player, p2DynArray<iPoint> & path);
