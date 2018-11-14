@@ -34,7 +34,7 @@ j1Player::~j1Player()
 
 bool j1Player::Awake(pugi::xml_node& config)
 {
-	j1Player* player = (j1Player*)App->entity_m->CreateEntity(Types::PLAYER);
+	//j1Player* player = (j1Player*)App->entity_m->CreateEntity(Types::PLAYER);
 
 	// Reading initial values from xml
 	pos_player.x = config.child("pos").attribute("x").as_int();

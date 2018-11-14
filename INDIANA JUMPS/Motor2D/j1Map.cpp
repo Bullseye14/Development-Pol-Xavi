@@ -7,6 +7,7 @@
 #include "j1Map.h"
 #include <math.h>
 #include "j1Collision.h"
+#include "j1Pathfinding.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -505,5 +506,17 @@ bool j1Map::LoadColliders(pugi::xml_node &node)
 		App->collision->AddCollider(rect, collidertype);
 	}
 	return ret;
+}
+
+bool j1Map::CanWalkTo(iPoint position) {
+	
+	if (position.x >= 0 && position.x <App->map->data.width && position.y >= 0 && position.y <App->map->data.height)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 

@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1PathFinding.h"
+#include "j1Map.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
@@ -167,9 +168,85 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
-	int ret = -1;
+	int ret = 1;
 
-	// Nice try :)
+	// TODO 1: if origin or destination are not walkable, return -1
+	if (!(App->map->CanWalkTo(origin) || !App->map->CanWalkTo(destination)))
+		return -1;
 
+	last_path.Clear();
+
+	// TODO 2: Create two lists: open, closed
+	// Add the origin tile to open
+	// Iterate while we have tiles in the open list
+	PathList open;
+	PathList closed;
+
+	PathNode origin_node;
+
+	origin_node.pos = origin;
+	open.list.add(origin_node);
+
+
+	while (open.list.count() > 0)
+	{
+		// TODO 3: Move the lowest score cell from open list to the closed list
+		p2List_item<PathNode>* current_item = open.GetNodeLowestScore();
+
+		p2List_item<PathNode>* lowest_cost_node = closed.list.add(open.GetNodeLowestScore()->data);
+		p2List_item<PathNode> lowest_cost_node_new = *closed.list.add(open.GetNodeLowestScore()->data);
+		open.list.del(current_item);
+
+		// TODO 4: If we just added the destination, we are done!
+		// Backtrack to create the final path
+		// Use the Pathnode::parent and Flip() the path when you are finish
+		if (lowest_cost_node_new.data.pos == destination)
+		{
+			int steps = 0;
+			while (lowest_cost_node_new.data.parent != nullptr) {
+				last_path.PushBack(lowest_cost_node_new.data.pos);
+				steps++;
+				lowest_cost_node_new = *closed.Find(lowest_cost_node_new.data.parent->pos);
+			}
+
+			last_path.PushBack(lowest_cost_node_new.data.pos);
+			steps++;
+
+			last_path.Flip();
+			return steps;
+		}
+
+		// TODO 5: Fill a list of all adjancent nodes
+		PathList neighbours;
+		lowest_cost_node->data.FindWalkableAdjacents(neighbours);
+
+		// TODO 6: Iterate adjancent nodes:
+		// ignore nodes in the closed list
+		// If it is NOT found, calculate its F and add it to the open list
+		// If it is already in the open list, check if it is a better path (compare G)
+		// If it is a better path, Update the parent
+		for (p2List_item<PathNode>* neighbour_node = neighbours.list.start; neighbour_node != nullptr; neighbour_node = neighbour_node->next)
+		{
+			iPoint neighbour_pos = neighbour_node->data.pos;
+			if (closed.Find(neighbour_pos) != nullptr)
+				continue;
+
+			p2List_item<PathNode>* node_open = open.Find(neighbour_pos);
+			if (node_open == nullptr)
+			{
+				neighbour_node->data.CalculateF(destination);
+				open.list.add(neighbour_node->data);
+			}
+			else {
+				int new_g = neighbour_node->data.parent->g + 1;
+				if (new_g < node_open->data.g)
+				{
+					node_open->data.g = new_g;
+					node_open->data.parent = &lowest_cost_node->data;
+				}
+			}
+		}
+	}
+	
 	return ret;
 }
