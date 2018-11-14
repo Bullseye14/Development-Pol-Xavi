@@ -102,7 +102,22 @@ void j1Map::Draw()
 	}
 }
 
+int j1Map::MovementCost(int x, int y) const
+{
+	int ret = -1;
 
+	if (x >= 0 && x < data.width && y >= 0 && y < data.height)
+	{
+		int id = data.map_layers.start->data->PathLimit(x, y);
+
+		if (id == 0)
+			ret = 3;
+		else
+			ret = 0;
+	}
+
+	return ret;
+}
 
 iPoint j1Map::MapToWorld(int x, int y) const
 {
@@ -518,15 +533,8 @@ bool j1Map::LoadColliders(pugi::xml_node &node)
 	return ret;
 }
 
-bool j1Map::CanWalkTo(iPoint position) {
-	
-	if (position.x >= 0 && position.x <App->map->data.width && position.y >= 0 && position.y <App->map->data.height)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+inline uint MapLayer::PathLimit(int x, int y) const
+{
+	return data[(y*width) + x];
 }
 

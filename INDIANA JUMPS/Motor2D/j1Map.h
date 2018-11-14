@@ -10,6 +10,7 @@
 // ----------------------------------------------------
 struct MapLayer 
 {
+	inline uint PathLimit(int x, int y) const;
 	p2SString			name;
 	uint				width = 0;
 	uint				height = 0;
@@ -114,7 +115,7 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 
-	bool CanWalkTo(iPoint position);
+	int MovementCost(int x, int y) const;
 
 public:
 

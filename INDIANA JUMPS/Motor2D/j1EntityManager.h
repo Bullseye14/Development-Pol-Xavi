@@ -6,6 +6,8 @@
 #include "j1App.h"
 #include "p2List.h"
 #include "j1Player.h"
+#include "j1Zombie_Enemy.h"
+#include "j1Bird_Enemy.h"
 
 #define MAX_ENTITIES 20
 
@@ -45,6 +47,8 @@ public:
 
 public:
 	j1Player * player_entity = nullptr;
+	j1Zombie_Enemy * zombie_entity = nullptr;
+	j1Bird_Enemy * bird_entity = nullptr;
 	EntityInfo queue[MAX_ENTITIES];
 	Entity* entities[MAX_ENTITIES];
 

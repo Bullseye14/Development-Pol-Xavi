@@ -6,131 +6,151 @@
 #include "j1Audio.h"
 #include "j1Map.h"
 
-void j1PathFinding::SetMap(uint w, uint h, uchar* data) 
+j1PathFinding::j1PathFinding() 
 {
-	this->w = w;
-	this->h = h;
-
-	RELEASE_ARRAY(map);
-
-	map = new uchar[w*h];
-	memcpy(map, data, w*h);
 }
 
-bool j1PathFinding::FloorContact(iPoint position) const
+j1PathFinding::~j1PathFinding()
 {
-	return !IsWalkable({ position.x, position.y + 1 });
 }
 
-// Utility: returns true is the tile is walkable
-bool j1PathFinding::IsWalkable(const iPoint& position) const
+bool j1PathFinding::Start() 
 {
-	bool ret = false;
-
-	int coordinates = (position.y * w) + position.x;
+	path_img = App->tex->Load("texture/path.png");
 	
-	if (position.x < w && map[coordinates] == 1 && position.x >= 0 && position.y >= 0 && position.y < h - 1) 
+	return true;
+}
+
+bool j1PathFinding::CleanUp() 
+{
+	LOG("Freeing pathfinding");
+
+	frontier.Clear();
+	breadcrumbs.clear();
+	visited.clear();
+	last_path.Clear();
+
+	return true;
+}
+
+bool j1PathFinding::IsWalkable(const iPoint& position) const 
+{
+	if (position.x >= 0 && position.x < App->map->data.width
+		&& position.y >= 0 && position.y < App->map->data.height) 
 	{
-		ret = true;
+		return true;
+	}
+	else return false;
+}
+
+const p2DynArray<iPoint>* j1PathFinding::LastPath() const 
+{
+	return &last_path;
+}
+
+void j1PathFinding::DrawPath(p2DynArray<iPoint>& finding) 
+{
+	for (uint i = 0; i < finding.Count(); ++i) 
+	{
+		iPoint position = App->map->MapToWorld(finding[i].x, finding[i].y);
+		App->render->Blit(path_img, position.x, position.y);
+	}
+}
+
+void j1PathFinding::Ground(const iPoint& beginning, p2DynArray<iPoint>& path)
+{
+	path.Clear();
+
+	iPoint objective = { beginning.x,beginning.y };
+	iPoint curr = objective;
+
+	path.PushBack(curr);
+
+	while (curr != breadcrumbs.start->data && visited.find(objective) != -1) 
+	{
+		curr = breadcrumbs[visited.find(curr)];
+		path.PushBack(curr);
 	}
 
-	return ret;
+	path.Flip();
 }
 
-void j1PathFinding::NewPath(p2DynArray <iPoint>& new_path)
+void j1PathFinding::Air(const iPoint& beginning, p2DynArray<iPoint>& path) 
 {
-	new_path.Clear();
-	frontier.Clear();
-	visited.clear();
-	breadcrumbs.clear();
-	memset(cost_so_far, 0, sizeof(uint) * MAP_SIZE * MAP_SIZE);
-	memset(falls, 0, sizeof(uint) * MAP_SIZE * MAP_SIZE);
-}
+	path.Clear();
 
-bool j1PathFinding::DoPath(Entity* enemy, Entity* player, p2DynArray <iPoint> & path) 
-{
-	bool ret = false;
+	iPoint objective = { beginning.x,beginning.y };
+	iPoint curr = objective;
 
-	NewPath(path);
+	path.PushBack(curr);
 
-	//Define origin and destination coords
-	iPoint pos_initial = App->map->WorldToMap(enemy->position.x, enemy->position.y);
-	frontier.Push(pos_initial, 0);
-	visited.add(pos_initial);
-	breadcrumbs.add(pos_initial);
-	iPoint destination = App->map->WorldToMap(player->position.x, player->position.y);
-
-	if (IsWalkable(destination) && IsWalkable(pos_initial) && (pos_initial.y <= destination.y))
+	while (curr != breadcrumbs.start->data&&visited.find(objective) != -1)
 	{
-		while (visited.find(destination) == -1)
+		curr = breadcrumbs[visited.find(curr)];
+		path.PushBack(curr);
+	}
+
+	path.Flip();
+}
+
+int j1PathFinding::CreatePath(const iPoint& beginning, const iPoint& objective) 
+{
+	frontier.Clear();
+	breadcrumbs.clear();
+	visited.clear();
+
+	int ret = 0;
+
+	if (ret != -1) 
+	{
+		iPoint curr;
+
+		iPoint goal = App->map->WorldToMap(objective.x, objective.y);
+
+		frontier.Push(App->map->WorldToMap(beginning.x, beginning.y), 0);
+
+		while (frontier.Count() != 0)
 		{
-			iPoint curr;
+			if (curr == goal)
+			{
+				break;
+			}
 			if (frontier.Pop(curr))
 			{
-
 				iPoint neighbors[4];
-				neighbors[0].create(curr.x + 0, curr.y + 1); 
-				neighbors[1].create(curr.x - 1, curr.y + 0); 
-				neighbors[2].create(curr.x + 1, curr.y + 0); 
-				neighbors[3].create(curr.x + 0, curr.y - 1); 
+				neighbors[0].create(curr.x + 1, curr.y + 0);
+				neighbors[1].create(curr.x + 0, curr.y + 1);
+				neighbors[2].create(curr.x - 1, curr.y + 0);
+				neighbors[3].create(curr.x + 0, curr.y - 1);
 
-				int max_neighbors = 4;
 
-				for (uint i = 0; i < max_neighbors; ++i)
+				for (uint i = 0; i < 4; ++i)
 				{
-					if (!IsWalkable(neighbors[i])) //If not walkable ignore
-						continue;
+					uint point_dist = neighbors[i].DistanceTo(goal);
 
-					int distance = neighbors[i].DistanceNoSqrt(destination);
-
-					int newCost = cost_so_far[curr.x][curr.y] + 1; //g
-					if (cost_so_far[neighbors[i].x][neighbors[i].y] == NULL || newCost < cost_so_far[neighbors[i].x][neighbors[i].y])
+					if (App->map->MovementCost(neighbors[i].x, neighbors[i].y) > 0 && App->entity_m->zombie_entity)
 					{
-						cost_so_far[neighbors[i].x][neighbors[i].y] = newCost;
-
-						//Set falling value
-						if (curr.x == neighbors[i].x)
-							falls[neighbors[i].x][neighbors[i].y] = falls[curr.x][curr.y] + (falls[curr.x][curr.y] % 2 == 0) ? 2 : 1;
-						else if (curr.y == neighbors[i].y)
-							falls[neighbors[i].x][neighbors[i].y] = falls[curr.x][curr.y] + 1;
-						if (FloorContact({ neighbors[i].x , neighbors[i].y }))
-							falls[neighbors[i].x][neighbors[i].y] = 0;
-
-						//Add to visited or update breadcrumb
-						if (visited.find(neighbors[i]) == -1)
+						if (visited.find(neighbors[i]) == -1 && breadcrumbs.find(neighbors[i]) == -1)
 						{
-							breadcrumbs.add(curr);
+							cost_so_far[neighbors[i].x][neighbors[i].y] = point_dist;
+							frontier.Push(neighbors[i], point_dist);
 							visited.add(neighbors[i]);
-							if (neighbors[i] != destination)
-							{
-								frontier.Push(neighbors[i], newCost + (distance * 10));
-							}
+							breadcrumbs.add(curr);
 						}
-						else
+					}
+					if (App->map->MovementCost(neighbors[i].x, neighbors[i].y) >= 0 && App->entity_m->bird_entity)
+					{
+						if (visited.find(neighbors[i]) == -1 && breadcrumbs.find(neighbors[i]) == -1)
 						{
-							breadcrumbs.At(visited.find(neighbors[i]))->data = curr;
+							cost_so_far[neighbors[i].x][neighbors[i].y] = point_dist;
+							frontier.Push(neighbors[i], point_dist);
+							visited.add(neighbors[i]);
+							breadcrumbs.add(curr);
 						}
 					}
 				}
 			}
-			else
-				break;
 		}
-
-		//Calculate final path
-		if (visited.find(destination) != -1)
-		{
-			ret = true;
-			path.PushBack(destination);
-			iPoint cameFrom = breadcrumbs.At(visited.find(destination))->data;
-			path.PushBack(cameFrom);
-			while (cameFrom != visited.start->data)
-			{
-				cameFrom = breadcrumbs.At(visited.find(cameFrom))->data;
-				path.PushBack(cameFrom);
-			}
-		}
-		path.Flip();
 	}
 
 	return ret;
