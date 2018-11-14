@@ -4,6 +4,27 @@
 #include "j1Zombie_Enemy.h"
 #include "j1Bird_Enemy.h"
 
+j1EntityManager::j1EntityManager()
+{}
+
+j1EntityManager::~j1EntityManager()
+{}
+
+bool j1EntityManager::Start() 
+{
+
+}
+
+bool j1EntityManager::Update(float dt) 
+{
+
+}
+
+bool j1EntityManager::CleanUp() 
+{
+
+}
+
 Entity* j1EntityManager::CreateEntity(Types type) 
 {
 	static_assert(Types::NONE == 3, "code needs update");
@@ -13,6 +34,7 @@ Entity* j1EntityManager::CreateEntity(Types type)
 	{
 	case Types::PLAYER:
 		ret = new j1Player();
+		player_entity = ret;
 		break;
 
 	case Types::ZOMBIE:
@@ -30,4 +52,9 @@ Entity* j1EntityManager::CreateEntity(Types type)
 	}
 
 	return ret;
+}
+
+void j1EntityManager::DestroyEntity(Entity* entity) 
+{
+
 }

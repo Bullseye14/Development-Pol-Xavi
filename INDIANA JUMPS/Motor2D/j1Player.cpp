@@ -9,9 +9,11 @@
 #include "j1Audio.h"
 #include "j1Collision.h"
 #include "j1FadeToBlack.h"
+#include "j1Entity.h"
+#include "j1EntityManager.h"
 #include <stdio.h>
 
-j1Player::j1Player() : Entity(PLAYER)
+j1Player::j1Player() : Entity(PLAYER, pos_initial)
 {
 //	name.create("player");
 
@@ -32,6 +34,8 @@ j1Player::~j1Player()
 
 bool j1Player::Awake(pugi::xml_node& config)
 {
+	j1Player* player = (j1Player*)App->entity_m->CreateEntity(Types::PLAYER);
+
 	// Reading initial values from xml
 	pos_player.x = config.child("pos").attribute("x").as_int();
 	pos_player.y = config.child("pos").attribute("y").as_int();

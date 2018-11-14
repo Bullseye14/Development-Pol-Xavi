@@ -11,6 +11,8 @@
 #include "j1Player.h"
 #include "j1Collision.h"
 #include "j1PathFinding.h"
+#include "j1EntityManager.h"
+#include "j1Entity.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -44,7 +46,7 @@ bool j1Scene::Start()
 {
 	// Calling the function to load the map
 	App->map->Load(mapList.start->data->map_name.GetString());
-	
+
 	img = App->player->graphics;
 
 	return true;

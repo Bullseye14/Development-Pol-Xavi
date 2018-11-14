@@ -7,7 +7,6 @@
 struct SDL_Texture;
 
 class Collider;
-class Player;
 
 struct map 
 {

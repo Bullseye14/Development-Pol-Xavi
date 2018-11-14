@@ -13,13 +13,16 @@ public:
 	j1EntityManager() { }
 	~j1EntityManager() { }
 
-	bool PreUpdate();
+	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
 
 	Entity* CreateEntity(Types type);
+	void DestroyEntity(Entity* entity);
 
-private:
+public:
+	Entity * player_entity = nullptr;
+	
 	p2List<Entity*> entities_list;
 
 };

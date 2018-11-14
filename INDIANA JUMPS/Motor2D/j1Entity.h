@@ -22,9 +22,10 @@ protected:
 
 public:
 	fPoint position;
+	char* name;
 
 public:
-	Entity::Entity(Types type) : type(type) { };
+	Entity::Entity(Types type, fPoint initial_pos) : type(type), position(initial_pos) { };
 
 };
 

@@ -32,7 +32,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	collision = new j1Collision();
-	player = new j1Player();
 	fade = new j1FadeToBlack();
 	pathfinding = new j1PathFinding();
 	entity_m = new j1EntityManager();
@@ -45,7 +44,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
-	AddModule(player);
 	AddModule(collision);
 	AddModule(fade);
 	AddModule(pathfinding);
