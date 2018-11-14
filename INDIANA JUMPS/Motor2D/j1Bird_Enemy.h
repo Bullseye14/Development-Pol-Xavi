@@ -2,15 +2,18 @@
 #define __BIRDENEMY_H__
 
 #include "j1Entity.h"
+#include "j1App.h"
 #include "p2Point.h"
 #include "Animation.h"
+#include "j1EntityManager.h"
+#include "j1Textures.h"
 
 struct SDL_Texture;
 
 class j1Bird_Enemy : public Entity
 {
 public:
-	j1Bird_Enemy();
+	j1Bird_Enemy(int x, int y);
 	~j1Bird_Enemy();
 
 	bool Start();

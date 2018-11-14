@@ -10,7 +10,7 @@ struct SDL_Texture;
 class j1Zombie_Enemy : public Entity
 {
 public:
-	j1Zombie_Enemy();
+	j1Zombie_Enemy(int x, int y);
 	~j1Zombie_Enemy();
 
 	bool Start();

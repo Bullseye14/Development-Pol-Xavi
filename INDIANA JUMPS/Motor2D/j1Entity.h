@@ -5,13 +5,6 @@
 #include "p2Point.h"
 #include "j1Collision.h"
 
-enum Types 
-{
-	PLAYER = 0,
-	ZOMBIE,
-	BIRD,
-	NONE
-};
 
 class Entity 
 {
@@ -23,6 +16,8 @@ protected:
 public:
 	Entity(int x, int y);
 	virtual ~Entity();
+
+	const Collider* GetCollider() const;
 
 	fPoint position;
 	char* name;

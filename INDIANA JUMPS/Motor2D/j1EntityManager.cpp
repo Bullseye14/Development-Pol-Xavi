@@ -1,3 +1,4 @@
+#include "Globals.h"
 #include "j1Entity.h"
 #include "j1EntityManager.h"
 #include "j1Player.h"
@@ -5,6 +6,10 @@
 #include "j1Bird_Enemy.h"
 #include "j1Textures.h"
 #include "j1App.h"
+#include "j1Render.h"
+
+
+#define SPAWN_MARGIN 100
 
 j1EntityManager::j1EntityManager()
 {
@@ -21,7 +26,19 @@ bool j1EntityManager::Start()
 }
 
 bool j1EntityManager::PreUpdate() {
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (queue[i].type != Entity_Type::NONE)
+		{
+			if (queue[i].x * SCREEN_SIZE < App->render->camera.x + (App->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN)
+			{
 
+				CreateEntity(queue[i]);
+				queue[i].type = Entity_Type::NONE;
+
+			}
+		}
+	}
 }
 
 bool j1EntityManager::Update() 
@@ -85,6 +102,7 @@ bool j1EntityManager::AddEnemy(Entity_Type type, int x, int y)
 	return ret;
 }
 
+
 void j1EntityManager::CreateEntity(const EntityInfo& info)
 {
 	uint i = 0;
@@ -95,14 +113,15 @@ void j1EntityManager::CreateEntity(const EntityInfo& info)
 		switch (info.type)
 		{
 		case Entity_Type::PLAYER:
-			entities[i] = new Player(info.x, info.y);
+			entities[i] = new j1Player(info.x, info.y);
 			break;
 		case Entity_Type::ZOMBIE:
-			entities[i] = new Zombie(info.x, info.y);
+			entities[i] = new j1Zombie_Enemy(info.x, info.y);
 			break;
 		case Entity_Type::BIRD:
-			entities[i] = new Bird(info.x, info.y);
+			entities[i] = new j1Bird_Enemy(info.x, info.y);
 			break;
 		}
 	}
 }
+

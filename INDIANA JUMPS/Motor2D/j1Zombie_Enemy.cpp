@@ -1,6 +1,6 @@
 #include "j1Zombie_Enemy.h"
 
-j1Zombie_Enemy::j1Zombie_Enemy() : Entity(ZOMBIE, initial_pos) 
+j1Zombie_Enemy::j1Zombie_Enemy(int x, int y) : Entity(x,y) 
 {
 
 }

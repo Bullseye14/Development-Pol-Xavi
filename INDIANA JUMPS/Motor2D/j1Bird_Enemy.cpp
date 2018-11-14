@@ -1,6 +1,7 @@
 #include "j1Bird_Enemy.h"
 
-j1Bird_Enemy::j1Bird_Enemy() : Entity(BIRD, initial_pos)
+
+j1Bird_Enemy::j1Bird_Enemy(int x, int y) : Entity(x,y)
 {
 
 }
