@@ -13,7 +13,7 @@
 #include "j1EntityManager.h"
 #include <stdio.h>
 
-j1Player::j1Player() : Entity(PLAYER, pos_initial)
+j1Player::j1Player(int x, int y) : Entity(x, y)
 {
 //	name.create("player");
 

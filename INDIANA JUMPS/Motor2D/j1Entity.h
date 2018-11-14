@@ -21,11 +21,14 @@ protected:
 	Collider* collider;
 
 public:
+	Entity(int x, int y);
+	virtual ~Entity();
+
 	fPoint position;
 	char* name;
 
 public:
-	Entity::Entity(Types type, fPoint initial_pos) : type(type), position(initial_pos) { };
+	
 
 };
 

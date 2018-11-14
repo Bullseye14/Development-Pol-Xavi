@@ -14,7 +14,7 @@ enum DIRECTION_Y { CENTER_Y, UP, DOWN };
 class j1Player : public Entity
 {
 public:
-	j1Player();
+	j1Player(int x, int y);
 	~j1Player();
 	bool Awake(pugi::xml_node& config);
 	bool Start();

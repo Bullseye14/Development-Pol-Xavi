@@ -6,6 +6,24 @@
 #include "j1App.h"
 #include "p2List.h"
 
+#define MAX_ENTITIES 20
+
+class Player;
+
+enum Entity_Type {
+	NONE,
+	PLAYER,
+	ZOMBIE,
+	BIRD
+};
+
+class Entity;
+
+struct EntityInfo {
+	Entity_Type type = Entity_Type::NONE;
+	int x, y;
+};
+
 class j1EntityManager : public j1Module 
 {
 public:
@@ -13,18 +31,27 @@ public:
 	j1EntityManager() { }
 	~j1EntityManager() { }
 
+	bool Awake(pugi::xml_node&);
 	bool Start();
-	bool Update(float dt);
+	bool PreUpdate();
+	bool Update();
 	bool CleanUp();
 
-	Entity* CreateEntity(Types type);
-	void DestroyEntity(Entity* entity);
+	bool AddEnemy(Entity_Type type, int x, int y);
+
+	//Entity* CreateEntity(Types type, iPoint pos);
+	//void DestroyEntity(Entity* entity);
+	//bool AddEnemy(Entity_Type type, int x, int y);
+	void CreateEntity(const EntityInfo& info);
 
 public:
 	Entity * player_entity = nullptr;
-	
+	EntityInfo queue[MAX_ENTITIES];
+	Entity* entities[MAX_ENTITIES];
 	p2List<Entity*> entities_list;
 
+private:
+	SDL_Texture* enemy_sprites;
 };
 
 #endif // __ENTITYMANAGER_H__
