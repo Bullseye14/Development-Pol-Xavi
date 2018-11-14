@@ -24,10 +24,10 @@ class j1PathFinding : public j1Module
 {
 public:
 
-	j1PathFinding() { }
+	j1PathFinding();
 
 	// Destructor
-	~j1PathFinding() { }
+	~j1PathFinding();
 
 	bool Start();
 

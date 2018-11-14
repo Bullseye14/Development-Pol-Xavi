@@ -16,6 +16,16 @@ j1EntityManager::j1EntityManager()
 {
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 		entities[i] = nullptr;
+
+	name.create("entities");
+}
+
+bool j1EntityManager::Awake(pugi::xml_node& config) 
+{
+	config_file.load_file("config.xml");
+	entity_config = config;
+
+	return true;
 }
 
 j1EntityManager::~j1EntityManager()
@@ -23,7 +33,6 @@ j1EntityManager::~j1EntityManager()
 
 bool j1EntityManager::Start() 
 {
-	
 	enemy_sprites = App->tex->Load("textures/Enemy_Spritesheet.png");
 
 	if (player_entity == nullptr)
@@ -55,13 +64,61 @@ bool j1EntityManager::PreUpdate() {
 	return true;
 }
 
-bool j1EntityManager::Update() 
+bool j1EntityManager::Update(float dt) 
 {
+	if (dt < 1) 
+	{
+		for (uint i = 0; i < MAX_ENEMIES; ++i) 
+		{
+			if (entities[i] != nullptr) 
+			{
+				entities[i]->MoveEntity(dt);
+				entities[i]->Draw(dt);
+				entities[i]->Awake(entity_config);
+			}
+			if (player_entity != nullptr) 
+			{
+				player_entity->MoveEntity(dt);
+				player_entity->Draw(dt);
+			}
+		}
+	}
+	
+	return true;
+}
+
+bool j1EntityManager::PostUpdate() 
+{
+	for (uint i = 0; i < MAX_ENEMIES; ++i) 
+	{
+		if (entities[i] != nullptr) 
+		{
+			if ((abs((int)App->render->camera.y) + SCREEN_HEIGHT + SPAWN_MARGIN) < entities[i]->position.y) 
+			{
+				delete entities[i];
+				entities[i] = nullptr;
+			}
+		}
+	}
+
 	return true;
 }
 
 bool j1EntityManager::CleanUp() 
 {
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
+			delete entities[i];
+			entities[i] = nullptr;
+		}
+		if (queue[i].type != NONE)
+		{
+			queue[i].type = NONE;
+		}
+	}
+
 	return true;
 }
 
@@ -138,4 +195,40 @@ void j1EntityManager::CreateEntity(const EntityInfo& info)
 		}
 	}
 }
+
+void j1EntityManager::CleanUpEnemies()
+{
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (queue[i].type != Entity_Type::NONE)
+		{
+			queue[i].type = Entity_Type::NONE;
+		}
+	}
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (entities[i] != nullptr)
+		{
+			delete entities[i];
+			entities[i] = nullptr;
+		}
+	}
+}
+
+void j1EntityManager::OnCollision(Collider* c1, Collider* c2) 
+{
+
+}
+
+bool j1EntityManager::Load(pugi::xml_node& data) 
+{
+	return true;
+}
+
+bool j1EntityManager::Save(pugi::xml_node& data) const 
+{
+	return true;
+}
+
+SDL_Texture* j1EntityManager::GetEnemySprites() const { return enemy_sprites; }
 

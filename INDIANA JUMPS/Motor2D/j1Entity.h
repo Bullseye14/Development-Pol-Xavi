@@ -5,6 +5,7 @@
 #include "p2Point.h"
 #include "j1Collision.h"
 #include "p2DynArray.h"
+#include "j1Module.h"
 
 struct SDL_Texture;
 
@@ -19,11 +20,11 @@ public:
 
 	const Collider* GetCollider() const;
 
-	virtual bool Awake(pugi::xml_node&) { return true; }
+	virtual bool Awake(pugi::xml_node&);
 
-	virtual void Draw(float dt) { }
+	virtual void Draw(float dt);
 
-	virtual void OnCollision() { }
+	virtual void OnCollision();
 
 	virtual void MoveEntity(float dt) {};
 

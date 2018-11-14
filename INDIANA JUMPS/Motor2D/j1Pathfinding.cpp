@@ -128,7 +128,7 @@ int j1PathFinding::CreatePath(const iPoint& beginning, const iPoint& objective)
 				{
 					uint point_dist = neighbors[i].DistanceTo(goal);
 
-					if (App->map->MovementCost(neighbors[i].x, neighbors[i].y) > 0 && App->entity_m->zombie_entity)
+					if (App->map->MovementCost(neighbors[i].x, neighbors[i].y) > 0/* && App->entity_m->zombie_entity*/)
 					{
 						if (visited.find(neighbors[i]) == -1 && breadcrumbs.find(neighbors[i]) == -1)
 						{
@@ -138,7 +138,7 @@ int j1PathFinding::CreatePath(const iPoint& beginning, const iPoint& objective)
 							breadcrumbs.add(curr);
 						}
 					}
-					if (App->map->MovementCost(neighbors[i].x, neighbors[i].y) >= 0 && App->entity_m->bird_entity)
+					if (App->map->MovementCost(neighbors[i].x, neighbors[i].y) >= 0/* && App->entity_m->bird_entity*/)
 					{
 						if (visited.find(neighbors[i]) == -1 && breadcrumbs.find(neighbors[i]) == -1)
 						{

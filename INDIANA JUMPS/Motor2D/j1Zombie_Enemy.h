@@ -4,8 +4,12 @@
 #include "j1Entity.h"
 #include "p2Point.h"
 #include "Animation.h"
+#include "j1Entity.h"
+#include "j1EntityManager.h"
+#include "j1App.h"
+#include "j1Pathfinding.h"
+#include "j1Textures.h"
 
-struct SDL_Texture;
 
 class j1Zombie_Enemy : public Entity
 {
@@ -13,16 +17,21 @@ public:
 	j1Zombie_Enemy(int x, int y);
 	~j1Zombie_Enemy();
 
-	bool Start();
-	bool Update(float dt);
-	bool CleanUp();
+	bool Awake();
+	void MoveEntity(float dt);
+	void Draw(float dt);
 
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&) const;
+private:
+	Animation walk_left;
+	Animation walk_right;
+	Animation dying;
 
-public:
+	uint c = 0;
 
-	fPoint initial_pos;
+	bool move = false;
+	bool die = false;
+	
+	fPoint position;
 
 };
 

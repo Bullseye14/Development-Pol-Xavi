@@ -5,6 +5,9 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "j1EntityManager.h"
+
+#define COST_MAP 100
 
 // TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
@@ -130,12 +133,20 @@ public:
 public:
 
 	MapData data;
+	SDL_Rect collider;
+	uint cost_so_far[COST_MAP][COST_MAP];
 
 private:
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
-	bool				map_loaded;
+	bool				map_loaded = false;
+
+	//p2PQueue<iPoint>	frontier;
+	//p2List<iPoint>		visited;
+	//p2List<iPoint>		breadcrumbs;
+	//p2DynArray<iPoint>	path;
+	//SDL_Texture*		tile_x = nullptr;
 };
 
 #endif // __j1MAP_H__

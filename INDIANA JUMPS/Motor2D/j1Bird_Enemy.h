@@ -2,13 +2,14 @@
 #define __BIRDENEMY_H__
 
 #include "j1Entity.h"
-#include "j1App.h"
 #include "p2Point.h"
 #include "Animation.h"
+#include "j1Entity.h"
 #include "j1EntityManager.h"
+#include "j1App.h"
+#include "j1Pathfinding.h"
 #include "j1Textures.h"
 
-struct SDL_Texture;
 
 class j1Bird_Enemy : public Entity
 {
@@ -16,15 +17,20 @@ public:
 	j1Bird_Enemy(int x, int y);
 	~j1Bird_Enemy();
 
-	bool Start();
-	bool Update(float dt);
-	bool CleanUp();
+	bool Awake();
+	void MoveEntity(float dt);
+	void Draw(float dt);
 
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&) const;
+private:
+	Animation fly_left;
+	Animation fly_right;
 
-public:
-	fPoint initial_pos;
+	uint c = 0;
+
+	bool move = false;
+	bool die = false;
+
+	fPoint position;
 
 };
 
