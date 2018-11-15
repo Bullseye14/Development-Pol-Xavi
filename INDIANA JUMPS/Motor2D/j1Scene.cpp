@@ -45,11 +45,27 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	// Calling the function to load the map
-	App->map->Load(mapList.start->data->map_name.GetString());
+	//App->map->Load(mapList.start->data->map_name.GetString());
 	App->entity_m->Start();
 	float dt;
+
+	if (current_level->data->level == 1) 
+	{
+		App->map->Load("desert_map_new.tmx");
+		App->entity_m->Start();
+		App->entity_m->AddEnemy(ZOMBIE, 1000, 200);
+		App->entity_m->AddEnemy(BIRD, 1000, 0);
+	}
+
+	if (current_level->data->level == 2)
+	{
+		App->map->Load("forest_map_new.tmx");
+		App->entity_m->Start();
+		App->entity_m->AddEnemy(ZOMBIE, 1000, 200);
+		App->entity_m->AddEnemy(BIRD, 1000, 0);
+	}
 	
-	img = App->entity_m->player_entity->spritesheet;
+	//img = App->entity_m->player_entity->spritesheet;
 
 	return true;
 }
@@ -62,10 +78,7 @@ bool j1Scene::PreUpdate()
 
 // Called each loop iteration
 bool j1Scene::Update(float dt)
-{
-	App->entity_m->AddEnemy(ZOMBIE, 10, 200);
-	App->entity_m->AddEnemy(BIRD, 100, 200);
-	
+{	
 	// Load game
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
 	{

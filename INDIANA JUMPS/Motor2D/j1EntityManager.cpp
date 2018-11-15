@@ -195,6 +195,80 @@ void j1EntityManager::CreateEntity(const EntityInfo& info)
 	}
 }
 
+void j1EntityManager::OnCollision(Collider* c1, Collider* c2) 
+{
+	// PLAYER & WALL
+	if (c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_SLIDE || c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL)
+	{
+		// touches from above
+		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10)) 
+		{ 
+			App->entity_m->player_entity->from_up = true; 
+		}
+		// touches from right
+		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10)) 
+		{ 
+			App->entity_m->player_entity->from_right = true;
+		}
+		// touches from left
+		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10)) 
+		{ 
+			App->entity_m->player_entity->from_left = true;
+		}
+		// touches from bottom
+		else if ((c2->rect.y + (c2->rect.h)) < (c1->rect.y + 10)) 
+		{
+			App->entity_m->player_entity->from_down = true;
+		}
+	}
+	
+	// PLAYER && DEATH
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH || c2->type == COLLIDER_ENEMY)
+	{
+		App->entity_m->player_entity->death = true;
+	}
+
+	// PLAYER && END
+	if ((c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_GOD || c1->type==COLLIDER_SLIDE) && c2->type == COLLIDER_END)
+	{
+		App->entity_m->player_entity->won = true;
+		App->entity_m->player_entity->start_freefalling = true;
+		App->entity_m->player_entity->current_animation_player = &App->entity_m->player_entity->jump;
+	}
+	
+	if (c1->type == COLLIDER_SLIDE && c2->type == COLLIDER_ENEMY) 
+	{
+		App->entity_m->player_entity->death = false;
+		c2->to_delete = true;
+		// Still not created:
+		// App->enemy->Dies();
+	}
+
+	// SLIDE && DEATH
+	if (c1->type == COLLIDER_SLIDE && c2->type == COLLIDER_DEATH)
+	{
+		App->entity_m->player_entity->death = true;
+	}
+
+	// GOD && WALL or DEATH (is the same, GOD can walk through death)
+	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_WALL || c2->type == COLLIDER_DEATH)
+	{
+		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
+		{
+			App->entity_m->player_entity->from_up = true;
+		}
+		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10))
+		{
+			App->entity_m->player_entity->from_right = true;
+		}
+		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10))
+		{
+			App->entity_m->player_entity-> from_left = true;
+		}
+	}
+
+}
+
 void j1EntityManager::CleanUpEnemies()
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
@@ -212,11 +286,6 @@ void j1EntityManager::CleanUpEnemies()
 			entities[i] = nullptr;
 		}
 	}
-}
-
-void j1EntityManager::OnCollision(Collider* c1, Collider* c2) 
-{
-
 }
 
 bool j1EntityManager::Load(pugi::xml_node& data) 

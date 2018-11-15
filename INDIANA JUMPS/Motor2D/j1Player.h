@@ -37,6 +37,15 @@ public:
 
 	float getX() { return position.x; }
 	float getY() { return position.y; }
+
+	Animation* current_animation_player = nullptr;
+	Animation idle;
+	Animation run;
+	Animation run_left;
+	Animation jump;
+	Animation jump_left;
+	Animation slide_l;
+	Animation slide_r;
 	
 //	 Save and Load
 //	bool Load(pugi::xml_node&);
@@ -77,15 +86,6 @@ public:
 	SDL_Rect rect_player;
 
 private:
-
-//	Animation* current_animation = nullptr;
-	Animation idle;
-	Animation run;
-	Animation run_left;
-	Animation jump;
-	Animation jump_left;
-	Animation slide_l;
-	Animation slide_r;
 
 	SDL_Texture* graphics = nullptr;
 

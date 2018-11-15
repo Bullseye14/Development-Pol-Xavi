@@ -17,7 +17,7 @@ j1Player::j1Player(int x, int y) : Entity(x, y)
 {
 //	name.create("player");
 	App->entity_m->player_active = true;
-	current_animation = NULL;
+	current_animation_player = current_animation = NULL;
 	graphics = NULL;
 
 	// Loading all animations
@@ -186,6 +186,10 @@ void j1Player::MoveEntity(float dt)
 				speed.y = -jumpforce;
 			}
 		}
+	}
+	else if (start_freefalling == true) 
+	{
+
 	}
 
 	// Updating the hitbox
