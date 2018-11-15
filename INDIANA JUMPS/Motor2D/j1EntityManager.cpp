@@ -35,8 +35,7 @@ j1EntityManager::~j1EntityManager()
 
 bool j1EntityManager::Start() 
 {
-	enemy_sprites = App->tex->Load("textures/Enemy_Spritesheet.png");
-	player_sprites = App->tex->Load("textures/Spritesheet.png");
+	enemy_sprites = App->tex->Load("textures/Enemies_Spritesheet.png");
 
 	if (player_entity == nullptr)
 	{
@@ -298,5 +297,8 @@ bool j1EntityManager::Save(pugi::xml_node& data) const
 	return true;
 }
 
-SDL_Texture* j1EntityManager::GetEnemySprites() const { return enemy_sprites; }
+SDL_Texture* j1EntityManager::GetEnemySprites() const 
+{ 
+	return enemy_sprites; 
+}
 

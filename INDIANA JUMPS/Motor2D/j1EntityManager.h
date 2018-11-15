@@ -56,6 +56,8 @@ public:
 	EntityInfo queue[MAX_ENTITIES];
 	Entity* entities[MAX_ENTITIES];
 
+	SDL_Texture* enemy_sprites = nullptr;
+
 	pugi::xml_node entity_config;
 	pugi::xml_document config_file;
 
@@ -68,7 +70,6 @@ public:
 	SDL_Texture* GetEnemySprites() const;
 
 private:
-	SDL_Texture* enemy_sprites = nullptr;
 	SDL_Texture* player_sprites = nullptr;
 };
 

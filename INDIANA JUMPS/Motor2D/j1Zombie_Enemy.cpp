@@ -4,11 +4,57 @@ j1Zombie_Enemy::j1Zombie_Enemy(int x, int y) : Entity(x,y)
 {
 	App->entity_m->zombie_active = true;
 
-	walk_left.PushBack({ 0,0,0,0 });
+	walk_left.PushBack({ 0,0,64,64 });
+	walk_left.PushBack({ 64,0,64,64 });
+	walk_left.PushBack({ 0,64,64,64 });
+	walk_left.PushBack({ 64,64,64,64 });
+	walk_left.PushBack({ 0,128,64,64 });
+	walk_left.PushBack({ 64,128,64,64 });
+	walk_left.PushBack({ 0,192,64,64 });
+	walk_left.PushBack({ 64,192,64,64 });
+	walk_left.PushBack({ 0,256,64,64 });
+	walk_left.PushBack({ 64,256,64,64 });
+	walk_left.loop = true;
 
-	walk_right.PushBack({ 0,0,0,0 });
+	walk_right.PushBack({ 192,0,64,64 });
+	walk_right.PushBack({ 128,0,64,64 });	
+	walk_right.PushBack({ 192,64,64,64 });
+	walk_right.PushBack({ 128,64,64,64 });
+	walk_right.PushBack({ 192,128,64,64 });
+	walk_right.PushBack({ 128,128,64,64 });
+	walk_right.PushBack({ 192,192,64,64 });
+	walk_right.PushBack({ 128,192,64,64 });
+	walk_right.PushBack({ 192,256,64,64 });
+	walk_right.PushBack({ 128,256,64,64 });
+	walk_right.loop = true;
 
-	dying.PushBack({ 0,0,0,0 });
+	die_left.PushBack({ 256,0,64,64 });
+	die_left.PushBack({ 320,0,64,64 });
+	die_left.PushBack({ 256,64,64,64 });
+	die_left.PushBack({ 320,64,64,64 });
+	die_left.PushBack({ 256,128,64,64 });
+	die_left.PushBack({ 320,128,64,64 });
+	die_left.PushBack({ 256,192,64,64 });
+	die_left.PushBack({ 320,192,64,64 });
+	die_left.PushBack({ 256,256,64,64 });
+	die_left.PushBack({ 320,256,64,64 });
+	die_left.PushBack({ 256,320,64,64 });
+	die_left.PushBack({ 320,320,64,64 });
+	die_left.loop = true;
+
+	die_right.PushBack({ 448,0,64,64 });
+	die_right.PushBack({ 384,0,64,64 });
+	die_right.PushBack({ 448,64,64,64 });
+	die_right.PushBack({ 384,64,64,64 });
+	die_right.PushBack({ 448,128,64,64 });
+	die_right.PushBack({ 384,128,64,64 });
+	die_right.PushBack({ 448,192,64,64 });
+	die_right.PushBack({ 384,192,64,64 });
+	die_right.PushBack({ 448,256,64,64 });
+	die_right.PushBack({ 384,256,64,64 });
+	die_right.PushBack({ 448,320,64,64 });
+	die_right.PushBack({ 384,320,64,64 });
+	die_right.loop = true;
 
 	current_animation = &walk_left;
 
@@ -18,16 +64,14 @@ j1Zombie_Enemy::j1Zombie_Enemy(int x, int y) : Entity(x,y)
 
 }
 
-bool j1Zombie_Enemy::Awake() 
+bool j1Zombie_Enemy::Awake(pugi::xml_node& config) 
 {
-	pugi::xml_document	config_file;
-	pugi::xml_node		config;
-
-	config = App->LoadConfig(config_file);
+	config = App->LoadConfig(App->entity_m->config_file);
 
 	config = config.child("entities").child("zombie");
-	// TODO
-	// Valors del Zombie per llegir del config file
+
+	speed.x = config.child("speed").attribute("x").as_int();
+	speed.y = config.child("speed").attribute("y").as_int();
 
 	return true;
 }
@@ -98,5 +142,5 @@ void j1Zombie_Enemy::Draw(float dt)
 {
 	current_animation->speed = 10.f*dt;
 	collider->SetPos(position.x, position.y);
-	App->render->Blit(App->entity_m->GetEnemySprites(),position.x,position.y, &(current_animation->GetCurrentFrame()));
+	App->render->Blit(App->entity_m->GetEnemySprites(), position.x, position.y, &(current_animation->GetCurrentFrame()));
 }

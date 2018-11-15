@@ -5,9 +5,17 @@ j1Bird_Enemy::j1Bird_Enemy(int x, int y) : Entity(x, y)
 {
 	App->entity_m->bird_active = true;
 
-	fly_left.PushBack({ 0,0,0,0 });
+	fly_right.PushBack({ 0,320,64,64 });
+	fly_right.PushBack({ 64,320,64,64 });
+	fly_right.PushBack({ 128,320,64,64 });
+	fly_right.PushBack({ 192,320,64,64 });
+	fly_right.loop = true;
 
-	fly_right.PushBack({ 0,0,0,0 });
+	fly_left.PushBack({ 0,384,64,64 });
+	fly_left.PushBack({ 64,384,64,64 });
+	fly_left.PushBack({ 128,384,64,64 });
+	fly_left.PushBack({ 192,384,64,64 });
+	fly_left.loop = true;
 
 	current_animation = &fly_right;
 

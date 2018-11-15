@@ -24,7 +24,10 @@ const Collider* Entity::GetCollider() const
 
 void Entity::Draw(float dt) 
 {
-	
+	for (int i = 0; App->entity_m->entities[i]; ++i) 
+	{
+		App->render->Blit(App->entity_m->entities[i]->spritesheet, App->entity_m->entities[i]->position.x, App->entity_m->entities[i]->position.y, &App->entity_m->entities[i]->current_animation->GetCurrentFrame());
+	}
 }
 
 void Entity::OnCollision() 

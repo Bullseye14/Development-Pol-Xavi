@@ -17,14 +17,15 @@ public:
 	j1Zombie_Enemy(int x, int y);
 	~j1Zombie_Enemy();
 
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 	void MoveEntity(float dt);
 	void Draw(float dt);
 
 private:
 	Animation walk_left;
 	Animation walk_right;
-	Animation dying;
+	Animation die_left;
+	Animation die_right;
 
 	uint c = 0;
 

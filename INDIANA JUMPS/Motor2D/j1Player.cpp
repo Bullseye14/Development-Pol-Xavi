@@ -34,69 +34,55 @@ j1Player::j1Player(int x, int y) : Entity(x, y)
 
 j1Player::~j1Player()
 {
-	if (playerHitbox != nullptr) 
+	if (collider != nullptr) 
 	{
-		playerHitbox->to_delete = true;
+		collider->to_delete = true;
 	}
 }
 
 bool j1Player::Start()
 {
-	playerHitbox = App->collision->AddCollider({ (int)position.x, (int)position.y, 32, 64 }, COLLIDER_PLAYER, (j1Module*)App->entity_m);
+	collider = App->collision->AddCollider({ (int)position.x, (int)position.y, 32, 64 }, COLLIDER_PLAYER, (j1Module*)App->entity_m);
+	
 	// Spritesheet
-	if (spritesheet == nullptr)
-	{
-		spritesheet = App->tex->Load("textures/Spritesheet.png");
-	}
-
-	start_freefalling = true;
-	won = false;
-
-	// When loading a new level, initial postition
-	pos_player.x = pos_initial.x;
-	pos_player.y = pos_initial.y;
-
-	// Initial values
-	current_animation = &jump;
-
-	if (start_freefalling == true)
-	{
-		speed.x = 0;
-		current_animation = &jump;
-	}
+	spritesheet = App->tex->Load("textures/Spritesheet.png");
 
 	return true;
 }
 
 bool j1Player::Awake(pugi::xml_node& config)
 {
-	//j1Player* player = (j1Player*)App->entity_m->CreateEntity(Types::PLAYER);
+	pugi::xml_document	config_file;
+	pugi::xml_node		config2;
 
-	// Reading initial values from xml
-	pos_player.x = config.child("pos").attribute("x").as_int();
-	pos_player.y = config.child("pos").attribute("y").as_int();
-	speed.x = config.child("speed").attribute("x").as_int();
-	speed.y = config.child("speed").attribute("y").as_int();
-	from_up = config.child("fromup").attribute("value").as_bool();
-	from_down = config.child("fromdown").attribute("value").as_bool();
-	from_left = config.child("fromleft").attribute("value").as_bool();
-	from_right = config.child("fromright").attribute("value").as_bool();
-	jumping = config.child("jumping").attribute("value").as_bool();
-	onfloor = config.child("onfloor").attribute("value").as_bool();
-	max_speed_y = config.child("max_speed_y").attribute("value").as_float();
-	jumpforce = config.child("jumpforce").attribute("value").as_float();
-	death = config.child("death").attribute("value").as_bool();
-	won = config.child("won").attribute("value").as_bool();
-	start_freefalling = config.child("start_freefalling").attribute("value").as_bool();
-	sliding = config.child("sliding").attribute("value").as_bool();
-	max_speed_x = config.child("max_speed_x").attribute("value").as_float();
-	slidingforce = config.child("slidingforce").attribute("value").as_float();
-	speed_slide = config.child("speed_slide").attribute("value").as_float();
+	config2 = App->LoadConfig(config_file);
+
+	config2 = config2.child("enitities").child("player");
+
+	position.x = config2.child("pos").attribute("x").as_int();
+	position.y = config2.child("pos").attribute("y").as_int();
+	speed.x = config2.child("speed").attribute("x").as_int();
+	speed.y = config2.child("speed").attribute("y").as_int();
+	from_up = config2.child("fromup").attribute("value").as_bool();
+	from_down = config2.child("fromdown").attribute("value").as_bool();
+	from_left = config2.child("fromleft").attribute("value").as_bool();
+	from_right = config2.child("fromright").attribute("value").as_bool();
+	jumping = config2.child("jumping").attribute("value").as_bool();
+	onfloor = config2.child("onfloor").attribute("value").as_bool();
+	max_speed_y = config2.child("max_speed_y").attribute("value").as_float();
+	jumpforce = config2.child("jumpforce").attribute("value").as_float();
+	death = config2.child("death").attribute("value").as_bool();
+	won = config2.child("won").attribute("value").as_bool();
+	start_freefalling = config2.child("start_freefalling").attribute("value").as_bool();
+	sliding = config2.child("sliding").attribute("value").as_bool();
+	max_speed_x = config2.child("max_speed_x").attribute("value").as_float();
+	slidingforce = config2.child("slidingforce").attribute("value").as_float();
+	speed_slide = config2.child("speed_slide").attribute("value").as_float();
 
 	return true;
 }
 
-void j1Player::MoveEntity(float dt) 
+void j1Player::MoveEntity(float dt)
 {
 	dt = dt / 1000;
 
@@ -108,7 +94,7 @@ void j1Player::MoveEntity(float dt)
 	slide_l.speed = 10.f*dt;
 	slide_r.speed = 10.f*dt;
 
-	if (start_freefalling == false)
+	//if (start_freefalling == false)
 	{
 		//MOVEMENT OF THE PLAYER
 
@@ -116,7 +102,6 @@ void j1Player::MoveEntity(float dt)
 		{
 			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && onfloor == true && from_left == false)
 			{
-				// TODO : Timer
 				mov = MOVING;
 				dir_x = SLIDE_R;
 				speed.x = slidingforce;
@@ -128,7 +113,7 @@ void j1Player::MoveEntity(float dt)
 				sliding = false;
 				mov = MOVING;
 				dir_x = RIGHT;				// Player moving to the right
-				speed.x = 5;
+				speed.x = 5 * dt;
 			}
 		}
 
@@ -147,7 +132,7 @@ void j1Player::MoveEntity(float dt)
 				sliding = false;
 				mov = MOVING;
 				dir_x = LEFT;				// Player moving to the left
-				speed.x = -5;
+				speed.x = -5 * dt;
 			}
 		}
 
@@ -187,13 +172,9 @@ void j1Player::MoveEntity(float dt)
 			}
 		}
 	}
-	else if (start_freefalling == true) 
-	{
-
-	}
 
 	// Updating the hitbox
-	playerHitbox->SetPos(pos_player.x + 16, pos_player.y);
+	//collider->SetPos(pos_player.x + 16, pos_player.y);
 
 	if (falling == true && current_animation != &jump)
 	{
@@ -209,27 +190,82 @@ void j1Player::MoveEntity(float dt)
 		GodMode = !GodMode;
 		if (GodMode == true)
 		{
-			playerHitbox->type = COLLIDER_GOD;
+			collider->type = COLLIDER_GOD;
 		}
 		else if (GodMode == false)
 		{
-			playerHitbox->type = COLLIDER_PLAYER;
+			collider->type = COLLIDER_PLAYER;
 		}
 	}
 
+	if (jumping == true)
+	{
+		current_animation = &jump;
+		speed.y -= 2.0f * dt;
+		if (speed.y <= max_speed_y)
+		{
+			jumping = false;
+		}
+	}
+	else if (!from_up)
+	{
+		current_animation = &jump;
+		if (GodMode == false)
+			speed.y = 7.0f * dt;			// Falling
+		else
+			speed.y = 2.5f * dt;
+	}
+	else if (from_up)
+	{
+		speed.y = 0;
+		onfloor = true;
+		current_animation = &idle;		// Touching floor
+		doublejump = 2 * dt;
+		start_freefalling = false;
+	}
 
-	if (sliding == true)
+	if (from_left)						// Colliding from left
 	{
-		playerHitbox->type = COLLIDER_SLIDE;
+		if (speed.x < 0) { speed.x = 0; }
 	}
-	else if (GodMode == true)
+
+	if (from_right)						// Colliding from right
 	{
-		playerHitbox->type = COLLIDER_GOD;
+		if (speed.x > 0) { speed.x = 0; }
 	}
-	else
+
+	if (death == true)					// Player dies
 	{
-		playerHitbox->type = COLLIDER_PLAYER;
+		death = false;
+		//		Respawn();
 	}
+
+	if (won == true)
+	{
+		if (App->scene->current_level->data->level == 1)
+		{
+			App->scene->LoadLevel(2); // Switching between levels when winning
+		}
+		else if (App->scene->current_level->data->level == 2)
+			App->scene->LoadLevel(1);
+
+
+		if (sliding == true)
+		{
+			collider->type = COLLIDER_SLIDE;
+		}
+		else if (GodMode == true)
+		{
+			collider->type = COLLIDER_GOD;
+		}
+		else
+		{
+			collider->type = COLLIDER_PLAYER;
+		}
+	}
+
+	position.x += speed.x;
+	position.y += speed.y;
 }
 
 void j1Player::Jump(float dt) 
@@ -263,7 +299,7 @@ void j1Player::Jump(float dt)
 
 void j1Player::Draw(float dt) 
 {
-	playerHitbox->SetPos(position.x, position.y);
+	collider->SetPos(position.x, position.y);
 	App->render->Blit(spritesheet, position.x, position.y, &(current_animation->GetCurrentFrame()));
 }
 
@@ -524,56 +560,56 @@ void j1Player::Draw(float dt)
 //
 //void j1Player::Check_Collision() 
 //{
-//	if (jumping == true)
-//	{
-//		current_animation = &jump;
-//		speed.y -= 2.0f;
-//		if (speed.y <= max_speed_y) 
-//		{
-//			jumping = false;
-//		}
-//	}
-//	else if (!from_up)
-//	{
-//		current_animation = &jump;
-//		if (GodMode == false)
-//			speed.y = 7.0f;			// Falling
-//		else
-//			speed.y = 2.5f;
-//	}
-//	else if (from_up)
-//	{
-//		speed.y = 0;
-//		onfloor = true;
-//		current_animation = &idle;		// Touching floor
-//		doublejump = 2;
-//		start_freefalling = false;
-//	}
-//	
-//	if (from_left)						// Colliding from left
-//	{
-//		if (speed.x < 0) { speed.x = 0; }
-//	}
-//	
-//	if (from_right)						// Colliding from right
-//	{
-//		if (speed.x > 0) { speed.x = 0; }
-//	}
-//	
-//	if (death == true)					// Player dies
-//	{
-//		death = false;
-//		Respawn();
-//	}
-//
-//	if (won == true) 
-//	{
-//		if (App->scene->current_level->data->level == 1) 
-//		{
-//			App->scene->LoadLevel(2); // Switching between levels when winning
-//		}
-//		else if(App->scene->current_level->data->level == 2)
-//			App->scene->LoadLevel(1);
+	//if (jumping == true)
+	//{
+	//	current_animation = &jump;
+	//	speed.y -= 2.0f;
+	//	if (speed.y <= max_speed_y) 
+	//	{
+	//		jumping = false;
+	//	}
+	//}
+	//else if (!from_up)
+	//{
+	//	current_animation = &jump;
+	//	if (GodMode == false)
+	//		speed.y = 7.0f;			// Falling
+	//	else
+	//		speed.y = 2.5f;
+	//}
+	//else if (from_up)
+	//{
+	//	speed.y = 0;
+	//	onfloor = true;
+	//	current_animation = &idle;		// Touching floor
+	//	doublejump = 2;
+	//	start_freefalling = false;
+	//}
+	//
+	//if (from_left)						// Colliding from left
+	//{
+	//	if (speed.x < 0) { speed.x = 0; }
+	//}
+	//
+	//if (from_right)						// Colliding from right
+	//{
+	//	if (speed.x > 0) { speed.x = 0; }
+	//}
+	//
+	//if (death == true)					// Player dies
+	//{
+	//	death = false;
+	//	Respawn();
+	//}
+
+	//if (won == true) 
+	//{
+	//	if (App->scene->current_level->data->level == 1) 
+	//	{
+	//		App->scene->LoadLevel(2); // Switching between levels when winning
+	//	}
+	//	else if(App->scene->current_level->data->level == 2)
+	//		App->scene->LoadLevel(1);
 //	}
 //}
 //
@@ -653,6 +689,6 @@ void j1Player::Draw(float dt)
 //
 //void j1Player::Move() 
 //{
-//	pos_player.x += speed.x;
-//	pos_player.y += speed.y;
+	//pos_player.x += speed.x;
+	//pos_player.y += speed.y;
 //}

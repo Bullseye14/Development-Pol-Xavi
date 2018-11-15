@@ -53,8 +53,8 @@ bool j1Scene::Start()
 	{
 		App->map->Load("desert_map_new.tmx");
 		App->entity_m->Start();
-		App->entity_m->AddEnemy(ZOMBIE, 1000, 200);
-		App->entity_m->AddEnemy(BIRD, 1000, 0);
+		App->entity_m->AddEnemy(ZOMBIE, 500, 200);
+		App->entity_m->AddEnemy(BIRD, 500, 15);
 	}
 
 	if (current_level->data->level == 2)
@@ -169,7 +169,7 @@ void j1Scene::LoadLevel(int number)
 		//Starting the level & player
 
 		App->map->Load(current_level->data->map_name.GetString());
-		App->entity_m->player_entity->playerHitbox = nullptr;
+		App->entity_m->player_entity->collider = nullptr;
 //		App->player->Start();
 	}
 }

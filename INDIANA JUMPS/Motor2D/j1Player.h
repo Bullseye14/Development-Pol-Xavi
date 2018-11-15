@@ -57,8 +57,6 @@ public:
 
 public:
 
-	Collider* playerHitbox = nullptr;
-
 	MOVEMENT mov = STOPPED;
 	DIRECTION_X dir_x = CENTER_X;
 	DIRECTION_Y dir_y = CENTER_Y;
