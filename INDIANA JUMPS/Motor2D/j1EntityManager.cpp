@@ -9,7 +9,6 @@
 #include "j1Render.h"
 #include "j1Scene.h"
 
-
 #define SPAWN_MARGIN 100
 
 j1EntityManager::j1EntityManager()
@@ -34,6 +33,7 @@ j1EntityManager::~j1EntityManager()
 bool j1EntityManager::Start() 
 {
 	enemy_sprites = App->tex->Load("textures/Enemy_Spritesheet.png");
+	player_sprites = App->tex->Load("textures/Spritesheet.png");
 
 	if (player_entity == nullptr)
 	{
@@ -47,17 +47,16 @@ bool j1EntityManager::Start()
 	return true;
 }
 
-bool j1EntityManager::PreUpdate() {
+bool j1EntityManager::PreUpdate() 
+{
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (queue[i].type != Entity_Type::NONE)
 		{
 			if (queue[i].x * SCREEN_SIZE < App->render->camera.x + (App->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN)
 			{
-
 				CreateEntity(queue[i]);
 				queue[i].type = Entity_Type::NONE;
-
 			}
 		}
 	}
@@ -95,7 +94,7 @@ bool j1EntityManager::PostUpdate()
 		{
 			if ((abs((int)App->render->camera.y) + SCREEN_HEIGHT + SPAWN_MARGIN) < entities[i]->position.y) 
 			{
-				delete entities[i];
+				//delete entities[i];
 				entities[i] = nullptr;
 			}
 		}
@@ -151,8 +150,6 @@ bool j1EntityManager::CleanUp()
 	return ret;
 }*/
 
-//void j1EntityManager::DestroyEntity(Entity* entity) 
-
 bool j1EntityManager::AddEnemy(Entity_Type type, int x, int y)
 {
 	bool ret = false;
@@ -172,7 +169,6 @@ bool j1EntityManager::AddEnemy(Entity_Type type, int x, int y)
 
 	return ret;
 }
-
 
 void j1EntityManager::CreateEntity(const EntityInfo& info)
 {

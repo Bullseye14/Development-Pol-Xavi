@@ -48,7 +48,7 @@ void j1Bird_Enemy::MoveEntity(float dt)
 		c = 0;
 
 		App->pathfinding->CreatePath(EnemyPos, PlayerPos);
-		App->pathfinding->Ground(PlayerPos, path);
+		App->pathfinding->Air(PlayerPos, path);
 
 		move = true;
 	}

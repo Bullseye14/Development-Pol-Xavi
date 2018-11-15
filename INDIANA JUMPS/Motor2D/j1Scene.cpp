@@ -87,11 +87,11 @@ bool j1Scene::Update(float dt)
 	// Start from the beginning of this level
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-//		App->player->Respawn();
+//		App->entity_m->player_entity->Respawn();
 	}
 
 	App->map->Draw();
-	App->render->Blit(img, 0, 0);
+//	App->render->Blit(img, 0, 0);
 
 	return true;
 }
@@ -153,7 +153,7 @@ void j1Scene::LoadLevel(int number)
 		//Starting the level & player
 
 		App->map->Load(current_level->data->map_name.GetString());
-//		App->player->playerHitbox = nullptr;
+		App->entity_m->player_entity->playerHitbox = nullptr;
 //		App->player->Start();
 	}
 }
@@ -169,15 +169,15 @@ void j1Scene::CameraToPlayer()
 	uint w, h;
 	App->win->GetWindowSize(w, h);
 
-/*	if (App->player->pos_player.x < 350) 
+	if (App->entity_m->player_entity->pos_player.x < 350) 
 	{
 		App->render->camera.x = 0;
 	}
-	else if (App->player->pos_player.x > 5710)
+	else if (App->entity_m->player_entity->pos_player.x > 5710)
 	{
 		App->render->camera.x = -5375;
 	}
 	else 
-		App->render->camera.x = -App->player->pos_player.x + w / 3;
-*/	
+		App->render->camera.x = -App->entity_m->player_entity->pos_player.x + w / 3;
+
 }

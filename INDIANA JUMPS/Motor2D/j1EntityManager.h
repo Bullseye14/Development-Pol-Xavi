@@ -71,6 +71,7 @@ public:
 
 private:
 	SDL_Texture* enemy_sprites = nullptr;
+	SDL_Texture* player_sprites = nullptr;
 };
 
 #endif // __ENTITYMANAGER_H__
