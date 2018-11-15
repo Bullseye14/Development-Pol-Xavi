@@ -63,6 +63,9 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	App->entity_m->AddEnemy(ZOMBIE, 10, 200);
+	App->entity_m->AddEnemy(BIRD, 100, 200);
+	
 	// Load game
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
 	{
