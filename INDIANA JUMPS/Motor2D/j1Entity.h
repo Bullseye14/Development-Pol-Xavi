@@ -34,9 +34,11 @@ public:
 	ENTITY_TYPES type;
 	fPoint position;
 	fPoint initialPosition;
-	float speed;
+	fPoint speed;
 	Animation* animation = nullptr;
 	Collider* playerHitbox = nullptr;
+
+	p2DynArray<iPoint> path;
 	
 };
 #endif // __ENTITY_H__ 

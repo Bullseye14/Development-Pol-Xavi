@@ -5,11 +5,15 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "j1EntityManager.h"
+
+#define COST_MAP 100
 
 // TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
 struct MapLayer 
 {
+	inline uint PathLimit(int x, int y) const;
 	p2SString			name;
 	uint				width = 0;
 	uint				height = 0;
@@ -112,6 +116,9 @@ public:
 
 	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
+	iPoint WorldToMap(int x, int y) const;
+
+	int MovementCost(int x, int y) const;
 
 public:
 

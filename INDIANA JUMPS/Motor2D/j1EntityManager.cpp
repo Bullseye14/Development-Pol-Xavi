@@ -59,6 +59,7 @@ bool j1EntityManager::Update(float dt)
 		ent = iterator->data;
 		ret = ent->Update(dt);
 	}
+
 	return true;
 }
 bool j1EntityManager::PostUpdate()

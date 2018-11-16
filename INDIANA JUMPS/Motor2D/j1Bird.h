@@ -43,9 +43,10 @@ public:
 	iPoint margin;
 	iPoint colliderSize;
 
-	float speed;
+	uint c = 0;
 
-	p2DynArray<iPoint>* path;
+	bool move = false;
+	bool die = false;
 
 	bool path_created = false;
 

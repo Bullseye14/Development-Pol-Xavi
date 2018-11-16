@@ -18,12 +18,14 @@ j1Bird::j1Bird(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::B
 	fly_right.PushBack({ 128,320,64,64 });
 	fly_right.PushBack({ 192,320,64,64 });
 	fly_right.loop = true;
+	fly_right.speed = 0.1f;
 
 	fly_left.PushBack({ 0,384,64,64 });
 	fly_left.PushBack({ 64,384,64,64 });
 	fly_left.PushBack({ 128,384,64,64 });
 	fly_left.PushBack({ 192,384,64,64 });
 	fly_left.loop = true;
+	fly_left.speed = 0.1f;
 
 	initialPosition.x = position.x = x;
 	initialPosition.y = position.y = y;
@@ -39,14 +41,97 @@ bool j1Bird::Start()
 
 	animation = &fly_left;
 
-	playerHitbox = App->collision->AddCollider({ (int)position.x, (int)position.y, 64, 64 }, COLLIDER_ENEMY, (j1Module*)App->entity_m);
+	playerHitbox = App->collision->AddCollider({ (int)position.x, (int)position.y, 40, 40 }, COLLIDER_ENEMY, (j1Module*)App->entity_m);
+
+	speed.x = 40;
+	speed.y = 40;
 
 	return true;
 }
 
 bool j1Bird::Update(float dt)
 {
-	playerHitbox->SetPos(position.x, position.y);
+	playerHitbox->SetPos(position.x + 10, position.y + 13);
+	App->render->Blit(graphics, position.x, position.y, &animation->GetCurrentFrame());
+	
+	iPoint EnemyPos = { (int)initialPosition.x + 32, (int)initialPosition.y };
+	iPoint PlayerPos{ (int)App->entity_m->player->position.x + 30, (int)App->entity_m->player->position.y + 46 };
+	
+	App->pathfinding->CreatePath(EnemyPos, PlayerPos);
+	App->pathfinding->Air(PlayerPos, path);
+	
+	position = initialPosition;
+
+	if ((abs(App->entity_m->player->position.x - EnemyPos.x) < 400) && !move)
+	{
+		c = 0;
+
+		App->pathfinding->CreatePath(EnemyPos, PlayerPos);
+		App->pathfinding->Air(PlayerPos, path);
+
+		move = true;
+	}
+
+	if (move)
+	{
+		iPoint objective = { path[c].x,path[c].y };
+
+		animation = &fly_left;
+
+		if (EnemyPos.x < objective.x)
+		{
+			initialPosition.x += speed.x * dt;
+
+			if (EnemyPos.x >= objective.x)
+			{
+				c++;
+				move = false;
+			}
+		}
+
+		else
+		{
+			initialPosition.x -= speed.x*dt;
+			animation = &fly_right;
+
+			if (EnemyPos.x <= objective.x)
+			{
+				c++;
+				move = false;
+			}
+		}
+
+		if (EnemyPos.y < objective.y)
+		{
+			initialPosition.y += speed.y*dt;
+
+			if (EnemyPos.y >= objective.y)
+			{
+				c++;
+				move = false;
+			}
+		}
+
+		else
+		{
+			initialPosition.y -= speed.y*dt;
+
+			if (EnemyPos.y < objective.y)
+			{
+				c++;
+				move = false;
+			}
+		}
+	}
+	else
+	{
+		animation = &fly_left;
+	}
+
+	if (abs(App->entity_m->player->position.x - EnemyPos.x) >= 400)
+	{
+		move = false;
+	}
 
 	return true;
 }

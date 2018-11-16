@@ -50,8 +50,7 @@ bool j1Scene::Start()
 	App->entity_m->CreatePlayer();
 	img = App->entity_m->player->graphics;
 
-
-	App->entity_m->AddEnemy(100, 100, BIRD);
+	App->entity_m->AddEnemy(300, 500, BIRD);
 
 	return true;
 }
