@@ -11,6 +11,7 @@
 #include "j1Player.h"
 #include "j1Collision.h"
 #include "j1PathFinding.h"
+#include "j1Bird.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -45,10 +46,12 @@ bool j1Scene::Start()
 	// Calling the function to load the map
 	App->map->Load(mapList.start->data->map_name.GetString());
 	
+	// Creating the player
 	App->entity_m->CreatePlayer();
 	img = App->entity_m->player->graphics;
 
-	//App->entity_m->AddEnemy()
+
+	App->entity_m->AddEnemy(100, 100, BIRD);
 
 	return true;
 }

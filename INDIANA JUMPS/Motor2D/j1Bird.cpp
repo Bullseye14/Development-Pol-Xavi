@@ -1,6 +1,13 @@
 #include "j1Bird.h"
-#include "j1Textures.h"
 #include "j1App.h"
+#include "j1Textures.h"
+#include "j1Input.h"
+#include "j1Render.h"
+#include "j1Player.h"
+#include "j1Window.h"
+#include "j1Map.h"
+#include "j1Scene.h"
+#include "j1Audio.h"
 #include "j1Collision.h"
 
 
@@ -32,7 +39,7 @@ bool j1Bird::Start()
 
 	animation = &fly_left;
 
-	playerHitbox = App->collision->AddCollider({ (int)position.x - margin.x, (int)position.y - margin.y, colliderSize.x, colliderSize.y }, COLLIDER_ENEMY, App->entity_m);
+	playerHitbox = App->collision->AddCollider({ (int)position.x, (int)position.y, 64, 64 }, COLLIDER_ENEMY, (j1Module*)App->entity_m);
 
 	return true;
 }

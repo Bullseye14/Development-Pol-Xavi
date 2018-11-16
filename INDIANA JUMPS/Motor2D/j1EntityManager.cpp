@@ -93,11 +93,8 @@ void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
 	iterator = entity_list.start;
 	for (iterator; iterator != nullptr; iterator = iterator->next)
 	{
-		if (iterator->data->playerHitbox == c1)
-		{
-			iterator->data->OnCollision(c1, c2);
-			break;
-		}
+		iterator->data->OnCollision(c1, c2);
+		iterator->data->CheckCollision();
 	}
 }
 

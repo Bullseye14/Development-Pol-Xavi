@@ -10,6 +10,7 @@ struct Collider;
 struct Animation;
 struct SDL_Texture;
 enum ENTITY_TYPES;
+
 class j1Entity
 {
 public:
@@ -26,6 +27,7 @@ public:
 	virtual bool Save(pugi::xml_node&) const { return true; };
 	
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
+	virtual void CheckCollision();
 
 	SDL_Texture* graphics = nullptr;
 
