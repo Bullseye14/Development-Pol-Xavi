@@ -14,7 +14,7 @@ j1Player::j1Player(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPE
 {
 	//name.create("player");
 
-	current_animation = NULL;
+	animation = NULL;
 
 	// Loading all animations
 	idle.LoadAnimation("idle");
@@ -76,7 +76,7 @@ bool j1Player::Start()
 	speed.x = 0;
 	speed.y = 0;
 	from_up = false;
-	from_down = false;
+//	from_down = false;
 	from_right = false;
 	from_left = false;
 	jumping = false;
@@ -99,12 +99,12 @@ bool j1Player::Start()
 	pos_player.y = pos_initial.y;
 
 	// Initial values
-	current_animation = &jump;
+	animation = &jump;
 	
 	if (start_freefalling == true) 
 	{
 		speed.x = 0;
-		current_animation = &jump;
+		animation = &jump;
 	}
 		
 	// Player hitbox
@@ -118,12 +118,12 @@ bool j1Player::Update(float dt)
 	from_up = false;
 	from_left = false;
 	from_right = false;
-	from_down = false;
+//	from_down = false;
 
 	// Animations from xml
 	DoAnimations();
 
-	//if (start_freefalling == false)
+	if (start_freefalling == false)
 	{
 		//MOVEMENT OF THE PLAYER
 
@@ -137,6 +137,7 @@ bool j1Player::Update(float dt)
 				speed.x = slidingforce;
 				App->audio->PlayFx(App->audio->slide);
 				sliding = true;
+				animation = &slide_r;
 			}
 			else
 			{
@@ -144,6 +145,7 @@ bool j1Player::Update(float dt)
 				mov = MOVING;
 				dir_x = RIGHT;				// Player moving to the right
 				speed.x = 5;
+				animation = &run;
 			}
 		}
 
@@ -156,6 +158,7 @@ bool j1Player::Update(float dt)
 				speed.x = -slidingforce;
 				App->audio->PlayFx(App->audio->slide);
 				sliding = true;
+				animation = &slide_l;
 			}
 			else
 			{
@@ -163,6 +166,7 @@ bool j1Player::Update(float dt)
 				mov = MOVING;
 				dir_x = LEFT;				// Player moving to the left
 				speed.x = -5;
+				animation = &run_left;
 			}
 		}
 
@@ -204,12 +208,12 @@ bool j1Player::Update(float dt)
 	// Updating the hitbox
 	playerHitbox->SetPos(pos_player.x + 16, pos_player.y);
 
-	if (falling == true && current_animation != &jump)
+	if (falling == true && animation != &jump)
 	{
 		if (dir_x == RIGHT)
-			current_animation = &jump;
+			animation = &jump;
 		else
-			current_animation = &jump_left;
+			animation = &jump_left;
 	}
 
 	// God mode
@@ -247,7 +251,7 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 	// Drawing the player
-	App->render->Blit(graphics, pos_player.x, pos_player.y, &current_animation->GetCurrentFrame());
+	App->render->Blit(graphics, pos_player.x, pos_player.y, &animation->GetCurrentFrame());
 
 	// Checking collisions
 	Check_Collision();
@@ -321,12 +325,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10))
 		{ 
 			from_left = true; 
-		}
-		// touches from bottom
-		else if ((c2->rect.y + (c2->rect.h)) < (c1->rect.y + 10))
-		{
-			from_down = true;
-		}
+		}	
 	}
 	
 	// PLAYER && DEATH
@@ -340,7 +339,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	{
 		won = true;
 		start_freefalling = true;
-		current_animation = &jump;
+		animation = &jump;
 	}
 	
 	if (c1->type == COLLIDER_SLIDE && c2->type == COLLIDER_ENEMY) 
@@ -379,7 +378,7 @@ void j1Player::Check_Collision()
 {
 	if (jumping == true)
 	{
-		current_animation = &jump;
+		animation = &jump;
 		speed.y -= 2.0f;
 		if (speed.y <= max_speed_y) 
 		{
@@ -388,7 +387,7 @@ void j1Player::Check_Collision()
 	}
 	else if (!from_up)
 	{
-		current_animation = &jump;
+		animation = &jump;
 		if (GodMode == false)
 			speed.y = 7.0f;			// Falling
 		else
@@ -398,7 +397,7 @@ void j1Player::Check_Collision()
 	{
 		speed.y = 0;
 		onfloor = true;
-		current_animation = &idle;		// Touching floor
+//		animation = &idle;		// Touching floor
 		doublejump = 2;
 		start_freefalling = false;
 	}
@@ -451,16 +450,16 @@ void j1Player::DoAnimations()
 			switch (dir_x)
 			{
 			case LEFT:
-				current_animation = &run_left;
+				animation = &run_left;
 				break;
 			case RIGHT:
-				current_animation = &run;
+				animation = &run;
 				break;
 			case SLIDE_L:
-				current_animation = &slide_l;
+				animation = &slide_l;
 				break;
 			case SLIDE_R:
-				current_animation = &slide_r;
+				animation = &slide_r;
 				break;
 			default:
 				break;
@@ -472,10 +471,10 @@ void j1Player::DoAnimations()
 			switch (dir_x) 
 			{
 			case LEFT:
-				current_animation = &jump_left;
+				animation = &jump_left;
 				break;
 			case RIGHT:
-				current_animation = &jump;
+				animation = &jump;
 				break;
 			default:
 				break;
@@ -486,16 +485,16 @@ void j1Player::DoAnimations()
 	if (mov == STOPPED)
 	{
 		// is on the floot
-		current_animation = &idle;
+		animation = &idle;
 
 		// is jumping
 		if (onfloor == false) { 
 			switch (dir_x) {
 			case LEFT:
-				current_animation = &jump_left;
+				animation = &jump_left;
 				break;
 			case RIGHT:
-				current_animation = &jump;
+				animation = &jump;
 				break;
 			default:
 				break;
