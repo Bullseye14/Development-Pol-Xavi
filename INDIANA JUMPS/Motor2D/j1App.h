@@ -17,9 +17,9 @@ class j1Audio;
 class j1Scene;
 class j1Map;
 class j1Collision;
+class j1EntityManager;
 class j1FadeToBlack;
 class j1PathFinding;
-class j1EntityManager;
 
 class j1App
 {
@@ -51,14 +51,13 @@ public:
 	const char* GetArgv(int index) const;
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
-	void FPSControl();
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
-	// Load config file
-	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+	void FPSControl();
+	pugi::xml_node LoadEntityVariables(pugi::xml_document&) const;
 
 private:
 
@@ -91,10 +90,10 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1Map*				map;
+	j1EntityManager*	entity_m;
 	j1Collision*		collision;
 	j1FadeToBlack*		fade;
 	j1PathFinding*		pathfinding;
-	j1EntityManager*	entity_m;
 
 private:
 
@@ -124,7 +123,7 @@ private:
 	bool active_cap = true;
 	int max_cap;
 	int cap_ms = -1;
-	p2SString state = "ON";
+	int state = 1;
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S

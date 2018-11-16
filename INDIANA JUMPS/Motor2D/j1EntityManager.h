@@ -1,38 +1,30 @@
-#ifndef __ENTITYMANAGER_H__
-#define __ENTITYMANAGER_H__
-
-#include "j1Entity.h"
+#ifndef __J1ENEMIES_H__
+#define __J1ENEMIES_H__
 #include "j1Module.h"
-#include "j1App.h"
+#include "p2Defs.h"
 #include "p2List.h"
-#include "j1Player.h"
-#include "j1Zombie_Enemy.h"
-#include "j1Bird_Enemy.h"
+#include "p2Point.h"
+#include "j1Entity.h"
+#define MAX_ENEMIES 50
+class j1Entity;
+class j1Player;
+class j1Hook;
+struct SDL_Texture;
 
-#define MAX_ENTITIES 100
-#define MAX_ENEMIES 100
-#define SCREEN_SIZE 1
-
-class Player;
-
-enum Entity_Type {
+enum ENTITY_TYPES
+{
 	NONE,
 	PLAYER,
-	ZOMBIE,
 	BIRD
 };
-
-class Entity;
-
-struct EntityInfo {
-	Entity_Type type = Entity_Type::NONE;
-	int x, y;
+struct EnemyInfo
+{
+	ENTITY_TYPES type = ENTITY_TYPES::NONE;
+	iPoint position;
 };
-
-class j1EntityManager : public j1Module 
+class j1EntityManager : public j1Module
 {
 public:
-
 	j1EntityManager();
 	~j1EntityManager();
 
@@ -42,35 +34,20 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
-	void CleanUpEnemies();
-
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
-
+	j1Entity* CreateEntity(ENTITY_TYPES type, int x = 0, int y = 0);
 	void OnCollision(Collider* c1, Collider* c2);
-	bool AddEnemy(Entity_Type type, int x, int y);
-	void CreateEntity(const EntityInfo& info);
-
-public:
-	j1Player * player_entity = nullptr;
-	EntityInfo queue[MAX_ENTITIES];
-	Entity* entities[MAX_ENTITIES];
-
-	SDL_Texture* enemy_sprites = nullptr;
-
-	pugi::xml_node entity_config;
-	pugi::xml_document config_file;
-
-	p2List<Entity*> entities_list;
-
-	bool player_active = false;
-	bool bird_active = false;
-	bool zombie_active = false;
-
-	SDL_Texture* GetEnemySprites() const;
-
+	void CreatePlayer();
+	void AddEnemy(int x, int y, ENTITY_TYPES type);
 private:
-	SDL_Texture* player_sprites = nullptr;
+	void SpawnEnemy(const EnemyInfo& info);
+public:
+	p2List<j1Entity*>	entity_list;
+	j1Player*			player = nullptr;
+	pugi::xml_document config_file;
+	pugi::xml_node entities_config;
+private:
+	EnemyInfo			queue[MAX_ENEMIES];
 };
-
-#endif // __ENTITYMANAGER_H__
+#endif // __J1ENEMIES_H__ 

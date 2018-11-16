@@ -11,8 +11,6 @@
 #include "j1Player.h"
 #include "j1Collision.h"
 #include "j1PathFinding.h"
-#include "j1EntityManager.h"
-#include "j1Entity.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -45,27 +43,12 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	// Calling the function to load the map
-	//App->map->Load(mapList.start->data->map_name.GetString());
-	App->entity_m->Start();
-	float dt;
-
-	if (current_level->data->level == 1) 
-	{
-		App->map->Load("desert_map_new.tmx");
-		App->entity_m->Start();
-		App->entity_m->AddEnemy(ZOMBIE, 500, 200);
-		App->entity_m->AddEnemy(BIRD, 500, 15);
-	}
-
-	if (current_level->data->level == 2)
-	{
-		App->map->Load("forest_map_new.tmx");
-		App->entity_m->Start();
-		App->entity_m->AddEnemy(ZOMBIE, 1000, 200);
-		App->entity_m->AddEnemy(BIRD, 1000, 0);
-	}
+	App->map->Load(mapList.start->data->map_name.GetString());
 	
-	//img = App->entity_m->player_entity->spritesheet;
+	App->entity_m->CreatePlayer();
+	img = App->entity_m->player->graphics;
+
+	//App->entity_m->AddEnemy()
 
 	return true;
 }
@@ -78,7 +61,7 @@ bool j1Scene::PreUpdate()
 
 // Called each loop iteration
 bool j1Scene::Update(float dt)
-{	
+{
 	// Load game
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
 	{
@@ -103,11 +86,11 @@ bool j1Scene::Update(float dt)
 	// Start from the beginning of this level
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-//		App->entity_m->player_entity->Respawn();
+		App->entity_m->player->Respawn();
 	}
 
 	App->map->Draw();
-//	App->render->Blit(img, 0, 0);
+	App->render->Blit(img, 0, 0);
 
 	return true;
 }
@@ -169,8 +152,8 @@ void j1Scene::LoadLevel(int number)
 		//Starting the level & player
 
 		App->map->Load(current_level->data->map_name.GetString());
-		App->entity_m->player_entity->collider = nullptr;
-//		App->player->Start();
+		App->entity_m->player->playerHitbox = nullptr;
+		App->entity_m->player->Start();
 	}
 }
 
@@ -185,15 +168,15 @@ void j1Scene::CameraToPlayer()
 	uint w, h;
 	App->win->GetWindowSize(w, h);
 
-	if (App->entity_m->player_entity->pos_player.x < 350) 
+	if (App->entity_m->player->pos_player.x < 350) 
 	{
 		App->render->camera.x = 0;
 	}
-	else if (App->entity_m->player_entity->pos_player.x > 5710)
+	else if (App->entity_m->player->pos_player.x > 5710)
 	{
 		App->render->camera.x = -5375;
 	}
 	else 
-		App->render->camera.x = -App->entity_m->player_entity->pos_player.x + w / 3;
-
+		App->render->camera.x = -App->entity_m->player->pos_player.x + w / 3;
+	
 }

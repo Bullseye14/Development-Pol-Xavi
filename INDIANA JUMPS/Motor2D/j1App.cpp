@@ -12,14 +12,10 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1App.h"
-#include "j1Player.h"
 #include "j1Collision.h"
 #include "j1FadeToBlack.h"
 #include "j1PathFinding.h"
 #include "j1EntityManager.h"
-
-#include "Brofiler/Brofiler.h"
-#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -35,9 +31,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	collision = new j1Collision();
+	entity_m = new j1EntityManager();
 	fade = new j1FadeToBlack();
 	pathfinding = new j1PathFinding();
-	entity_m = new j1EntityManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -47,10 +43,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
+	AddModule(entity_m);
 	AddModule(collision);
 	AddModule(fade);
 	AddModule(pathfinding);
-	AddModule(entity_m);
 	
 	// render last to swap buffer
 	AddModule(render);
@@ -86,7 +82,7 @@ bool j1App::Awake()
 
 	bool ret = false;
 		
-	config = LoadConfig(config_file);
+	config = LoadEntityVariables(config_file);
 
 	if(config.empty() == false)
 	{
@@ -161,7 +157,7 @@ bool j1App::Update()
 }
 
 // ---------------------------------------------
-pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
+pugi::xml_node j1App::LoadEntityVariables(pugi::xml_document& config_file) const
 {
 	pugi::xml_node ret;
 
@@ -215,10 +211,9 @@ void j1App::FinishUpdate()
 	float seconds_since_startup = startup_time.ReadSec();
 	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
-
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f  Last Frame Ms: %02u  Last sec frames: %i  Time since startup: %.3f  Frame Count: %lu  Cap Mode: %s",
-		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count, state.GetString());
+	sprintf_s(title, 256, "Av.FPS: %.2f  Last Frame Ms: %02u  Last sec frames: %i  Time since startup: %.3f  Frame Count: %lu",
+		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
 	App->win->SetTitle(title);
 
 	if (cap_ms > 0 && last_frame_ms < cap_ms)
@@ -436,11 +431,11 @@ void j1App::FPSControl() {
 	if (cap_ms > 0)
 	{
 		cap_ms = 0;
-		state = "OFF";
+		state = 0;
 	}
 	else
 	{
 		cap_ms = 1000 / max_cap;
-		state = "ON";
+		state = 1;
 	}
 }

@@ -3096,5 +3096,7 @@
   <object id="231" name="cactus" x="6112" y="416" width="64" height="32"/>
   <object id="232" name="wall" x="4992" y="352" width="95" height="15"/>
   <object id="233" name="wall" x="5120.5" y="287.5" width="95" height="15"/>
+  <object id="236" name="enemy" x="928" y="320" width="64" height="64"/>
+  <object id="237" name="enemy" x="1152" y="320" width="64" height="64"/>
  </objectgroup>
 </map>

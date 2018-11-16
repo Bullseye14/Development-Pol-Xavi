@@ -1,304 +1,177 @@
-#include "Globals.h"
-#include "j1Entity.h"
-#include "j1EntityManager.h"
-#include "j1Player.h"
-#include "j1Zombie_Enemy.h"
-#include "j1Bird_Enemy.h"
-#include "j1Textures.h"
+#include "p2Log.h"
 #include "j1App.h"
+#include "j1Input.h"
 #include "j1Render.h"
+#include "j1Textures.h"
+#include "j1Collision.h"
+#include "j1EntityManager.h"
+#include "j1Entity.h"
 #include "j1Scene.h"
-
-#include "Brofiler/Brofiler.h"
-#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
-
-#define SPAWN_MARGIN 100
+#include "j1Player.h"
 
 j1EntityManager::j1EntityManager()
 {
-	for (uint i = 0; i < MAX_ENTITIES; ++i)
-		entities[i] = nullptr;
-
-	name.create("entities");
+	name.create("EntityManager");
 }
+j1EntityManager::~j1EntityManager() {}
 
-bool j1EntityManager::Awake(pugi::xml_node& config) 
+bool j1EntityManager::Awake(pugi::xml_node& config)
 {
 	config_file.load_file("config.xml");
-	entity_config = config;
-
+	entities_config = config;
 	return true;
 }
 
-j1EntityManager::~j1EntityManager()
-{}
-
-bool j1EntityManager::Start() 
+bool j1EntityManager::Start()
 {
-	enemy_sprites = App->tex->Load("textures/Enemies_Spritesheet.png");
-
-	if (player_entity == nullptr)
+	bool ret = true;
+	j1Entity* ent = nullptr;
+	p2List_item<j1Entity*>* iterator;
+	iterator = entity_list.start;
+	for (iterator; iterator != nullptr && ret == true; iterator = iterator->next)
 	{
-		player_entity = new j1Player(5, 10);
-		player_entity->Awake(entity_config);
-		player_entity->Start();
-	}
-	else
-		player_entity->Start();
-
-	return true;
-}
-
-bool j1EntityManager::PreUpdate() 
-{
-	for (uint i = 0; i < MAX_ENTITIES; ++i)
-	{
-		if (queue[i].type != Entity_Type::NONE)
-		{
-			if (queue[i].x * SCREEN_SIZE < App->render->camera.x + (App->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN)
-			{
-				CreateEntity(queue[i]);
-				queue[i].type = Entity_Type::NONE;
-			}
-		}
+		ent = iterator->data;
+		ret = ent->Start();
 	}
 	return true;
 }
-
-bool j1EntityManager::Update(float dt) 
-{
-	if (dt < 1) 
-	{
-		for (uint i = 0; i < MAX_ENEMIES; ++i) 
-		{
-			if (entities[i] != nullptr) 
-			{
-				entities[i]->MoveEntity(dt);
-				entities[i]->Draw(dt);
-				entities[i]->Awake(entity_config);
-			}
-			if (player_entity != nullptr) 
-			{
-				player_entity->MoveEntity(dt);
-				player_entity->Draw(dt);
-			}
-		}
-	}
-	
-	return true;
-}
-
-bool j1EntityManager::PostUpdate() 
-{
-	for (uint i = 0; i < MAX_ENEMIES; ++i) 
-	{
-		if (entities[i] != nullptr) 
-		{
-			if ((abs((int)App->render->camera.y) + SCREEN_HEIGHT + SPAWN_MARGIN) < entities[i]->position.y) 
-			{
-				delete entities[i];
-				entities[i] = nullptr;
-			}
-		}
-	}
-
-	return true;
-}
-
-bool j1EntityManager::CleanUp() 
+bool j1EntityManager::PreUpdate()
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (entities[i] != nullptr)
+		if (queue[i].type != ENTITY_TYPES::NONE)
 		{
-			delete entities[i];
-			entities[i] = nullptr;
-		}
-		if (queue[i].type != NONE)
-		{
-			queue[i].type = NONE;
+			SpawnEnemy(queue[i]);
+			queue[i].type = ENTITY_TYPES::NONE;
 		}
 	}
-
+	return true;
+}
+bool j1EntityManager::Update(float dt)
+{
+	bool ret = true;
+	j1Entity* ent = nullptr;
+	p2List_item<j1Entity*>* iterator;
+	iterator = entity_list.start;
+	for (iterator; iterator != nullptr && ret == true; iterator = iterator->next)
+	{
+		ent = iterator->data;
+		ret = ent->Update(dt);
+	}
+	return true;
+}
+bool j1EntityManager::PostUpdate()
+{
+	bool ret = true;
+	j1Entity* ent = nullptr;
+	p2List_item<j1Entity*>* iterator;
+	iterator = entity_list.start;
+	for (iterator; iterator != nullptr && ret == true; iterator = iterator->next)
+	{
+		ent = iterator->data;
+		ret = ent->PostUpdate();
+	}
+	return true;
+}
+bool j1EntityManager::CleanUp()
+{
+	p2List_item<j1Entity*>* iterator;
+	iterator = entity_list.start;
+	for (iterator; iterator != nullptr; iterator = iterator->next)
+	{
+		RELEASE(iterator->data);
+	}
+	player = nullptr;
+	entity_list.clear();
 	return true;
 }
 
-/*Entity* j1EntityManager::CreateEntity(Types type, iPoint pos) 
+void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
 {
-	static_assert(Types::NONE == 3, "code needs update");
-	Entity* ret = nullptr;
-	
-	switch (type) 
+	p2List_item<j1Entity*>* iterator;
+	iterator = entity_list.start;
+	for (iterator; iterator != nullptr; iterator = iterator->next)
 	{
-	case Types::PLAYER:
-		ret = new j1Player();
-		player_entity = ret;
-		break;
+		if (iterator->data->playerHitbox == c1)
+		{
+			iterator->data->OnCollision(c1, c2);
+			break;
+		}
+	}
+}
 
-	case Types::ZOMBIE:
-		ret = new j1Zombie_Enemy();
-		break;
-
-	case Types::BIRD:
-		ret = new j1Bird_Enemy();
-		break;
+j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPES type, int x, int y)
+{
+	j1Entity* new_entity = nullptr;
+	if(type == PLAYER)
+	{
+		new_entity = new j1Player(x, y, type);
 	}
 
-	if (ret != nullptr) 
+	if (new_entity != nullptr)
 	{
-		entities_list.add(ret);
+		entity_list.add(new_entity);
 	}
 
-	return ret;
-}*/
-
-bool j1EntityManager::AddEnemy(Entity_Type type, int x, int y)
+	return new_entity;
+}
+void j1EntityManager::AddEnemy(int x, int y, ENTITY_TYPES type)
 {
-	bool ret = false;
-
-	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (queue[i].type == Entity_Type::NONE)
+		if (queue[i].type == ENTITY_TYPES::NONE)
 		{
 			queue[i].type = type;
-			queue[i].x = x;
-			queue[i].y = y;
-
-			ret = true;
-			break;
-		}
-	}
-
-	return ret;
-}
-
-void j1EntityManager::CreateEntity(const EntityInfo& info)
-{
-	uint i = 0;
-	for (; entities[i] != nullptr && i < MAX_ENTITIES; ++i);
-
-	if (i != MAX_ENTITIES)
-	{
-		switch (info.type)
-		{
-		case Entity_Type::PLAYER:
-			entities[i] = new j1Player(info.x, info.y);
-			break;
-		case Entity_Type::ZOMBIE:
-			entities[i] = new j1Zombie_Enemy(info.x, info.y);
-			break;
-		case Entity_Type::BIRD:
-			entities[i] = new j1Bird_Enemy(info.x, info.y);
+			queue[i].position.x = x;
+			queue[i].position.y = y;
 			break;
 		}
 	}
 }
-
-void j1EntityManager::OnCollision(Collider* c1, Collider* c2) 
-{
-	// PLAYER & WALL
-	if (c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_SLIDE || c1->type == COLLIDER_ENEMY && c2->type == COLLIDER_WALL)
-	{
-		// touches from above
-		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10)) 
-		{ 
-			App->entity_m->player_entity->from_up = true; 
-		}
-		// touches from right
-		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10)) 
-		{ 
-			App->entity_m->player_entity->from_right = true;
-		}
-		// touches from left
-		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10)) 
-		{ 
-			App->entity_m->player_entity->from_left = true;
-		}
-		// touches from bottom
-		else if ((c2->rect.y + (c2->rect.h)) < (c1->rect.y + 10)) 
-		{
-			App->entity_m->player_entity->from_down = true;
-		}
-	}
-	
-	// PLAYER && DEATH
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_DEATH || c2->type == COLLIDER_ENEMY)
-	{
-		App->entity_m->player_entity->death = true;
-	}
-
-	// PLAYER && END
-	if ((c1->type == COLLIDER_PLAYER || c1->type == COLLIDER_GOD || c1->type==COLLIDER_SLIDE) && c2->type == COLLIDER_END)
-	{
-		App->entity_m->player_entity->won = true;
-		App->entity_m->player_entity->start_freefalling = true;
-		App->entity_m->player_entity->current_animation_player = &App->entity_m->player_entity->jump;
-	}
-	
-	if (c1->type == COLLIDER_SLIDE && c2->type == COLLIDER_ENEMY) 
-	{
-		App->entity_m->player_entity->death = false;
-		c2->to_delete = true;
-		// Still not created:
-		// App->enemy->Dies();
-	}
-
-	// SLIDE && DEATH
-	if (c1->type == COLLIDER_SLIDE && c2->type == COLLIDER_DEATH)
-	{
-		App->entity_m->player_entity->death = true;
-	}
-
-	// GOD && WALL or DEATH (is the same, GOD can walk through death)
-	if (c1->type == COLLIDER_GOD && c2->type == COLLIDER_WALL || c2->type == COLLIDER_DEATH)
-	{
-		if ((c2->rect.y) > (c1->rect.y + c1->rect.h - 10))
-		{
-			App->entity_m->player_entity->from_up = true;
-		}
-		else if ((c2->rect.x) > (c1->rect.x + c1->rect.w - 10))
-		{
-			App->entity_m->player_entity->from_right = true;
-		}
-		else if ((c2->rect.x + (c2->rect.w)) < (c1->rect.x + 10))
-		{
-			App->entity_m->player_entity-> from_left = true;
-		}
-	}
-
-}
-
-void j1EntityManager::CleanUpEnemies()
+void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (queue[i].type != Entity_Type::NONE)
+		/*if (queue[i].type != ENTITY_TYPES::NONE)
 		{
-			queue[i].type = Entity_Type::NONE;
-		}
+			j1Entity* entity;
+			if (queue[i].type == BIRD)
+				entity = new j1Bird(info.position.x, info.position.y, info.type);
+			entities.add(entity);
+			entity->Start();
+		}*/
 	}
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
+}
+void j1EntityManager::CreatePlayer()
+{
+	player = (j1Player*)CreateEntity(PLAYER);
+}
+
+
+
+bool j1EntityManager::Load(pugi::xml_node& data)
+{
+	if (player != nullptr)
 	{
-		if (entities[i] != nullptr)
-		{
-			delete entities[i];
-			entities[i] = nullptr;
-		}
+		player->Load(data);
 	}
-}
-
-bool j1EntityManager::Load(pugi::xml_node& data) 
-{
+	/*for (pugi::xml_node harpy = data.child("harpy").child("position"); harpy; harpy = harpy.next_sibling()) {
+		iPoint harpypos = { harpy.attribute("x").as_int(), harpy.attribute("y").as_int() };
+		AddEnemy(harpypos.x, harpypos.y, HARPY);
+	}*/
 	return true;
 }
-
-bool j1EntityManager::Save(pugi::xml_node& data) const 
+bool j1EntityManager::Save(pugi::xml_node& data) const
 {
+	if (player != nullptr)
+	{
+		player->Save(data);
+	}/*
+	pugi::xml_node harpy = data.append_child("harpy");
+	for (p2List_item<j1Entity*>* iterator = entities.start; iterator; iterator = iterator->next)
+	{
+		if (iterator->data->type == HARPY)
+			iterator->data->Save(harpy);
+	}*/
 	return true;
 }
-
-SDL_Texture* j1EntityManager::GetEnemySprites() const 
-{ 
-	return enemy_sprites; 
-}
-

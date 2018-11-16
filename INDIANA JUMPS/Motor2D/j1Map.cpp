@@ -7,7 +7,6 @@
 #include "j1Map.h"
 #include <math.h>
 #include "j1Collision.h"
-#include "j1Pathfinding.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -102,22 +101,7 @@ void j1Map::Draw()
 	}
 }
 
-int j1Map::MovementCost(int x, int y) const
-{
-	int ret = -1;
 
-	if (x >= 0 && x < data.width && y >= 0 && y < data.height)
-	{
-		int id = data.map_layers.start->data->PathLimit(x, y);
-
-		if (id == 0)
-			ret = 3;
-		else
-			ret = 0;
-	}
-
-	return ret;
-}
 
 iPoint j1Map::MapToWorld(int x, int y) const
 {
@@ -138,16 +122,6 @@ SDL_Rect TileSet::GetTileRect(int id) const
 	rect.x = margin + ((rect.w + spacing) * (relative_id % num_tiles_width));
 	rect.y = margin + ((rect.h + spacing) * (relative_id / num_tiles_width));
 	return rect;
-}
-
-iPoint j1Map::WorldToMap(int x, int y) const
-{
-	iPoint ret;
-
-	ret.x = x / data.tile_width;
-	ret.y = y / data.tile_height;
-
-	return ret;
 }
 
 // Called before quitting
@@ -531,10 +505,5 @@ bool j1Map::LoadColliders(pugi::xml_node &node)
 		App->collision->AddCollider(rect, collidertype);
 	}
 	return ret;
-}
-
-inline uint MapLayer::PathLimit(int x, int y) const
-{
-	return data[(y*width) + x];
 }
 

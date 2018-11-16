@@ -1,36 +1,38 @@
+#include "j1Module.h"
 #include "j1Entity.h"
+#include "j1App.h"
+#include "j1Render.h"
 #include "j1EntityManager.h"
+#include "j1Textures.h"
 
-Entity::Entity(int x, int y) : position(x, y), initial_position(x, y), collider_position(0, 0)
+j1Entity::j1Entity(int x, int y, ENTITY_TYPES type) : position(x, y), type(type)
 {
-
+}
+j1Entity::~j1Entity()
+{
 }
 
-bool Entity::Awake(pugi::xml_node& data) 
+bool j1Entity::Start()
 {
 	return true;
 }
 
-Entity::~Entity()
+bool j1Entity::Update(float dt)
 {
-	if (collider != nullptr)
-		collider->to_delete = true;
+	return true;
 }
 
-const Collider* Entity::GetCollider() const
+bool j1Entity::PostUpdate()
 {
-	return collider;
+	return true;
 }
 
-void Entity::Draw(float dt) 
+bool j1Entity::PreUpdate()
 {
-	for (int i = 0; App->entity_m->entities[i]; ++i) 
-	{
-		App->render->Blit(App->entity_m->entities[i]->spritesheet, App->entity_m->entities[i]->position.x, App->entity_m->entities[i]->position.y, &App->entity_m->entities[i]->current_animation->GetCurrentFrame());
-	}
+	return true;
 }
 
-void Entity::OnCollision() 
+bool j1Entity::CleanUp()
 {
-
+	return true;
 }
