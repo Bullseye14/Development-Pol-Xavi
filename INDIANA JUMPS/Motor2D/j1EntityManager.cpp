@@ -8,6 +8,7 @@
 #include "j1Entity.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "j1Bird.h"
 
 j1EntityManager::j1EntityManager()
 {
@@ -132,14 +133,14 @@ void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		/*if (queue[i].type != ENTITY_TYPES::NONE)
+		if (queue[i].type != ENTITY_TYPES::NONE)
 		{
 			j1Entity* entity;
 			if (queue[i].type == BIRD)
 				entity = new j1Bird(info.position.x, info.position.y, info.type);
-			entities.add(entity);
+			entity_list.add(entity);
 			entity->Start();
-		}*/
+		}
 	}
 }
 void j1EntityManager::CreatePlayer()
