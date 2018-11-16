@@ -78,7 +78,7 @@ public:
 	bool from_up;
 	bool from_right;
 	bool from_left;
-//	bool from_down;
+	bool from_down;
 	
 	bool death;
 	bool won;

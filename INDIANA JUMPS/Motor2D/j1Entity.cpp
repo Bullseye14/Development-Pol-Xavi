@@ -15,6 +15,11 @@ j1Entity::~j1Entity()
 {
 }
 
+bool j1Entity::Awake(pugi::xml_node& ent_config) 
+{
+	return true;
+}
+
 bool j1Entity::Start()
 {
 	return true;

@@ -19,7 +19,7 @@ j1EntityManager::~j1EntityManager() {}
 bool j1EntityManager::Awake(pugi::xml_node& config)
 {
 	config_file.load_file("config.xml");
-	entities_config = config;
+	entities_config = config_file.child("config").child("entity");
 	return true;
 }
 
@@ -144,6 +144,7 @@ void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 void j1EntityManager::CreatePlayer()
 {
 	player = (j1Player*)CreateEntity(PLAYER);
+	player->Awake(entities_config);
 }
 
 

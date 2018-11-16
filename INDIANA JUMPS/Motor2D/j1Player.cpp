@@ -31,35 +31,34 @@ j1Player::~j1Player()
 
 bool j1Player::Awake(pugi::xml_node& config)
 {
-	/*pugi::xml_document config_file;
-	pugi::xml_node config_entity;
-
-	config_entity = App->LoadEntityVariables(config_file);
-
-	config_entity = config_entity.child("entity").child("player");
+	pugi::xml_document config_file;
+	pugi::xml_node node;
+	
+	node = App->LoadConfig(config_file);
+	node = node.child("entity").child("player");
 
 	// Reading initial values from xml
-	pos_player.x = config_entity.child("pos").attribute("x").as_int();
-	pos_player.y = config_entity.child("pos").attribute("y").as_int();
-	speed.x = config_entity.child("speed").attribute("x").as_int();
-	speed.y = config_entity.child("speed").attribute("y").as_int();
-	from_up = config_entity.child("fromup").attribute("value").as_bool();
-	from_down = config_entity.child("fromdown").attribute("value").as_bool();
-	from_left = config_entity.child("fromleft").attribute("value").as_bool();
-	from_right = config_entity.child("fromright").attribute("value").as_bool();
-	jumping = config_entity.child("jumping").attribute("value").as_bool();
-	onfloor = config_entity.child("onfloor").attribute("value").as_bool();
-	max_speed_y = config_entity.child("max_speed_y").attribute("value").as_float();
-	jumpforce = config_entity.child("jumpforce").attribute("value").as_float();
-	death = config_entity.child("death").attribute("value").as_bool();
-	won = config_entity.child("won").attribute("value").as_bool();
-	start_freefalling = config_entity.child("start_freefalling").attribute("value").as_bool();
-	sliding = config_entity.child("sliding").attribute("value").as_bool();
-	max_speed_x = config_entity.child("max_speed_x").attribute("value").as_float();
-	slidingforce = config_entity.child("slidingforce").attribute("value").as_float();
-	speed_slide = config_entity.child("speed_slide").attribute("value").as_float();
+	pos_player.x = node.child("pos").attribute("x").as_int();
+	pos_player.y = node.child("pos").attribute("y").as_int();
+	speed.x = node.child("speed").attribute("x").as_int();
+	speed.y = node.child("speed").attribute("y").as_int();
+	from_up = node.child("fromup").attribute("value").as_bool();
+	from_down = node.child("fromdown").attribute("value").as_bool();
+	from_left = node.child("fromleft").attribute("value").as_bool();
+	from_right = node.child("fromright").attribute("value").as_bool();
+	jumping = node.child("jumping").attribute("value").as_bool();
+	onfloor = node.child("onfloor").attribute("value").as_bool();
+	max_speed_y = node.child("max_speed_y").attribute("value").as_float();
+	jumpforce = node.child("jumpforce").attribute("value").as_float();
+	death = node.child("death").attribute("value").as_bool();
+	won = node.child("won").attribute("value").as_bool();
+	start_freefalling = node.child("start_freefalling").attribute("value").as_bool();
+	sliding = node.child("sliding").attribute("value").as_bool();
+	max_speed_x = node.child("max_speed_x").attribute("value").as_float();
+	slidingforce = node.child("slidingforce").attribute("value").as_float();
+	speed_slide = node.child("speed_slide").attribute("value").as_float();
 
-	//pos_initial = pos_player;*/
+	//pos_initial = pos_player;
 
 	return true;
 }
@@ -71,12 +70,12 @@ bool j1Player::Start()
 		graphics = App->tex->Load("textures/Spritesheet.png");
 	}
 
-	pos_player.x = 5;
+	/*pos_player.x = 5;
 	pos_player.y = 10;
 	speed.x = 0;
 	speed.y = 0;
 	from_up = false;
-//	from_down = false;
+	from_down = false;
 	from_right = false;
 	from_left = false;
 	jumping = false;
@@ -89,7 +88,7 @@ bool j1Player::Start()
 	max_speed_x = 20.0f;
 	slidingforce = 7.0f;
 	start_freefalling = true;
-	speed_slide = 5.0f;
+	speed_slide = 5.0f;*/
 
 	start_freefalling = true;
 	won = false;

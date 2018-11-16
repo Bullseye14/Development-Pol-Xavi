@@ -82,7 +82,7 @@ bool j1App::Awake()
 
 	bool ret = false;
 		
-	config = LoadEntityVariables(config_file);
+	config = LoadConfig(config_file);
 
 	if(config.empty() == false)
 	{
@@ -157,7 +157,7 @@ bool j1App::Update()
 }
 
 // ---------------------------------------------
-pugi::xml_node j1App::LoadEntityVariables(pugi::xml_document& config_file) const
+pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 {
 	pugi::xml_node ret;
 

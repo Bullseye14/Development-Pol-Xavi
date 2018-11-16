@@ -21,6 +21,7 @@ public:
 
 	virtual ~j1Bird();
 
+	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();

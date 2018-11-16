@@ -5,6 +5,7 @@
 #include "p2DynArray.h"
 #include "Animation.h"
 #include "p2Log.h"
+#include "j1App.h"
 
 struct Collider;
 struct Animation;
@@ -17,6 +18,7 @@ public:
 	j1Entity(int x, int y, ENTITY_TYPES type);
 	~j1Entity();
 
+	bool Awake(pugi::xml_node&);
 	virtual bool Start();
 	virtual bool Update(float dt);
 	virtual bool PostUpdate();

@@ -5,6 +5,8 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Entity.h"
+#include "j1App.h"
+
 #define MAX_ENEMIES 50
 class j1Entity;
 class j1Player;

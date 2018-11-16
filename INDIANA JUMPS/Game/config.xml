@@ -46,6 +46,9 @@
 	  <start_freefalling value = "true"/>
 	  <speed_slide value = "5.0f"/>
 	</player>
+	<bird>
+	
+	</bird>
   </entity>
 
 </config>

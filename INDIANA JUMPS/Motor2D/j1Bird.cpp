@@ -35,6 +35,14 @@ j1Bird::~j1Bird()
 {
 }
 
+bool j1Bird::Awake(pugi::xml_node& config)
+{
+	pugi::xml_node bird = config.child("bird");
+
+	// variables here above
+
+	return true;
+}
 bool j1Bird::Start()
 {
 	graphics = App->tex->Load("textures/Enemies_Spritesheet.png");
