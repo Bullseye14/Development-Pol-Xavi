@@ -58,7 +58,7 @@ j1Zombie_Enemy::j1Zombie_Enemy(int x, int y) : Entity(x,y)
 
 	current_animation = &walk_left;
 
-	collider = App->collision->AddCollider({ (int)position.x,(int)position.y,32,64 }, COLLIDER_ENEMY, (j1Module*)App->entity_m);
+	collider = App->collision->AddCollider({ (int)position.x-16,(int)position.y,32,64 }, COLLIDER_ENEMY, (j1Module*)App->entity_m);
 
 	initial_pos = initial_position.x;
 
@@ -142,5 +142,5 @@ void j1Zombie_Enemy::Draw(float dt)
 {
 	current_animation->speed = 10.f*dt;
 	collider->SetPos(position.x, position.y);
-	App->render->Blit(App->entity_m->GetEnemySprites(), position.x, position.y, &(current_animation->GetCurrentFrame()));
+	App->render->Blit(App->entity_m->GetEnemySprites(), position.x - 16, position.y, &(current_animation->GetCurrentFrame()));
 }

@@ -57,7 +57,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	config2 = App->LoadConfig(config_file);
 
-	config2 = config2.child("enitities").child("player");
+	config2 = config2.child("player");
 
 	position.x = config2.child("pos").attribute("x").as_int();
 	position.y = config2.child("pos").attribute("y").as_int();
