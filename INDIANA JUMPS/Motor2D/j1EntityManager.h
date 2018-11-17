@@ -42,15 +42,22 @@ public:
 	j1Entity* CreateEntity(ENTITY_TYPES type, int x = 0, int y = 0);
 	j1Entity* entities[MAX_ENEMIES];
 	void OnCollision(Collider* c1, Collider* c2);
+	void DestroyEntity(j1Entity* entity);
 	void CreatePlayer();
+	/*void CreateBird();
+	void CreateZombie();*/
 	void AddEnemy(int x, int y, ENTITY_TYPES type);
 private:
 	void SpawnEnemy(const EnemyInfo& info);
 public:
 	p2List<j1Entity*>	entity_list;
-	j1Player*			player = nullptr;
+
 	pugi::xml_document config_file;
 	pugi::xml_node entities_config;
+public:
+	j1Player* player = nullptr;
+	//j1Bird* bird = nullptr;
+	//j1Zombie* zombie = nullptr;
 private:
 	EnemyInfo			queue[MAX_ENEMIES];
 };
