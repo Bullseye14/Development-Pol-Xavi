@@ -61,6 +61,9 @@
     <ClCompile Include="j1Player.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="j1Zombie.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -145,6 +148,9 @@
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1Player.h">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Zombie.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
   </ItemGroup>

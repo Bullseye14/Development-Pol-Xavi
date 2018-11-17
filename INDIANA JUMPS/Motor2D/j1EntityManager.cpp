@@ -9,6 +9,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Bird.h"
+#include "j1Zombie.h"
 
 j1EntityManager::j1EntityManager()
 {
@@ -135,7 +136,13 @@ void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 		{
 			j1Entity* entity;
 			if (queue[i].type == BIRD)
+			{
 				entity = new j1Bird(info.position.x, info.position.y, info.type);
+			}
+			else if (queue[i].type == ZOMBIE)
+			{
+				entity = new j1Zombie(info.position.x, info.position.y, info.type);
+			}
 			entity_list.add(entity);
 			entity->Start();
 		}
@@ -146,8 +153,6 @@ void j1EntityManager::CreatePlayer()
 	player = (j1Player*)CreateEntity(PLAYER);
 	player->Awake(entities_config);
 }
-
-
 
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
