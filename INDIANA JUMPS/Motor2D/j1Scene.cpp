@@ -14,6 +14,9 @@
 #include "j1Bird.h"
 #include "j1Zombie.h"
 
+#include "Brofiler/Brofiler.h"
+#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
+
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
@@ -66,6 +69,8 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	BROFILER_CATEGORY("Scene Update", Profiler::Color::ForestGreen);
+	
 	// Load game
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
 	{
@@ -102,6 +107,8 @@ bool j1Scene::Update(float dt)
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
+	BROFILER_CATEGORY("Scene PostUpdate", Profiler::Color::LightGreen);
+	
 	bool ret = true;
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -152,12 +159,18 @@ void j1Scene::LoadLevel(int number)
 		//Clean up the level
 		App->collision->CleanUp();
 		App->map->CleanUp();
+		App->entity_m->player->CleanUp();
+		App->entity_m->CleanUp();
 
 		//Starting the level & player
 
 		App->map->Load(current_level->data->map_name.GetString());
-		App->entity_m->player->playerHitbox = nullptr;
+		App->entity_m->Start();
+		App->entity_m->CreatePlayer();
+		App->collision->Start();
 		App->entity_m->player->Start();
+		
+//		App->scene->Start();
 	}
 }
 

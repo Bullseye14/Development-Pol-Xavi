@@ -5,6 +5,9 @@
 #include "j1Render.h"
 #include "j1Player.h"
 
+#include "Brofiler/Brofiler.h"
+#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
+
 #define VSYNC true
 
 j1Render::j1Render() : j1Module()
@@ -70,11 +73,15 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
+	BROFILER_CATEGORY("Render Update", Profiler::Color::Yellow);
+
 	return true;
 }
 
 bool j1Render::PostUpdate()
 {
+	BROFILER_CATEGORY("Render Update", Profiler::Color::YellowGreen);
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 	return true;

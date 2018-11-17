@@ -17,6 +17,9 @@
 #include "j1PathFinding.h"
 #include "j1EntityManager.h"
 
+#include "Brofiler/Brofiler.h"
+#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
+
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -137,6 +140,8 @@ bool j1App::Start()
 // Called each loop iteration
 bool j1App::Update()
 {
+	BROFILER_CATEGORY("App Update", Profiler::Color::Gray);
+	
 	bool ret = true;
 	PrepareUpdate();
 
@@ -269,6 +274,8 @@ bool j1App::DoUpdate()
 // Call modules after each loop iteration
 bool j1App::PostUpdate()
 {
+	BROFILER_CATEGORY("App PostUpdate", Profiler::Color::LightSlateGray);
+	
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	j1Module* pModule = NULL;

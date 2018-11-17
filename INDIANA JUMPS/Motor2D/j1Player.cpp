@@ -10,6 +10,9 @@
 #include "j1Collision.h"
 #include <stdio.h>
 
+#include "Brofiler/Brofiler.h"
+#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
+
 j1Player::j1Player(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::PLAYER)
 {
 	//name.create("player");
@@ -114,6 +117,8 @@ bool j1Player::Start()
 
 bool j1Player::Update(float dt)
 {
+	BROFILER_CATEGORY("Player Entity Update", Profiler::Color::Red);
+
 	from_up = false;
 	from_left = false;
 	from_right = false;
@@ -249,6 +254,8 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
+	BROFILER_CATEGORY("Player Entity PostUpdate", Profiler::Color::OrangeRed);
+	
 	// Drawing the player
 	App->render->Blit(graphics, pos_player.x, pos_player.y, &animation->GetCurrentFrame());
 

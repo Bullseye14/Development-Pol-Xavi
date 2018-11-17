@@ -10,6 +10,9 @@
 #include "j1Audio.h"
 #include "j1Collision.h"
 
+#include "Brofiler/Brofiler.h"
+#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
+
 j1Zombie::j1Zombie(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::ZOMBIE) 
 {
 	walk_left.PushBack({ 0,0,64,64 });
@@ -98,6 +101,8 @@ bool j1Zombie::Start()
 
 bool j1Zombie::Update(float dt) 
 {
+	BROFILER_CATEGORY("Zombie Entity Update", Profiler::Color::AliceBlue);
+	
 	playerHitbox->SetPos(position.x + 16, position.y);
 	App->render->Blit(graphics, position.x, position.y, &animation->GetCurrentFrame());
 

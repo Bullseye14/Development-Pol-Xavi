@@ -8,6 +8,9 @@
 #include "j1Player.h"
 #include "j1Scene.h"
 
+#include "Brofiler/Brofiler.h"
+#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
+
 j1Entity::j1Entity(int x, int y, ENTITY_TYPES type) : position(x, y), type(type)
 {
 }
