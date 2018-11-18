@@ -108,7 +108,7 @@ bool j1Zombie::Update(float dt)
 
 	CheckCollision();
 
-	iPoint EnemyPos = { (int)initialPosition.x + 32, (int)initialPosition.y };
+	/*iPoint EnemyPos = { (int)initialPosition.x + 32, (int)initialPosition.y };
 	iPoint PlayerPos{ (int)App->entity_m->player->position.x, (int)App->entity_m->player->position.y};
 
 	App->pathfinding->CreatePath(EnemyPos, PlayerPos);
@@ -167,7 +167,7 @@ bool j1Zombie::Update(float dt)
 
 	position.x += speed.x;
 	position.y += speed.y;
-
+	*/
 	return true;
 }
 

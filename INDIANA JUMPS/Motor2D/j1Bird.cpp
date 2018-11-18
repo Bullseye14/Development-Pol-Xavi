@@ -66,7 +66,7 @@ bool j1Bird::Update(float dt)
 	playerHitbox->SetPos(position.x + 10, position.y + 13);
 	App->render->Blit(graphics, position.x, position.y, &animation->GetCurrentFrame());
 	
-	iPoint EnemyPos = { (int)initialPosition.x + 32, (int)initialPosition.y };
+	/*iPoint EnemyPos = { (int)initialPosition.x + 32, (int)initialPosition.y };
 	iPoint PlayerPos{ (int)App->entity_m->player->position.x, (int)App->entity_m->player->position.y};
 	
 	App->pathfinding->CreatePath(EnemyPos, PlayerPos);
@@ -143,7 +143,7 @@ bool j1Bird::Update(float dt)
 	if (abs(App->entity_m->player->position.x - EnemyPos.x) >= 400)
 	{
 		move = false;
-	}
+	}*/
 
 	return true;
 }
