@@ -9,10 +9,6 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Bird.h"
-#include "j1Zombie.h"
-
-#include "Brofiler/Brofiler.h"
-#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
 
 j1EntityManager::j1EntityManager()
 {
@@ -54,8 +50,6 @@ bool j1EntityManager::PreUpdate()
 }
 bool j1EntityManager::Update(float dt)
 {
-	BROFILER_CATEGORY("Entity Manager Update", Profiler::Color::Purple);
-	
 	bool ret = true;
 	j1Entity* ent = nullptr;
 	p2List_item<j1Entity*>* iterator;
@@ -70,8 +64,6 @@ bool j1EntityManager::Update(float dt)
 }
 bool j1EntityManager::PostUpdate()
 {
-	BROFILER_CATEGORY("Entity Manager PostUpdate", Profiler::Color::MediumPurple);
-
 	bool ret = true;
 	j1Entity* ent = nullptr;
 	p2List_item<j1Entity*>* iterator;
@@ -89,7 +81,6 @@ bool j1EntityManager::CleanUp()
 	iterator = entity_list.start;
 	for (iterator; iterator != nullptr; iterator = iterator->next)
 	{
-		iterator->data->CleanUp();
 		RELEASE(iterator->data);
 	}
 	player = nullptr;
@@ -115,14 +106,6 @@ j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPES type, int x, int y)
 	{
 		new_entity = new j1Player(x, y, type);
 	}
-	/*if (type == BIRD)
-	{
-		new_entity = new j1Bird(x, y, type);
-	}
-	if (type == ZOMBIE)
-	{
-		new_entity = new j1Zombie(x, y, type);
-	}*/
 
 	if (new_entity != nullptr)
 	{
@@ -131,22 +114,6 @@ j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPES type, int x, int y)
 
 	return new_entity;
 }
-
-void j1EntityManager::DestroyEntity(j1Entity* entity)
-{
-	p2List_item<j1Entity*>* iterator;
-	iterator = entity_list.start;
-	for (iterator; iterator != nullptr; iterator = iterator->next)
-	{
-		if (iterator->data == entity)
-		{
-			entity_list.del(iterator);
-			RELEASE(iterator->data);
-			break;
-		}
-	}
-}
-
 void j1EntityManager::AddEnemy(int x, int y, ENTITY_TYPES type)
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
@@ -168,36 +135,19 @@ void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 		{
 			j1Entity* entity;
 			if (queue[i].type == BIRD)
-			{
 				entity = new j1Bird(info.position.x, info.position.y, info.type);
-			}
-			else if (queue[i].type == ZOMBIE)
-			{
-				entity = new j1Zombie(info.position.x, info.position.y, info.type);
-			}
 			entity_list.add(entity);
 			entity->Start();
 		}
 	}
 }
-
 void j1EntityManager::CreatePlayer()
 {
 	player = (j1Player*)CreateEntity(PLAYER);
 	player->Awake(entities_config);
 }
 
-//void j1EntityManager::CreateBird()
-//{
-//	bird = (j1Bird*)CreateEntity(BIRD);
-//	//bird->Awake(entities_config);
-//}
-//
-//void j1EntityManager::CreateZombie()
-//{
-//	zombie = (j1Zombie*)CreateEntity(ZOMBIE);
-//	//zombie->Awake(entities_config);
-//}
+
 
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
@@ -205,6 +155,10 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 	{
 		player->Load(data);
 	}
+	/*for (pugi::xml_node harpy = data.child("harpy").child("position"); harpy; harpy = harpy.next_sibling()) {
+		iPoint harpypos = { harpy.attribute("x").as_int(), harpy.attribute("y").as_int() };
+		AddEnemy(harpypos.x, harpypos.y, HARPY);
+	}*/
 	return true;
 }
 bool j1EntityManager::Save(pugi::xml_node& data) const
@@ -212,6 +166,12 @@ bool j1EntityManager::Save(pugi::xml_node& data) const
 	if (player != nullptr)
 	{
 		player->Save(data);
-	}
+	}/*
+	pugi::xml_node harpy = data.append_child("harpy");
+	for (p2List_item<j1Entity*>* iterator = entities.start; iterator; iterator = iterator->next)
+	{
+		if (iterator->data->type == HARPY)
+			iterator->data->Save(harpy);
+	}*/
 	return true;
 }

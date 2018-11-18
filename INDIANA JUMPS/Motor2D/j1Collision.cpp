@@ -5,9 +5,6 @@
 #include "j1Collision.h"
 #include "p2Log.h"
 
-#include "Brofiler/Brofiler.h"
-#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
-
 j1Collision::j1Collision()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
@@ -23,7 +20,6 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_END] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_BIRD] = true;
 
 	matrix[COLLIDER_DEATH][COLLIDER_WALL] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_PLAYER] = true;
@@ -48,20 +44,12 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_SLIDE][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_SLIDE][COLLIDER_END] = true;
 	matrix[COLLIDER_SLIDE][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_SLIDE][COLLIDER_BIRD] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
-	matrix[COLLIDER_ENEMY][COLLIDER_GOD] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_GOD] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_END] = false;
-
-	matrix[COLLIDER_BIRD][COLLIDER_BIRD] = false;
-	matrix[COLLIDER_BIRD][COLLIDER_ENEMY] = false;
-	matrix[COLLIDER_BIRD][COLLIDER_GOD] = false;
-	matrix[COLLIDER_BIRD][COLLIDER_WALL] = true;
-	matrix[COLLIDER_BIRD][COLLIDER_DEATH] = true;
-	matrix[COLLIDER_BIRD][COLLIDER_END] = false;
 }
 
 // Destructor
@@ -86,8 +74,6 @@ bool j1Collision::PreUpdate()
 // Called before render is available
 bool j1Collision::Update(float dt)
 {
-	BROFILER_CATEGORY("Collisions Update", Profiler::Color::Green);
-	
 	Collider* c1;
 	Collider* c2;
 
@@ -167,9 +153,6 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_ENEMY:	//purple
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
-			break;
-		case COLLIDER_BIRD:	//purple
-			App->render->DrawQuad(colliders[i]->rect, 255, 100, 200, alpha);
 			break;
 		}
 	}

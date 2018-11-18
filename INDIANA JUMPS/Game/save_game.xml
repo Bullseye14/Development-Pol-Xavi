@@ -9,13 +9,13 @@
 		<level num="1" />
 	</scene>
 	<EntityManager>
-		<position x="6200" y="289" />
+		<position x="1045" y="323" />
 		<god_mode active="false" />
 	</EntityManager>
 	<:anonymous />
 	<:anonymous />
-	<PathFinding />
+	<:anonymous />
 	<renderer>
-		<camera x="-5375" y="0" />
+		<camera x="-704" y="0" />
 	</renderer>
 </game_state>

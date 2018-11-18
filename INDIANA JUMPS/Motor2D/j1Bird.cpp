@@ -10,8 +10,6 @@
 #include "j1Audio.h"
 #include "j1Collision.h"
 
-#include "Brofiler/Brofiler.h"
-#pragma comment( lib, "Brofiler/ProfilerCore32.lib" )
 
 j1Bird::j1Bird(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::BIRD)
 {
@@ -51,7 +49,7 @@ bool j1Bird::Start()
 
 	animation = &fly_left;
 
-	playerHitbox = App->collision->AddCollider({ (int)position.x, (int)position.y, 40, 40 }, COLLIDER_BIRD, (j1Module*)App->entity_m);
+	playerHitbox = App->collision->AddCollider({ (int)position.x, (int)position.y, 40, 40 }, COLLIDER_ENEMY, (j1Module*)App->entity_m);
 
 	speed.x = 40;
 	speed.y = 40;
@@ -61,13 +59,11 @@ bool j1Bird::Start()
 
 bool j1Bird::Update(float dt)
 {
-	BROFILER_CATEGORY("Bird Entity Update", Profiler::Color::Aquamarine);
-
 	playerHitbox->SetPos(position.x + 10, position.y + 13);
 	App->render->Blit(graphics, position.x, position.y, &animation->GetCurrentFrame());
 	
-	/*iPoint EnemyPos = { (int)initialPosition.x + 32, (int)initialPosition.y };
-	iPoint PlayerPos{ (int)App->entity_m->player->position.x, (int)App->entity_m->player->position.y};
+	iPoint EnemyPos = { (int)initialPosition.x + 32, (int)initialPosition.y };
+	iPoint PlayerPos{ (int)App->entity_m->player->position.x + 30, (int)App->entity_m->player->position.y + 46 };
 	
 	App->pathfinding->CreatePath(EnemyPos, PlayerPos);
 	App->pathfinding->Air(PlayerPos, path);
@@ -143,7 +139,7 @@ bool j1Bird::Update(float dt)
 	if (abs(App->entity_m->player->position.x - EnemyPos.x) >= 400)
 	{
 		move = false;
-	}*/
+	}
 
 	return true;
 }
@@ -157,16 +153,6 @@ bool j1Bird::CleanUp()
 	return true;
 }
 
-void j1Bird::OnCollision(Collider * c1, Collider * c2)
+void j1Bird::OnCollision(Collider * col_1, Collider * col_2)
 {
-	if (c1->type == COLLIDER_BIRD && c2->type == COLLIDER_PLAYER)
-	{
-		App->entity_m->player->death = true;
-	}
-
-}
-
-void j1Bird::CheckCollision() 
-{
-
 }
