@@ -10,6 +10,9 @@
 #include "j1Collision.h"
 #include <stdio.h>
 
+#include "Brofiler/Brofiler.h"
+#pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )
+
 j1Player::j1Player(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::PLAYER)
 {
 	//name.create("player");
@@ -70,26 +73,6 @@ bool j1Player::Start()
 		graphics = App->tex->Load("textures/Spritesheet.png");
 	}
 
-	/*pos_player.x = 5;
-	pos_player.y = 10;
-	speed.x = 0;
-	speed.y = 0;
-	from_up = false;
-	from_down = false;
-	from_right = false;
-	from_left = false;
-	jumping = false;
-	onfloor = false;
-	max_speed_y = -20.0f;
-	jumpforce = 4.0f;
-	death = false;
-	won = false;
-	sliding = false;
-	max_speed_x = 20.0f;
-	slidingforce = 7.0f;
-	start_freefalling = true;
-	speed_slide = 5.0f;*/
-
 	start_freefalling = true;
 	won = false;
 
@@ -114,10 +97,11 @@ bool j1Player::Start()
 
 bool j1Player::Update(float dt)
 {
+	BROFILER_CATEGORY("Player Update", Profiler::Color::Red);
+	
 	from_up = false;
 	from_left = false;
 	from_right = false;
-//	from_down = false;
 
 	// Animations from xml
 	DoAnimations();
@@ -249,6 +233,8 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
+	BROFILER_CATEGORY("Player PostUpdate", Profiler::Color::DarkRed);
+	
 	// Drawing the player
 	App->render->Blit(graphics, pos_player.x, pos_player.y, &animation->GetCurrentFrame());
 
@@ -501,5 +487,3 @@ void j1Player::DoAnimations()
 		}
 	}
 }
-
-

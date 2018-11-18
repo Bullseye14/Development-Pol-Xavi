@@ -27,11 +27,6 @@ public:
 
 	void OnCollision(Collider* col_1, Collider* col_2);
 
-	//bool Load(pugi::xml_node&);
-	//bool Save(pugi::xml_node&) const;
-
-	//void Move(p2DynArray<iPoint>& path, float dt);
-
 public:
 
 	Animation walk_left;

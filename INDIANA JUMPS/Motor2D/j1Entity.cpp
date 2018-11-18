@@ -8,6 +8,9 @@
 #include "j1Player.h"
 #include "j1Scene.h"
 
+#include "Brofiler/Brofiler.h"
+#pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )
+
 j1Entity::j1Entity(int x, int y, ENTITY_TYPES type) : position(x, y), type(type)
 {
 }
@@ -27,11 +30,15 @@ bool j1Entity::Start()
 
 bool j1Entity::Update(float dt)
 {
+	BROFILER_CATEGORY("Entity Update", Profiler::Color::Violet);
+
 	return true;
 }
 
 bool j1Entity::PostUpdate()
 {
+	BROFILER_CATEGORY("Entity PostUpdate", Profiler::Color::PaleVioletRed);
+	
 	return true;
 }
 

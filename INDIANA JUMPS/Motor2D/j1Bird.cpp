@@ -10,6 +10,8 @@
 #include "j1Audio.h"
 #include "j1Collision.h"
 
+#include "Brofiler/Brofiler.h"
+#pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )
 
 j1Bird::j1Bird(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::BIRD)
 {
@@ -59,6 +61,8 @@ bool j1Bird::Start()
 
 bool j1Bird::Update(float dt)
 {
+	BROFILER_CATEGORY("Bird Update", Profiler::Color::Green);
+	
 	playerHitbox->SetPos(position.x + 10, position.y + 13);
 	App->render->Blit(graphics, position.x, position.y, &animation->GetCurrentFrame());
 	

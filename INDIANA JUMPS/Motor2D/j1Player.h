@@ -24,7 +24,6 @@ public:
 	void Respawn();
 	void DoAnimations();
 	void Move();
-	//void Win();
 	
 	// Save and Load
 	bool Load(pugi::xml_node&);
@@ -57,7 +56,6 @@ public:
 	float	slidingforce;
 	float	speed_slide;
 	float	pos_slide;
-	//int		past_ticks;
 
 	bool GodMode = false;
 

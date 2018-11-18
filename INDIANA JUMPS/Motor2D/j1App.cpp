@@ -17,6 +17,9 @@
 #include "j1PathFinding.h"
 #include "j1EntityManager.h"
 
+#include "Brofiler/Brofiler.h"
+#pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )
+
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -137,6 +140,8 @@ bool j1App::Start()
 // Called each loop iteration
 bool j1App::Update()
 {
+	BROFILER_CATEGORY("App Update", Profiler::Color::Yellow);
+	
 	bool ret = true;
 	PrepareUpdate();
 
@@ -185,6 +190,8 @@ void j1App::PrepareUpdate()
 // ---------------------------------------------
 void j1App::FinishUpdate()
 {
+	BROFILER_CATEGORY("App FinishUpdate", Profiler::Color::LightYellow);
+
 	if(want_to_save == true)
 		SavegameNow();
 

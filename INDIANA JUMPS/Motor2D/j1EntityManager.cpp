@@ -11,6 +11,9 @@
 #include "j1Bird.h"
 #include "j1Zombie.h"
 
+#include "Brofiler/Brofiler.h"
+#pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )
+
 j1EntityManager::j1EntityManager()
 {
 	name.create("EntityManager");
@@ -51,6 +54,8 @@ bool j1EntityManager::PreUpdate()
 }
 bool j1EntityManager::Update(float dt)
 {
+	BROFILER_CATEGORY("Entity Manager Update", Profiler::Color::MediumVioletRed);
+	
 	bool ret = true;
 	j1Entity* ent = nullptr;
 	p2List_item<j1Entity*>* iterator;
@@ -65,6 +70,8 @@ bool j1EntityManager::Update(float dt)
 }
 bool j1EntityManager::PostUpdate()
 {
+	BROFILER_CATEGORY("Entity Manager PostUpdate", Profiler::Color::Gray);
+	
 	bool ret = true;
 	j1Entity* ent = nullptr;
 	p2List_item<j1Entity*>* iterator;
