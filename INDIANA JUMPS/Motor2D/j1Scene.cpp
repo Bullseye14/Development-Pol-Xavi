@@ -12,6 +12,7 @@
 #include "j1Collision.h"
 #include "j1PathFinding.h"
 #include "j1Bird.h"
+#include "j1Zombie.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -50,7 +51,8 @@ bool j1Scene::Start()
 	App->entity_m->CreatePlayer();
 	img = App->entity_m->player->graphics;
 
-	App->entity_m->AddEnemy(300, 500, BIRD);
+	App->entity_m->AddEnemy(300, 200, BIRD);
+	App->entity_m->AddEnemy(100, 400, ZOMBIE);
 
 	return true;
 }

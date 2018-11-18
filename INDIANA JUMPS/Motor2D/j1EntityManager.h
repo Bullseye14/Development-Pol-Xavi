@@ -17,7 +17,8 @@ enum ENTITY_TYPES
 {
 	NONE,
 	PLAYER,
-	BIRD
+	BIRD,
+	ZOMBIE
 };
 struct EnemyInfo
 {

@@ -9,6 +9,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Bird.h"
+#include "j1Zombie.h"
 
 j1EntityManager::j1EntityManager()
 {
@@ -136,6 +137,11 @@ void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 			j1Entity* entity;
 			if (queue[i].type == BIRD)
 				entity = new j1Bird(info.position.x, info.position.y, info.type);
+
+			if (queue[i].type == ZOMBIE)
+				entity = new j1Zombie(info.position.x, info.position.y, info.type);
+
+
 			entity_list.add(entity);
 			entity->Start();
 		}
@@ -155,10 +161,6 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 	{
 		player->Load(data);
 	}
-	/*for (pugi::xml_node harpy = data.child("harpy").child("position"); harpy; harpy = harpy.next_sibling()) {
-		iPoint harpypos = { harpy.attribute("x").as_int(), harpy.attribute("y").as_int() };
-		AddEnemy(harpypos.x, harpypos.y, HARPY);
-	}*/
 	return true;
 }
 bool j1EntityManager::Save(pugi::xml_node& data) const
@@ -166,12 +168,6 @@ bool j1EntityManager::Save(pugi::xml_node& data) const
 	if (player != nullptr)
 	{
 		player->Save(data);
-	}/*
-	pugi::xml_node harpy = data.append_child("harpy");
-	for (p2List_item<j1Entity*>* iterator = entities.start; iterator; iterator = iterator->next)
-	{
-		if (iterator->data->type == HARPY)
-			iterator->data->Save(harpy);
-	}*/
+	}
 	return true;
 }

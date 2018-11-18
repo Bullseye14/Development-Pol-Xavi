@@ -1,5 +1,5 @@
-#ifndef __j1BIRD_H__
-#define __j1BIRD_H__
+#ifndef __j1ZOMBIE_H__
+#define __j1ZOMBIE_H__
 
 #include "j1EntityManager.h"
 #include "j1Entity.h"
@@ -10,16 +10,15 @@
 #include "p2DynArray.h"
 
 
-
 struct SDL_Texture;
 //struct Collider;
 
-class j1Bird : public j1Entity
+class j1Zombie : public j1Entity
 {
 public:
-	j1Bird(int x, int y, ENTITY_TYPES type);
+	j1Zombie(int x, int y, ENTITY_TYPES type);
 
-	virtual ~j1Bird();
+	virtual ~j1Zombie();
 
 	bool Awake(pugi::xml_node&);
 	bool Start();
@@ -35,8 +34,10 @@ public:
 
 public:
 
-	Animation fly_left;
-	Animation fly_right;
+	Animation walk_left;
+	Animation walk_right;
+	Animation die_left;
+	Animation die_right;
 
 public:
 	fPoint initialPosition;
@@ -53,3 +54,4 @@ public:
 
 };
 #endif
+
