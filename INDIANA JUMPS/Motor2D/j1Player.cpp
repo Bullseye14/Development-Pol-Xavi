@@ -281,7 +281,7 @@ bool j1Player::CleanUp()
 	return true;
 }
 
-/*bool j1Player::Load(pugi::xml_node& data) 
+bool j1Player::Load(pugi::xml_node& data) 
 {
 	// Player position
 	pos_player.x = data.child("position").attribute("x").as_int();
@@ -304,7 +304,7 @@ bool j1Player::Save(pugi::xml_node& data) const
 	god_mode.append_attribute("active") = GodMode;
 
 	return true;
-}*/
+}
 
 void j1Player::Move()
 {

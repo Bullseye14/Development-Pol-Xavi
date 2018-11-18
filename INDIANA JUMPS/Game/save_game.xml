@@ -8,14 +8,14 @@
 	<scene>
 		<level num="1" />
 	</scene>
-	<player>
-		<position x="1645" y="129" />
+	<EntityManager>
+		<position x="6200" y="289" />
 		<god_mode active="false" />
-	</player>
+	</EntityManager>
 	<:anonymous />
 	<:anonymous />
-	<pathfinding />
+	<PathFinding />
 	<renderer>
-		<camera x="-1309" y="0" />
+		<camera x="-5375" y="0" />
 	</renderer>
 </game_state>
