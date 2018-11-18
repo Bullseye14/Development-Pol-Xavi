@@ -51,8 +51,8 @@ bool j1Scene::Start()
 	App->entity_m->CreatePlayer();
 	img = App->entity_m->player->graphics;
 
-	App->entity_m->AddEnemy(300, 200, BIRD);
-	App->entity_m->AddEnemy(100, 400, ZOMBIE);
+	//App->entity_m->AddEnemy(300, 200, BIRD);
+	App->entity_m->AddEnemy(1000, 325, ZOMBIE);
 
 	return true;
 }

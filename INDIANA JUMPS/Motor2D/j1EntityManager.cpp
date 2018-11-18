@@ -82,6 +82,7 @@ bool j1EntityManager::CleanUp()
 	iterator = entity_list.start;
 	for (iterator; iterator != nullptr; iterator = iterator->next)
 	{
+		iterator->data->CleanUp();
 		RELEASE(iterator->data);
 	}
 	player = nullptr;
@@ -115,6 +116,22 @@ j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPES type, int x, int y)
 
 	return new_entity;
 }
+
+void j1EntityManager::DestroyEntity(j1Entity * entity)
+{
+		p2List_item<j1Entity*>* iterator;
+		iterator = entity_list.start;
+		for (iterator; iterator != nullptr; iterator = iterator->next)
+		{
+			if (iterator->data == entity)
+			{
+				entity_list.del(iterator);
+				RELEASE(iterator->data);
+				break;
+			}
+		}
+}
+
 void j1EntityManager::AddEnemy(int x, int y, ENTITY_TYPES type)
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)

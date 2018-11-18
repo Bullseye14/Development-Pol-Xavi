@@ -104,6 +104,7 @@ bool j1Zombie::Update(float dt)
 	playerHitbox->SetPos(position.x + 10, position.y + 13);
 	App->render->Blit(graphics, position.x, position.y, &animation->GetCurrentFrame());
 
+	/*
 	iPoint EnemyPos = { (int)initialPosition.x + 32, (int)initialPosition.y };
 	iPoint PlayerPos{ (int)App->entity_m->player->position.x + 30, (int)App->entity_m->player->position.y + 46 };
 
@@ -182,7 +183,7 @@ bool j1Zombie::Update(float dt)
 	{
 		move = false;
 	}
-
+	*/
 	return true;
 }
 
@@ -197,4 +198,9 @@ bool j1Zombie::CleanUp()
 
 void j1Zombie::OnCollision(Collider * col_1, Collider * col_2)
 {
+	if (col_1->type == COLLIDER_SLIDE) {
+		if (col_2->type == COLLIDER_ENEMY) {
+			App->tex->UnLoad(graphics);
+		}
+	}
 }
