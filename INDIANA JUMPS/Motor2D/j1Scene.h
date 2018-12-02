@@ -68,6 +68,9 @@ public:
 
 private:
 	SDL_Texture * img;
+	SDL_Texture * path_img;
+
+	bool DrawPath = true;
 };
 
 #endif // __j1SCENE_H__

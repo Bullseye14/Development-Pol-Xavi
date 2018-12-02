@@ -49,6 +49,7 @@ bool j1Scene::Start()
 {
 	// Calling the function to load the map
 	App->map->Load(mapList.start->data->map_name.GetString());
+	path_img = App->tex->Load("path.png");
 	
 	// Creating the player
 	App->entity_m->CreatePlayer();
@@ -96,6 +97,33 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		App->entity_m->player->Respawn();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
+	{
+		DrawPath != DrawPath;
+	}
+
+	if (DrawPath) 
+	{
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint map_coord = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+
+
+		iPoint point = App->render->ScreenToWorld(x, y);
+		point = App->map->WorldToMap(point.x, point.y);
+		point = App->map->MapToWorld(point.x, point.y);
+
+		App->render->Blit(path_img, point.x, point.y);
+
+		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			App->render->Blit(path_img, pos.x, pos.y);
+		}
 	}
 
 	App->map->Draw();

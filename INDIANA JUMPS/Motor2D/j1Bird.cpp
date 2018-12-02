@@ -70,7 +70,6 @@ bool j1Bird::Update(float dt)
 	iPoint PlayerPos{ (int)App->entity_m->player->position.x + 30, (int)App->entity_m->player->position.y + 46 };
 	
 	App->pathfinding->CreatePath(EnemyPos, PlayerPos);
-	App->pathfinding->Air(PlayerPos, path);
 	
 	position = initialPosition;
 
@@ -79,7 +78,6 @@ bool j1Bird::Update(float dt)
 		c = 0;
 
 		App->pathfinding->CreatePath(EnemyPos, PlayerPos);
-		App->pathfinding->Air(PlayerPos, path);
 
 		move = true;
 	}

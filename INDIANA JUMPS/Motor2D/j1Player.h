@@ -8,8 +8,8 @@ struct SDL_Texture;
 struct Collider;
 
 enum MOVEMENT { STOPPED, MOVING };
-enum DIRECTION_X { CENTER_X, LEFT, RIGHT, SLIDE_L, SLIDE_R };
-enum DIRECTION_Y { CENTER_Y, UP, DOWN };
+enum DIRECTION_X { CENTER_X, P_LEFT, P_RIGHT, SLIDE_L, SLIDE_R };
+enum DIRECTION_Y { CENTER_Y, P_UP, P_DOWN };
 
 class j1Player : public j1Entity
 {

@@ -126,7 +126,7 @@ bool j1Player::Update(float dt)
 			{
 				sliding = false;
 				mov = MOVING;
-				dir_x = RIGHT;				// Player moving to the right
+				dir_x = P_RIGHT;				// Player moving to the right
 				speed.x = 5;
 				animation = &run;
 			}
@@ -147,7 +147,7 @@ bool j1Player::Update(float dt)
 			{
 				sliding = false;
 				mov = MOVING;
-				dir_x = LEFT;				// Player moving to the left
+				dir_x = P_LEFT;				// Player moving to the left
 				speed.x = -5;
 				animation = &run_left;
 			}
@@ -193,7 +193,7 @@ bool j1Player::Update(float dt)
 
 	if (falling == true && animation != &jump)
 	{
-		if (dir_x == RIGHT)
+		if (dir_x == P_RIGHT)
 			animation = &jump;
 		else
 			animation = &jump_left;
@@ -434,10 +434,10 @@ void j1Player::DoAnimations()
 		{
 			switch (dir_x)
 			{
-			case LEFT:
+			case P_LEFT:
 				animation = &run_left;
 				break;
-			case RIGHT:
+			case P_RIGHT:
 				animation = &run;
 				break;
 			case SLIDE_L:
@@ -455,10 +455,10 @@ void j1Player::DoAnimations()
 		{
 			switch (dir_x) 
 			{
-			case LEFT:
+			case P_LEFT:
 				animation = &jump_left;
 				break;
-			case RIGHT:
+			case P_RIGHT:
 				animation = &jump;
 				break;
 			default:
@@ -475,10 +475,10 @@ void j1Player::DoAnimations()
 		// is jumping
 		if (onfloor == false) { 
 			switch (dir_x) {
-			case LEFT:
+			case P_LEFT:
 				animation = &jump_left;
 				break;
-			case RIGHT:
+			case P_RIGHT:
 				animation = &jump;
 				break;
 			default:
