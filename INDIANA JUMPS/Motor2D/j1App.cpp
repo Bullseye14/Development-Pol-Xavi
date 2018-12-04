@@ -16,6 +16,7 @@
 #include "j1FadeToBlack.h"
 #include "j1PathFinding.h"
 #include "j1EntityManager.h"
+#include "j1Gui.h"
 
 #include "Brofiler/Brofiler.h"
 #pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )
@@ -37,6 +38,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entity_m = new j1EntityManager();
 	fade = new j1FadeToBlack();
 	pathfinding = new j1PathFinding();
+	gui = new j1Gui();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -50,6 +52,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collision);
 	AddModule(fade);
 	AddModule(pathfinding);
+	AddModule(gui);
 	
 	// render last to swap buffer
 	AddModule(render);
