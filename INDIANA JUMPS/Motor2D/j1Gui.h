@@ -36,13 +36,15 @@ public:
 	// Called before quitting
 	bool CleanUp();
 	
-	// TODO 2: Create the factory methods
-	// Gui creation functions
+	//functions to get SDL_Textures easily
 	SDL_Texture* GetAtlas() const;
 	SDL_Texture* GetMenuBackground() const;
+
+	j1UI_Element* SpawnButton(int x, int y, E_TYPE type, SDL_Rect* rect, j1Module* mod, const char* text, bool visible);
+	void SpawnMenuBackground(int x, int y, E_TYPE type, j1Module* mod);
 	
 public:
-	p2List<j1UI_Element*> elements;
+	p2List<j1UI_Element*> element_list;
 	SDL_Texture* menuBackgroundTex = nullptr;
 
 private:

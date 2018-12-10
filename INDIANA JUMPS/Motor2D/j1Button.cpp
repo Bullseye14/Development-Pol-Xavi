@@ -6,7 +6,7 @@
 #include "j1Textures.h"
 #include "j1Fonts.h"
 
-j1Button::j1Button(int x, int y, E_TYPE type, SDL_Rect* rect, const char* text, j1Module* mod, bool visible) : j1UI_Element(x, y, type, mod)
+j1Button::j1Button(int x, int y, E_TYPE type, SDL_Rect* rect, j1Module* mod, const char* text, bool visible) : j1UI_Element(x, y, type, mod)
 {
 
 }
