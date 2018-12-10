@@ -10,6 +10,7 @@
 #include "j1UI_Element.h"
 #include "j1MenuBackground.h"
 #include "j1Button.h"
+#include "j1MainMenu.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -30,7 +31,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.GetString());
-	//menuBackgroundTex = App->tex->Load("gui/");
+	menuBackgroundTex = App->tex->Load("gui/atlas.png");
 
 	return true;
 }
@@ -39,8 +40,17 @@ bool j1Gui::PreUpdate()
 {
 	return true;
 }
+
 bool j1Gui::PostUpdate()
 {
+	//p2List_item<j1UI_Element*>* element_iterator;
+	// element_iterator = element_list.start;
+
+	//while (element_iterator != nullptr) 
+	{
+		//element_iterator->data->Draw();
+	}
+
 	return true;
 }
 
@@ -61,7 +71,7 @@ SDL_Texture* j1Gui::GetAtlas() const
 }
 
 // class Gui ---------------------------------------------------
-void j1Gui::SpawnMenuBackground(int x, int y, E_TYPE type, j1Module * mod)
+void j1Gui::SpawnMenuBackground(int x, int y, E_TYPE type, j1Module* mod)
 {
 	j1UI_Element* elem = new j1MenuBackground(x, y, type, mod);
 	element_list.add(elem);

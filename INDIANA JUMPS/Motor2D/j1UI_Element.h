@@ -6,7 +6,7 @@
 
 enum E_TYPE
 {
-	NONE,
+	NONE_UI,
 	BACKGROUND,
 	BUTTON,
 	TEXT,
@@ -28,4 +28,4 @@ public:
 	j1Module*		callback = nullptr;
 	
 };
-#endif// __UIELEMENTS_H__ 
+#endif// __j1UI_ELEMENT_H__ 
