@@ -47,8 +47,15 @@ bool j1Gui::CleanUp()
 	return true;
 }
 
+SDL_Texture* j1Gui::GetMenuBackground() const
+{
+	return menuBackgroundTex;
+}
+
 SDL_Texture* j1Gui::GetAtlas() const
 {
 	return atlas;
 }
+
+
 // class Gui ---------------------------------------------------

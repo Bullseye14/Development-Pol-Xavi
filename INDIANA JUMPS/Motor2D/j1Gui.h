@@ -39,11 +39,14 @@ public:
 	// TODO 2: Create the factory methods
 	// Gui creation functions
 	SDL_Texture* GetAtlas() const;
+	SDL_Texture* GetMenuBackground() const;
 	
 public:
 	p2List<j1UI_Element*> elements;
+	SDL_Texture* menuBackgroundTex = nullptr;
 
 private:
+	
 	SDL_Texture* atlas = nullptr;
 	p2SString atlas_file_name;
 };
