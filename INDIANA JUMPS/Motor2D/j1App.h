@@ -14,6 +14,7 @@ class j1Input;
 class j1Render;
 class j1Textures;
 class j1Audio;
+class j1MainMenu;
 class j1Scene;
 class j1Map;
 class j1Collision;
@@ -22,6 +23,7 @@ class j1FadeToBlack;
 class j1PathFinding;
 class j1Gui;
 class j1Fonts;
+
 
 class j1App
 {
@@ -85,19 +87,20 @@ private:
 public:
 
 	// Modules
-	j1Window*			win;
-	j1Input*			input;
-	j1Render*			render;
-	j1Textures*			tex;
-	j1Audio*			audio;
-	j1Scene*			scene;
-	j1Map*				map;
-	j1EntityManager*	entity_m;
-	j1Collision*		collision;
-	j1FadeToBlack*		fade;
-	j1PathFinding*		pathfinding;
-	j1Gui*				gui;
-	j1Fonts*			font;
+	j1Window*			win = nullptr;
+	j1Input*			input = nullptr;
+	j1Render*			render = nullptr;
+	j1Textures*			tex = nullptr;
+	j1Audio*			audio = nullptr;
+	j1MainMenu*			mainmenu = nullptr;
+	j1Scene*			scene = nullptr;
+	j1Map*				map = nullptr;
+	j1EntityManager*	entity_m = nullptr;
+	j1Collision*		collision = nullptr;
+	j1FadeToBlack*		fade = nullptr;
+	j1PathFinding*		pathfinding = nullptr;
+	j1Gui*				gui = nullptr;
+	j1Fonts*			font = nullptr;
 
 private:
 
