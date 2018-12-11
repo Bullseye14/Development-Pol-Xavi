@@ -26,8 +26,8 @@ bool j1MainMenu::Start()
 	App->scene->active = false;
 	App->entity_m->active = false;
 
-	menuBackgroundTex = App->tex->Load("gui/atlas.png");
-	BG_Rect = { 0, 0, 700, 500 };
+	menuBackgroundTex = App->tex->Load("gui/MainMenu.png");
+	BG_Rect = { 0, 0, 1024, 480 };
 
 	/*playTex = App->tex->Load("gui/b_1");
 	playRect = { 0, 0, 500, 500 };*/
