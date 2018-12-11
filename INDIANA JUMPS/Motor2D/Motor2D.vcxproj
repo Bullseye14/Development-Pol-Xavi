@@ -96,7 +96,7 @@
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Player.cpp" />
     <ClCompile Include="j1Scene.cpp" />
-    <ClCompile Include="j1Text.cpp" />
+    <ClCompile Include="j1ButtonText.cpp" />
     <ClCompile Include="j1Timer.cpp" />
     <ClCompile Include="j1UI_Element.cpp" />
     <ClCompile Include="j1Zombie.cpp" />
@@ -125,7 +125,7 @@
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Player.h" />
     <ClInclude Include="j1Scene.h" />
-    <ClInclude Include="j1Text.h" />
+    <ClInclude Include="j1ButtonText.h" />
     <ClInclude Include="j1Timer.h" />
     <ClInclude Include="j1UI_Element.h" />
     <ClInclude Include="j1Zombie.h" />

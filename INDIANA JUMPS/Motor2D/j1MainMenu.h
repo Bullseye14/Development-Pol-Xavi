@@ -24,7 +24,12 @@ public:
 private:
 
 	SDL_Texture * menuBackgroundTex = nullptr;
+	SDL_Texture * playTex = nullptr;
+	SDL_Texture * continueTex = nullptr;
+
 	SDL_Rect BG_Rect;
+	SDL_Rect playRect;
+
 
 };
 

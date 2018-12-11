@@ -10,7 +10,7 @@ class j1Button : public j1UI_Element
 {
 public:
 
-	j1Button(int x, int y, E_TYPE type, SDL_Rect* rect, j1Module* mod, const char* text, bool visible);
+	j1Button(int x, int y, E_TYPE type, SDL_Rect* rect, j1Module* mod, bool visible);
 	~j1Button();
 
 	void Draw();

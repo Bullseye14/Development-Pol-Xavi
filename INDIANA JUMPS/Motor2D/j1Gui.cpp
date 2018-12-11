@@ -11,6 +11,7 @@
 #include "j1MenuBackground.h"
 #include "j1Button.h"
 #include "j1MainMenu.h"
+#include "j1ButtonText.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -75,13 +76,37 @@ SDL_Texture* j1Gui::GetAtlas() const
 void j1Gui::SpawnMenuBackground(int x, int y, E_TYPE type, j1Module* mod)
 {
 	j1UI_Element* elem = new j1MenuBackground(x, y, type, mod);
-	element_list.add(elem);
+
+	if (elem != nullptr)
+	{
+		element_list.add(elem);
+	}
+
 }
 
-j1UI_Element* j1Gui::SpawnButton(int x, int y, E_TYPE type, SDL_Rect* rect, j1Module* mod, const char * text, bool visible)
+j1UI_Element* j1Gui::SpawnButton(int x, int y, E_TYPE type, SDL_Rect* rect, j1Module* mod, bool visible)
 {
-	j1UI_Element* elem = new j1Button(x, y, type, rect, mod, text, visible);
-	element_list.add(elem);
+	j1UI_Element* elem = new j1Button(x, y, type, rect, mod, visible);
+
+	if (elem != nullptr)
+	{
+		element_list.add(elem);
+	}
 
 	return elem;
 }
+
+//j1UI_Element* j1Gui::SpawnButtonText(int x, int y, E_TYPE type, j1Module * mod, const char * text, _TTF_Font * font)
+//{
+//	j1UI_Element* elem = new j1ButtonText(x, y, type, mod, text, font);
+//
+//	if (elem != nullptr)
+//	{
+//		element_list.add(elem);
+//	}
+//
+//	return elem;
+//}
+
+
+
