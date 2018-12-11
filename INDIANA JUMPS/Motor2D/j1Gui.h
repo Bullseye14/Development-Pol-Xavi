@@ -1,5 +1,6 @@
 #ifndef __j1GUI_H__
 #define __j1GUI_H__
+
 #include "p2List.h"
 #include "p2Log.h"
 #include "j1Module.h"
@@ -18,6 +19,7 @@ enum UIEvents
 	MOUSE_CLICK,
 	MOUSE_STOP_CLICK
 };
+
 class j1Gui : public j1Module
 {
 public:

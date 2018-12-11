@@ -38,19 +38,20 @@ bool j1Gui::Start()
 
 bool j1Gui::PreUpdate()
 {
+	p2List_item<j1UI_Element*>* element_iterator;
+	 element_iterator = element_list.start;
+
+	while (element_iterator != nullptr) 
+	{
+		element_iterator->data->Draw();
+	}
+
 	return true;
 }
 
 bool j1Gui::PostUpdate()
 {
-	//p2List_item<j1UI_Element*>* element_iterator;
-	// element_iterator = element_list.start;
-
-	//while (element_iterator != nullptr) 
-	{
-		//element_iterator->data->Draw();
-	}
-
+	
 	return true;
 }
 

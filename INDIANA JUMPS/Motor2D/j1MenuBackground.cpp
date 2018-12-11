@@ -16,5 +16,5 @@ j1MenuBackground::~j1MenuBackground()
 
 void j1MenuBackground::Draw()
 {
-	//App->render->Blit(App->gui->GetMenuBackground(), position.x, position.y, {});
+	//App->render->Blit(App->gui->GetAtlas(), position.x, position.y, {});
 }

@@ -1,5 +1,6 @@
 #ifndef __J1ENEMIES_H__
 #define __J1ENEMIES_H__
+
 #include "j1Module.h"
 #include "p2Defs.h"
 #include "p2List.h"
