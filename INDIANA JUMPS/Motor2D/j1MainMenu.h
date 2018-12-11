@@ -4,6 +4,7 @@
 #include "j1App.h"
 #include "j1Module.h"
 #include "Animation.h"
+#include "j1Textures.h"
 
 class j1MainMenu :public j1Module
 {
@@ -22,6 +23,8 @@ public:
 
 private:
 
+	SDL_Texture * menuBackgroundTex = nullptr;
+	SDL_Rect BG_Rect;
 
 };
 

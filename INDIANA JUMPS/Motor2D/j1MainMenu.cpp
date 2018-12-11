@@ -25,14 +25,22 @@ bool j1MainMenu::Start()
 {
 	App->scene->active = false;
 	App->entity_m->active = false;
-	App->gui->SpawnMenuBackground(0, 0, BACKGROUND, this);
+
+	menuBackgroundTex = App->tex->Load("gui/atlas.png");
+
+	BG_Rect = { 0, 0, 500, 500 };
+	//App->gui->SpawnMenuBackground(0, 0, BACKGROUND, this);
+	
 	return true;
 }
 
 bool j1MainMenu::Update(float dt)
 {
+	App->render->Blit(menuBackgroundTex, 0, 0, &BG_Rect);
+
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
 		GoToScene();
+		
 	}
 	return true;
 }
