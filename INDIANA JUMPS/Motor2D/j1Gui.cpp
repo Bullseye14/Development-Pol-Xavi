@@ -39,13 +39,13 @@ bool j1Gui::Start()
 
 bool j1Gui::PreUpdate()
 {
-	p2List_item<j1UI_Element*>* element_iterator;
+	/*p2List_item<j1UI_Element*>* element_iterator;
 	 element_iterator = element_list.start;
 
 	while (element_iterator != nullptr) 
 	{
 		element_iterator->data->Draw();
-	}
+	}*/
 
 	return true;
 }
@@ -73,16 +73,16 @@ SDL_Texture* j1Gui::GetAtlas() const
 }
 
 // class Gui ---------------------------------------------------
-void j1Gui::SpawnMenuBackground(int x, int y, E_TYPE type, j1Module* mod)
-{
-	j1UI_Element* elem = new j1MenuBackground(x, y, type, mod);
-
-	if (elem != nullptr)
-	{
-		element_list.add(elem);
-	}
-
-}
+//void j1Gui::SpawnMenuBackground(int x, int y, E_TYPE type, j1Module* mod)
+//{
+//	j1UI_Element* elem = new j1MenuBackground(x, y, type, mod);
+//
+//	if (elem != nullptr)
+//	{
+//		element_list.add(elem);
+//	}
+//
+//}
 
 j1UI_Element* j1Gui::SpawnButton(int x, int y, E_TYPE type, SDL_Rect* rect, j1Module* mod, bool visible)
 {

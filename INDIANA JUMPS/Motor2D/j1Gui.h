@@ -6,6 +6,7 @@
 #include "j1Module.h"
 #include "p2DynArray.h"
 
+struct j1Button;
 class SDL_Texture;
 class SDL_Rect;
 class j1UI_Element;
@@ -42,7 +43,7 @@ public:
 	SDL_Texture* GetAtlas() const;
 	SDL_Texture* GetMenuBackground() const;
 
-	void SpawnMenuBackground(int x, int y, E_TYPE type, j1Module* mod);
+	//void SpawnMenuBackground(int x, int y, E_TYPE type, j1Module* mod);
 	j1UI_Element* SpawnButton(int x, int y, E_TYPE type, SDL_Rect* rect, j1Module* mod, bool visible);
 	//j1UI_Element* SpawnButtonText(int x, int y, E_TYPE type, j1Module* mod, const char* text, _TTF_Font* font);
 	
