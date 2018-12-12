@@ -28,12 +28,14 @@ bool j1MainMenu::Start()
 	App->entity_m->active = false;
 
 	//Background of the menu
-	menuBackgroundTex = App->tex->Load("gui/MainMenu.png");
+	menuBackgroundTex = App->tex->Load("gui/MainMenu_TILED.png");
 	BG_Rect = { 0, 0, 1024, 480 };
 
-	App->gui->element_list.add(App->gui->SpawnButton(445, 200, PLAY, "PLAY"));
-	App->gui->element_list.add(App->gui->SpawnButton(445, 300, CONTINUE, "CONTINUE"));
-	App->gui->element_list.add(App->gui->SpawnButton(445, 400, EXIT, "EXIT"));
+	App->gui->element_list.add(App->gui->SpawnButton(800, 25, PLAY, "PLAY"));
+	App->gui->element_list.add(App->gui->SpawnButton(800, 95, CONTINUE, "CONTINUE"));
+	App->gui->element_list.add(App->gui->SpawnButton(800, 165, SETTINGS, "SETTINGS"));
+	App->gui->element_list.add(App->gui->SpawnButton(800, 235, CREDITS, "CREDITS"));
+	App->gui->element_list.add(App->gui->SpawnButton(800, 305, EXIT, "EXIT"));
 
 	return true;
 }
@@ -65,5 +67,4 @@ void j1MainMenu::GoToScene()
 	App->gui->active = false; //temporal
 	App->scene->active = true;
 	App->entity_m->active = true;
-
 }
