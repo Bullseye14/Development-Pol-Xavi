@@ -42,15 +42,6 @@ bool j1MainMenu::Update(float dt)
 {
 	App->render->Blit(menuBackgroundTex, 0, 0, &BG_Rect);
 
-	//App->render->Blit(playTex, 0, 0, &playRect);
-
-	//p2List_item<j1Button*>* button_iterator;
-	//button_iterator = App->gui->element_list.start;
-
-	//while (button_iterator != nullptr) {
-	//	button_iterator->data->Draw();
-	//}
-
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) 
 	{
 		GoToScene();
@@ -71,6 +62,7 @@ bool j1MainMenu::CleanUp()
 void j1MainMenu::GoToScene()
 {
 	App->mainmenu->active = false;
+	App->gui->active = false; //temporal
 	App->scene->active = true;
 	App->entity_m->active = true;
 
