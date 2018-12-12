@@ -13,6 +13,7 @@
 #include "j1PathFinding.h"
 #include "j1Bird.h"
 #include "j1Zombie.h"
+#include "j1Gui.h"
 
 #include "Brofiler/Brofiler.h"
 #pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )

@@ -5,25 +5,72 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Fonts.h"
+#include "j1Window.h"
 
-j1Button::j1Button(int x, int y, E_TYPE type, SDL_Rect* rect, j1Module* mod, bool visible) : j1UI_Element(x, y, type, mod)
+j1Button::j1Button(const char* text, BUTTON_TYPE type)
 {
-	
-}
+	buttonRect = { 0,0,133,50 };
+	buttonOnHover = { 0,50,133,50 };
+	buttonOnClick = { 0,100,133,50 };
 
+	buttonText.create(text);
+}
 
 j1Button::~j1Button()
 {
-
 }
 
-
-void j1Button::Draw()
+bool j1Button::Start() 
 {
-	//App->render->Blit(UI_tex, position.x, position.y, NULL);
+	App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonRect);
+
+	return true;
 }
 
-void j1Button::Interaction()
+bool j1Button::PostUpdate() 
 {
+	bool ret = true;
 	
+	switch (mouse_state) 
+	{
+	case MOUSE_NONE:
+		ret = App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonRect);
+		break;
+
+	case MOUSE_HOVER:
+		ret = App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonOnHover);
+		break;
+
+	case MOUSE_CLICK:
+		ret = App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonOnClick);
+		break;
+
+	}
+
+	return ret;
+}
+
+bool j1Button::OnHover()
+{
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	bool ret = position.x + App->render->camera.x / (int)App->win->GetScale() < x 
+		&& position.y + App->render->camera.y < y && position.x + App->render->camera.x / (int)App->win->GetScale() + buttonRect.w > x 
+		&& position.y + buttonRect.h > y;
+
+	return ret;
+}
+
+bool j1Button::OnClick()
+{
+	bool ret = false;
+
+	if (OnHover())
+	{
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+		{
+			ret = true;
+		}
+	}
+	return ret;
 }
