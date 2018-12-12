@@ -82,9 +82,6 @@
     <ClCompile Include="j1Image.cpp">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClCompile>
-    <ClCompile Include="j1MenuBackground.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="j1ButtonText.cpp">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClCompile>
@@ -196,9 +193,6 @@
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="j1Image.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="j1MenuBackground.h">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="j1ButtonText.h">

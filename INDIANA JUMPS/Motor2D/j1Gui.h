@@ -5,21 +5,10 @@
 #include "p2Log.h"
 #include "j1Module.h"
 #include "p2DynArray.h"
+#include "j1UI_Element.h"
+#include "j1Button.h"
 
-struct j1Button;
-class SDL_Texture;
-class SDL_Rect;
-class j1UI_Element;
-enum E_TYPE;
-class _TTF_Font;
-
-enum UIEvents
-{
-	MOUSE_ENTER,
-	MOUSE_LEAVE,
-	MOUSE_CLICK,
-	MOUSE_STOP_CLICK
-};
+enum BUTTON_TYPE;
 
 class j1Gui : public j1Module
 {
@@ -32,8 +21,8 @@ public:
 	// Call before first frame
 	bool Start();
 	// Called before all Updates
-	bool PreUpdate();
-	//bool Update(float dt);
+	bool PreUpdate(float dt);
+	bool Update(float dt);
 	// Called after all Updates
 	bool PostUpdate();
 	// Called before quitting
@@ -44,8 +33,7 @@ public:
 	SDL_Texture* GetMenuBackground() const;
 
 	//void SpawnMenuBackground(int x, int y, E_TYPE type, j1Module* mod);
-	j1UI_Element* SpawnButton(int x, int y, E_TYPE type, SDL_Rect* rect, j1Module* mod, bool visible);
-	//j1UI_Element* SpawnButtonText(int x, int y, E_TYPE type, j1Module* mod, const char* text, _TTF_Font* font);
+	j1UI_Element* SpawnButton(int x, int y, BUTTON_TYPE type, const char* text = "");
 	
 public:
 	p2List<j1UI_Element*> element_list;

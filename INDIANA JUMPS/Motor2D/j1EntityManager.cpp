@@ -31,13 +31,12 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 bool j1EntityManager::Start()
 {
 	bool ret = true;
-	j1Entity* ent = nullptr;
+	
 	p2List_item<j1Entity*>* iterator;
 	iterator = entity_list.start;
 	for (iterator; iterator != nullptr && ret == true; iterator = iterator->next)
 	{
-		ent = iterator->data;
-		ret = ent->Start();
+		iterator->data->Start();
 	}
 	return true;
 }
@@ -58,13 +57,12 @@ bool j1EntityManager::Update(float dt)
 	BROFILER_CATEGORY("Entity Manager Update", Profiler::Color::MediumVioletRed);
 	
 	bool ret = true;
-	j1Entity* ent = nullptr;
+
 	p2List_item<j1Entity*>* iterator;
 	iterator = entity_list.start;
 	for (iterator; iterator != nullptr && ret == true; iterator = iterator->next)
 	{
-		ent = iterator->data;
-		ret = ent->Update(dt);
+		iterator->data->Update(dt);
 	}
 
 	return true;
@@ -74,13 +72,13 @@ bool j1EntityManager::PostUpdate()
 	BROFILER_CATEGORY("Entity Manager PostUpdate", Profiler::Color::Gray);
 	
 	bool ret = true;
-	j1Entity* ent = nullptr;
+
 	p2List_item<j1Entity*>* iterator;
 	iterator = entity_list.start;
 	for (iterator; iterator != nullptr && ret == true; iterator = iterator->next)
 	{
-		ent = iterator->data;
-		ret = ent->PostUpdate();
+		
+		iterator->data->PostUpdate();
 	}
 	return true;
 }
@@ -91,7 +89,6 @@ bool j1EntityManager::CleanUp()
 	for (iterator; iterator != nullptr; iterator = iterator->next)
 	{
 		iterator->data->CleanUp();
-		RELEASE(iterator->data);
 	}
 	player = nullptr;
 	entity_list.clear();

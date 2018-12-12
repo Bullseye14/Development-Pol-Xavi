@@ -1,26 +1,40 @@
 #ifndef __j1BUTTON_H__
 #define __j1BUTTON_H__
 
+#include "j1Gui.h"
 #include "j1UI_Element.h"
+#include "SDL/include/SDL.h"
+#include "p2Defs.h"
 
-class SDL_Rect;
-class SDL_Texture;
+enum BUTTON_TYPE 
+{
+	NO_BUTTON,
+	PLAY,
+	CONTINUE,
+	EXIT,
+	SETTINGS,
+	CREDITS
+};
 
 class j1Button : public j1UI_Element
 {
+
 public:
 
-	j1Button(int x, int y, E_TYPE type, SDL_Rect* rect, j1Module* mod, bool visible);
+	j1Button(const char* text, BUTTON_TYPE type);
 	~j1Button();
 
-	void Draw();
-	void Interaction();
+	bool Start();
+	bool PostUpdate();
+
+	bool OnHover();
+	bool OnClick();
 
 private:
 
-	SDL_Texture*	buttonTex = nullptr;
-	SDL_Rect*		buttonRect = nullptr;
-	bool			buttonOn = false;
+	BUTTON_TYPE		b_type;
+	SDL_Rect		buttonRect, buttonOnHover, buttonOnClick;
+	p2SString		buttonText;
 };
 
 #endif //__j1BUTTON_H__

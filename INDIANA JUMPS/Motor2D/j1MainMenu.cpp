@@ -31,17 +31,10 @@ bool j1MainMenu::Start()
 	menuBackgroundTex = App->tex->Load("gui/MainMenu.png");
 	BG_Rect = { 0, 0, 1024, 480 };
 
-	//Buttons Texture
-	//UI_spritesheet = App->tex->Load("gui/gui_spritesheet");
+	App->gui->element_list.add(App->gui->SpawnButton(445, 200, PLAY, "PLAY"));
+	App->gui->element_list.add(App->gui->SpawnButton(445, 300, CONTINUE, "CONTINUE"));
+	App->gui->element_list.add(App->gui->SpawnButton(445, 400, EXIT, "EXIT"));
 
-	//App->gui->SpawnMenuBackground(0, 0, BACKGROUND, this);
-
-	//Buttons Rects
-	//R_play = { 0, 3, 134, 48 };
-
-	//Spawn Buttons
-	//B_play = App->gui->SpawnButton(80, 40, BUTTON, &R_play, this, true);
-	
 	return true;
 }
 
@@ -58,9 +51,9 @@ bool j1MainMenu::Update(float dt)
 	//	button_iterator->data->Draw();
 	//}
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) 
+	{
 		GoToScene();
-		
 	}
 	return true;
 }
