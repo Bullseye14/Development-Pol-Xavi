@@ -36,8 +36,8 @@
 	  <fromright value = "false"/>
 	  <jumping value = "false"/>
 	  <onfloor value = "false"/>
-	  <max_speed_y value = "-20.0f"/>
-	  <jumpforce value = "4.0f"/>
+	  <max_speed_y value = "-21.5f"/>
+	  <jumpforce value = "5.0f"/>
 	  <death value = "false"/>
 	  <won value = "false"/>
 	  <sliding value = "false"/>

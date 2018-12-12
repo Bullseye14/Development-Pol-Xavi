@@ -4,18 +4,21 @@
 	<window />
 	<textures />
 	<audio />
+	<mainmenu />
 	<map />
 	<scene>
 		<level num="1" />
 	</scene>
 	<EntityManager>
-		<position x="1045" y="323" />
+		<position x="0" y="322" />
 		<god_mode active="false" />
 	</EntityManager>
 	<:anonymous />
 	<:anonymous />
-	<:anonymous />
+	<pathfinding />
+	<gui />
+	<fonts />
 	<renderer>
-		<camera x="-704" y="0" />
+		<camera x="0" y="0" />
 	</renderer>
 </game_state>
