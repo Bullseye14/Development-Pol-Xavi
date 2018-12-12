@@ -10,6 +10,7 @@
 #include "j1Player.h"
 #include "j1Bird.h"
 #include "j1Zombie.h"
+#include "j1Coin.h"
 
 #include "Brofiler/Brofiler.h"
 #pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )
@@ -108,17 +109,24 @@ void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
 	}
 }
 
+void j1EntityManager::CreatePlayer()
+{
+	player = (j1Player*)CreateEntity(PLAYER);
+	player->Awake(entities_config);
+}
+
 j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPES type, int x, int y)
 {
 	j1Entity* new_entity = nullptr;
+	
 	if(type == PLAYER)
 	{
 		new_entity = new j1Player(x, y, type);
-	}
 
-	if (new_entity != nullptr)
-	{
-		entity_list.add(new_entity);
+		if (new_entity != nullptr)
+		{
+			entity_list.add(new_entity);
+		}
 	}
 
 	return new_entity;
@@ -159,25 +167,23 @@ void j1EntityManager::SpawnEnemy(const EnemyInfo& info)
 		if (queue[i].type != ENTITY_TYPES::NONE)
 		{
 			j1Entity* entity;
-			if (queue[i].type == BIRD)
+			if (queue[i].type == BIRD) {
 				entity = new j1Bird(info.position.x, info.position.y, info.type);
+			}
 
-			if (queue[i].type == ZOMBIE)
+			else if (queue[i].type == ZOMBIE) {
 				entity = new j1Zombie(info.position.x, info.position.y, info.type);
+			}
 
+			else if (queue[i].type == COIN) {
+				entity = new j1Coin(info.position.x, info.position.y, info.type);
+			}
 
 			entity_list.add(entity);
 			entity->Start();
 		}
 	}
 }
-void j1EntityManager::CreatePlayer()
-{
-	player = (j1Player*)CreateEntity(PLAYER);
-	player->Awake(entities_config);
-}
-
-
 
 bool j1EntityManager::Load(pugi::xml_node& data)
 {

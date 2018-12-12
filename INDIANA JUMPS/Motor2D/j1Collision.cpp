@@ -20,6 +20,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_END] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_COIN] = true;
 
 	matrix[COLLIDER_DEATH][COLLIDER_WALL] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_PLAYER] = true;
@@ -36,6 +37,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_GOD][COLLIDER_WALL] = true;
 	matrix[COLLIDER_GOD][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_GOD][COLLIDER_END] = true;
+	matrix[COLLIDER_GOD][COLLIDER_COIN] = true;
 
 	matrix[COLLIDER_SLIDE][COLLIDER_SLIDE] = false;
 	matrix[COLLIDER_SLIDE][COLLIDER_PLAYER] = false;
@@ -44,6 +46,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_SLIDE][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_SLIDE][COLLIDER_END] = true;
 	matrix[COLLIDER_SLIDE][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_SLIDE][COLLIDER_COIN] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_GOD] = true;
@@ -153,6 +156,9 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_ENEMY:	//purple
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
+			break;
+		case COLLIDER_COIN:	//purple
+			App->render->DrawQuad(colliders[i]->rect, 100, 255, 0, alpha);
 			break;
 		}
 	}

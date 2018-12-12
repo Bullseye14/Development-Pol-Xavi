@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClCompile Include="j1Bird.cpp" />
     <ClCompile Include="j1Button.cpp" />
+    <ClCompile Include="j1Coin.cpp" />
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1EntityManager.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="j1Bird.h" />
     <ClInclude Include="j1Button.h" />
+    <ClInclude Include="j1Coin.h" />
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1EntityManager.h" />
     <ClInclude Include="j1FadeToBlack.h" />

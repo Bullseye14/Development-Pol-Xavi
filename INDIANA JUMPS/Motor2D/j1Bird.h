@@ -9,8 +9,6 @@
 #include "p2Point.h"
 #include "p2DynArray.h"
 
-
-
 struct SDL_Texture;
 //struct Collider;
 
