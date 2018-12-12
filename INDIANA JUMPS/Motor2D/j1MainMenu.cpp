@@ -8,6 +8,8 @@
 #include "j1Input.h"
 #include "j1EntityManager.h"
 #include "j1Fonts.h"
+#include "j1Button.h"
+#include "j1Window.h"
 
 j1MainMenu::j1MainMenu()
 {
@@ -23,7 +25,7 @@ j1MainMenu::j1MainMenu()
 	idle.PushBack({ 162,734,156,244 });
 	idle.PushBack({ 1,978,157,244 });
 	idle.PushBack({ 161,978,156,244 });
-	idle.speed = 0.2f;
+	idle.speed = 0.4f;
 
 	running.PushBack({ 326,10,202,239 });
 	running.PushBack({ 530,8,203,247 });
@@ -35,7 +37,7 @@ j1MainMenu::j1MainMenu()
 	running.PushBack({ 530,768,198,238 });
 	running.PushBack({ 326,1025,195,225 });
 	running.PushBack({ 530,1030,204,233 });
-	running.speed = 0.2f;
+	running.speed = 0.3f;
 
 }
 
@@ -69,8 +71,8 @@ bool j1MainMenu::Start()
 
 
 	//Loading Fonts
-	App->font->font_title = App->font->Load("fonts/Adventure.ttf", 12);
-	App->font->font_buttons = App->font->Load("fonts/West.ttf", 8);
+	//App->font->font_title = App->font->Load("fonts/Adventure.ttf", 12);
+	//App->font->font_buttons = App->font->Load("fonts/West.ttf", 8);
 
 	return true;
 }
@@ -79,19 +81,52 @@ bool j1MainMenu::Update(float dt)
 {
 	App->render->Blit(menuBackgroundTex, 0, 0, &BG_Rect);
 
+	ManageMenuAnimation();
+
+	if (mouseInButton == false) {
+		current_animation = &idle;
+		App->render->Blit(IndianaJumps, 200, 148, &current_animation->GetCurrentFrame());
+	}
+	else {
+		current_animation = &running;
+		App->render->Blit(IndianaJumps, 200, 148, &current_animation->GetCurrentFrame());
+	}
+	
 	return true;
 }
 
 bool j1MainMenu::PostUpdate()
 {
-	App->render->Blit(IndianaJumps, 200, 148, &current_animation->GetCurrentFrame());
-
 	return true;
 }
 
 bool j1MainMenu::CleanUp()
 {
 	return true;
+}
+
+
+
+void j1MainMenu::ManageMenuAnimation()
+{
+	int x, y;
+	App->input->GetMousePosition(x, y);
+
+	if ((x > 800 && x < 933) && 
+		(y > 25 && y < 75 
+		|| y > 95 && y < 145
+		|| y > 165 && y < 215
+		|| y > 235 && y < 285
+		|| y > 305 && y < 355))
+	{
+		mouseInButton = true;
+	}
+	
+	else 
+	{
+		mouseInButton = false;
+	}
+	
 }
 
 void j1MainMenu::GoToScene()

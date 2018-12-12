@@ -5,6 +5,7 @@
 #include "j1Fonts.h"
 #include "j1App.h"
 #include "j1Map.h"
+#include "j1Gui.h"
 
 bool j1UI_Element::Update(float dt) 
 {
@@ -13,16 +14,25 @@ bool j1UI_Element::Update(float dt)
 	case UIEvents::MOUSE_NONE:
 		if (OnHover()) 
 		{ 
+			hover = true;
+			none = false;
+			click = false;
 			mouse_state = UIEvents::MOUSE_HOVER;
 			break;
 		}
 	case UIEvents::MOUSE_HOVER:
 		if (!OnHover())
 		{
+			none = true;
+			hover = false;
+			click = false;
 			mouse_state = UIEvents::MOUSE_NONE;
 		}
 		if (OnClick())
 		{
+			click = true;
+			none = false;
+			hover = false;
 			mouse_state = UIEvents::MOUSE_CLICK;
 		}
 		break;
@@ -30,6 +40,9 @@ bool j1UI_Element::Update(float dt)
 	case UIEvents::MOUSE_CLICK:
 		if (!OnClick())
 		{
+			hover = true;
+			none = false;
+			click = false;
 			mouse_state = UIEvents::MOUSE_HOVER;
 		}
 		break;

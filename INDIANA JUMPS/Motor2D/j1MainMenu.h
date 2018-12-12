@@ -21,7 +21,9 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 	
+	void ManageMenuAnimation();
 	void GoToScene();
+	
 
 private:
 
@@ -35,6 +37,8 @@ private:
 	
 	Animation*		current_animation;
 	Animation		idle, running;
+
+	bool mouseInButton = false;
 
 };
 

@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1MainMenu.h"
 #include "j1Scene.h"
+#include "Animation.h"
 
 j1Button::j1Button(const char* text, BUTTON_TYPE type)
 {
@@ -42,6 +43,7 @@ bool j1Button::PostUpdate()
 		break;
 
 	case MOUSE_HOVER:
+		//App->gui->mouse_hovering = true;
 		ret = App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonOnHover);
 		break;
 
