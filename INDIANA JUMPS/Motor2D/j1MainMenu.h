@@ -24,6 +24,7 @@ public:
 	void ManageMenuAnimation();
 	void GoToScene();
 	
+	bool ending = false;
 
 private:
 

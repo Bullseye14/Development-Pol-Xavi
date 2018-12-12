@@ -97,7 +97,8 @@ bool j1MainMenu::Update(float dt)
 
 bool j1MainMenu::PostUpdate()
 {
-	return true;
+	if (ending) return false;
+	else return true;
 }
 
 bool j1MainMenu::CleanUp()

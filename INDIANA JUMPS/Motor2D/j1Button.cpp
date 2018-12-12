@@ -26,7 +26,7 @@ j1Button::~j1Button()
 bool j1Button::Start() 
 {
 	App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonRect);
-
+	
 	return true;
 }
 
@@ -58,9 +58,13 @@ bool j1Button::PostUpdate()
 			App->LoadGame("save_game.xml");
 			App->mainmenu->CleanUp();
 		}
+		else if (b_type == CREDITS)
+		{
+			ShellExecuteA(NULL, "open", "https://github.com/Bullseye14/Development-Pol-Xavi", NULL, NULL, SW_SHOWNORMAL);
+		}
 		else if (b_type == EXIT) 
 		{
-			return ret = false;
+			App->mainmenu->ending = true;
 		}
 		break;
 
