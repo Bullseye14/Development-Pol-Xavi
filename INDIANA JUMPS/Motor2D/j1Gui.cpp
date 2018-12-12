@@ -101,16 +101,28 @@ SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
-j1UI_Element*j1Gui::SpawnButton(int x, int y, BUTTON_TYPE type, const char* text)
+j1UI_Element* j1Gui::SpawnButton(int x, int y, BUTTON_TYPE type, const char* text)
 {
-	j1UI_Element* button = nullptr;
-	button = new j1Button(text, type);
+	j1UI_Element* button_elem = new j1Button(text, type);
 	
-	button->position.x = x;
-	button->position.y = y;
+	button_elem->position.x = x;
+	button_elem->position.y = y;
 
-	return button;
+	return button_elem;
 }
+
+j1UI_Element* j1Gui::SpawnText(int x, int y, TEXT_TYPE type, uint font, const char * text, SDL_Color color)
+{
+	j1UI_Element* text_elem = new j1ButtonText(type, font, text, color);
+
+	text_elem->position.x = x;
+	text_elem->position.y = y;
+
+	return text_elem;
+}
+
+
+
 
 
 

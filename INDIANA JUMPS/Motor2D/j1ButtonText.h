@@ -15,15 +15,17 @@ enum TEXT_TYPE
 
 class j1ButtonText : public j1UI_Element {
 	public: 
-		j1ButtonText(int x, int y, TEXT_TYPE type, uint font, const char* text, SDL_Color color);
+		j1ButtonText(TEXT_TYPE type, uint font, const char* text, SDL_Color color);
 		j1ButtonText();
+
+		bool Start();
 
 	public:
 
 		uint font;
 		const char* string = nullptr;
 		SDL_Color text_color = { 102, 51, 0, 255 };
-
+		SDL_Texture* text_tex = nullptr;
 
 };
 #endif // __j1BUTTONTEXT_H__
