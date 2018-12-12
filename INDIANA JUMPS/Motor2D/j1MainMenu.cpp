@@ -11,6 +11,23 @@
 j1MainMenu::j1MainMenu()
 {
 	name.create("mainmenu");
+
+	idle.PushBack({ 0,0,156,245 });
+	idle.PushBack({ 162,0,156,245 });
+	idle.PushBack({ 0,245,156,245 });
+	idle.PushBack({ 162,245,156,245 });
+	idle.PushBack({ 0,490,156,245 });
+	idle.PushBack({ 162,490,156,245 });
+	idle.PushBack({ 0,735,156,245 });
+	idle.PushBack({ 162,735,156,245 });
+	idle.PushBack({ 0,978,156,245 });
+	idle.PushBack({ 162,978,156,245 });
+	idle.speed = 0.2f;
+
+	running.PushBack({ 150,150,156,245 });
+	running.PushBack({ 150,150,156,245 });
+	running.PushBack({ 150,150,156,245 });
+
 }
 
 j1MainMenu::~j1MainMenu()
@@ -26,6 +43,10 @@ bool j1MainMenu::Start()
 {
 	App->scene->active = false;
 	App->entity_m->active = false;
+
+	IndianaJumps = App->tex->Load("textures/MainMenuSpritesheet.png");
+
+	current_animation = &idle;
 
 	//Background of the menu
 	menuBackgroundTex = App->tex->Load("gui/MainMenu_TILED.png");
@@ -44,10 +65,18 @@ bool j1MainMenu::Update(float dt)
 {
 	App->render->Blit(menuBackgroundTex, 0, 0, &BG_Rect);
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) 
+	if (App->gui->mouse_hovering) 
 	{
-		GoToScene();
+		current_animation = &running;
 	}
+	
+	if(!App->gui->mouse_hovering)
+	{
+		current_animation = &idle;
+	}
+
+	App->render->Blit(IndianaJumps, 200, 148, &current_animation->GetCurrentFrame());
+
 	return true;
 }
 

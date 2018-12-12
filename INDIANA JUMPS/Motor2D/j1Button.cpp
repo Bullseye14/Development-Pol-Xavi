@@ -50,11 +50,13 @@ bool j1Button::PostUpdate()
 		if (b_type == PLAY) 
 		{
 			App->mainmenu->GoToScene();
+			App->mainmenu->CleanUp();
 		}
 		else if (b_type == CONTINUE) 
 		{
 			App->mainmenu->GoToScene();
 			App->LoadGame("save_game.xml");
+			App->mainmenu->CleanUp();
 		}
 		else if (b_type == EXIT) 
 		{
@@ -89,5 +91,6 @@ bool j1Button::OnClick()
 			ret = true;
 		}
 	}
+
 	return ret;
 }

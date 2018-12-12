@@ -39,6 +39,8 @@ public:
 	p2List<j1UI_Element*> element_list;
 	SDL_Texture* menuBackgroundTex = nullptr;
 
+	bool mouse_hovering = false;
+
 private:
 	
 	SDL_Texture* atlas = nullptr;

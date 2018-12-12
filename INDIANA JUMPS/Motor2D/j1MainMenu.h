@@ -25,15 +25,16 @@ public:
 
 private:
 
-	SDL_Texture * UI_spritesheet = nullptr;
+	SDL_Texture *	UI_spritesheet = nullptr;
 
-	SDL_Texture * menuBackgroundTex = nullptr;
-	SDL_Rect BG_Rect;
+	SDL_Texture *	IndianaJumps = nullptr;
+	SDL_Rect		PlayerRect;
 
-	//j1UI_Element* B_play = nullptr;
-	//SDL_Rect R_play;
-
-
+	SDL_Texture *	menuBackgroundTex = nullptr;
+	SDL_Rect		BG_Rect;
+	
+	Animation*		current_animation;
+	Animation		idle, running;
 
 };
 

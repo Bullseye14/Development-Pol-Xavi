@@ -38,7 +38,7 @@ public:
 	
 public:
 	UIEvents		mouse_state = MOUSE_NONE;
-	
+
 	SDL_Texture*	UI_tex = nullptr;
 	SDL_Rect		UI_rect;
 	iPoint			position;
