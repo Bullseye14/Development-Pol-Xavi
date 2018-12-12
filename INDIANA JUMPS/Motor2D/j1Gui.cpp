@@ -101,9 +101,9 @@ SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
-j1UI_Element* j1Gui::SpawnButton(int x, int y, BUTTON_TYPE type, const char* text)
+j1UI_Element* j1Gui::SpawnButton(int x, int y, BUTTON_TYPE type)
 {
-	j1UI_Element* button_elem = new j1Button(text, type);
+	j1UI_Element* button_elem = new j1Button(type);
 	
 	button_elem->position.x = x;
 	button_elem->position.y = y;

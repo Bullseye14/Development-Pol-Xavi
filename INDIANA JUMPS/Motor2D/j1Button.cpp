@@ -10,15 +10,13 @@
 #include "j1Scene.h"
 #include "Animation.h"
 
-j1Button::j1Button(const char* text, BUTTON_TYPE type)
+j1Button::j1Button(BUTTON_TYPE type)
 {
 	buttonRect = { 0,0,133,50 };
 	buttonOnHover = { 0,50,133,50 };
 	buttonOnClick = { 0,100,133,50 };
 
 	b_type = type;
-
-	buttonText.create(text);
 }
 
 j1Button::~j1Button()

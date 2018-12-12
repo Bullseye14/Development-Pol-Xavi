@@ -21,7 +21,7 @@ class j1Button : public j1UI_Element
 
 public:
 
-	j1Button(const char* text, BUTTON_TYPE type);
+	j1Button(BUTTON_TYPE type);
 	~j1Button();
 
 	bool Start();
