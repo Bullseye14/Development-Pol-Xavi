@@ -7,6 +7,10 @@ You won't complete the levels if you bump into cactus or if you fall into the wa
 
 ## Information
 
+### Website
+If you want to know more about the game and about us:
+- Visit our [Website](https://bullseye14.github.io/IndianaJumps/)
+
 ### Controls
 - Move: LEFT/RIGHT
 - Jump: SPACE
@@ -33,8 +37,6 @@ You won't complete the levels if you bump into cactus or if you fall into the wa
 * Group's Github link
   - [Indiana Jumps](https://github.com/Bullseye14/Development-Pol-Xavi)
   
-* Link to our website
-  - [IndianaJumps](https://bullseye14.github.io/IndianaJumps/)
   
 ## Accomplishments
 ### Pol:
