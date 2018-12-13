@@ -5,6 +5,9 @@
 #include "j1Render.h"
 #include "j1Collision.h"
 #include "j1Window.h"
+#include "j1Gui.h"
+#include "j1MainMenu.h"
+#include "j1Scene.h"
 #include "p2Log.h"
 #include "p2Defs.h"
 #include "SDL/include/SDL_render.h"
@@ -30,52 +33,84 @@ bool j1FadeToBlack::Start()
 // Update: draw background
 bool j1FadeToBlack::Update(float dt)
 {
+	bool ret = true;
+
 	if (current_step == fade_step::none)
-		return true;
-
-	Uint32 now = SDL_GetTicks() - start_time;
-	float normalized = MIN(1.0f, (float)now / (float)total_time);
-
-	switch (current_step)
 	{
-	case fade_step::fade_to_black:
+		ret == true;
+	}
+	else
 	{
-		if (now >= total_time)
+		switch (current_step)
 		{
-			total_time += total_time;
-			start_time = SDL_GetTicks();
-			current_step = fade_step::fade_from_black;
+		case fade_step::fade_to_black:
+		{
+			if (transp <= 249)
+			{
+				transp += 6;
+
+			}
+
+			if (clock.ReadSec() >= 1.5 && free_gui)
+			{
+				free_gui = false;
+				App->gui->startgame = true;
+			}
+			if (clock.ReadSec() >= 2)
+			{
+				to_disable->active = false;
+
+				App->render->camera.x = 0;
+				App->render->camera.y = 0;
+
+				if (to_enable == App->scene)
+				{
+					App->mainmenu->GoToScene();
+				}
+				/*else
+				{
+					App->scene->GoToMenu();
+				}*/
+
+				to_enable->active = true;
+				current_step = fade_step::fade_from_black;
+			}
 		}
-	} break;
+		break;
 
-	case fade_step::fade_from_black:
-	{
-		normalized = 1.0f - normalized;
+		case fade_step::fade_from_black:
+		{
+			if (transp >= 6)
+			{
+				transp -= 6;
+			}
+			else
+			{
+				current_step = fade_step::none;
+			}
+		}
+		break;
+		}
 
-		if (now >= total_time)
-			current_step = fade_step::none;
-	} break;
+		SDL_SetRenderDrawColor(App->render->renderer, 255, 255, 225, transp);
+		SDL_RenderFillRect(App->render->renderer, &screen);
 	}
 
-	// Finally render the black square with alpha on the screen
-	SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
-	SDL_RenderFillRect(App->render->renderer, &screen);
-
-	return true;
+	return ret;
 }
 
-// Fade to black. At mid point deactivate one module, then activate the other
-bool j1FadeToBlack::FadeToBlack(j1Module* module_off, j1Module* module_on, float time)
+
+bool j1FadeToBlack::FadeToBlack(j1Module* module_off, j1Module* module_on)
 {
 	bool ret = false;
-	fade_out = module_off;
-	fade_in = module_on;
-
 	if (current_step == fade_step::none)
 	{
 		current_step = fade_step::fade_to_black;
-		start_time = SDL_GetTicks();
-		total_time = (Uint32)(time * 0.5f * 1000.0f);
+		transp = 0;
+		free_gui = true;
+		to_disable = module_off;
+		to_enable = module_on;
+		clock.Start();
 		ret = true;
 	}
 	return ret;

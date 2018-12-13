@@ -9,6 +9,7 @@
 #include "j1MainMenu.h"
 #include "j1Scene.h"
 #include "Animation.h"
+#include "j1FadeToBlack.h"
 
 j1Button::j1Button(BUTTON_TYPE type)
 {
@@ -33,6 +34,7 @@ bool j1Button::Start()
 	}
 	else
 		App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonRect);
+		
 	
 	return true;
 }
@@ -64,7 +66,8 @@ bool j1Button::PostUpdate()
 		}
 		if (b_type == PLAY) 
 		{
-			App->mainmenu->GoToScene();
+			App->fade->FadeToBlack(App->mainmenu, App->scene);
+			//App->mainmenu->GoToScene();
 			App->mainmenu->CleanUp();
 		}
 		else if (b_type == CONTINUE) 
@@ -75,7 +78,7 @@ bool j1Button::PostUpdate()
 		}
 		else if (b_type == CREDITS)
 		{
-			ShellExecuteA(NULL, "open", "https://github.com/Bullseye14/Development-Pol-Xavi", NULL, NULL, SW_SHOWNORMAL);
+			ShellExecuteA(NULL, "open", "https://bullseye14.github.io/IndianaJumps/", NULL, NULL, SW_SHOWNORMAL);
 		}
 		else if (b_type == EXIT) 
 		{
@@ -88,12 +91,11 @@ bool j1Button::PostUpdate()
 				App->mainmenu->showVolume = true;
 			}
 			
-			/*else 
+			else 
 			{
 				App->mainmenu->showVolume = false;
-			}*/
-			
-			App->mainmenu->manageVolume = false;
+			}
+		
 		}
 		else if (b_type == VOLUME)
 		{
@@ -102,9 +104,12 @@ bool j1Button::PostUpdate()
 		break;
 
 	}
+	
+	DrawDebug();
 
 	return ret;
 }
+
 
 bool j1Button::OnHover()
 {
@@ -123,11 +128,19 @@ bool j1Button::OnClick()
 
 	if (OnHover())
 	{
-		if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
+		if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 		{
 			ret = true;
 		}
 	}
 
 	return ret;
+}
+
+void j1Button::DrawDebug()
+{
+	debugRect = { position.x, position.y, 20, 20 };
+	if (debug == true) {
+		App->render->DrawQuad(debugRect, 255, 0, 255, 50);
+	}
 }

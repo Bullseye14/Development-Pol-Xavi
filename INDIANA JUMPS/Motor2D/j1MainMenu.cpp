@@ -166,6 +166,7 @@ void j1MainMenu::ManageVolume()
 void j1MainMenu::GoToScene()
 {
 	App->mainmenu->active = false;
+	//App->scene->Start();
 	App->gui->active = false; //temporal
 	App->scene->active = true;
 	App->entity_m->active = true;

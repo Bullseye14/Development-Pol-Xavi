@@ -38,6 +38,7 @@ public:
 	bool PreUpdate(float dt) { return true; }
 	virtual bool Update(float dt);
 	virtual bool PostUpdate() { return true; }
+	virtual bool CleanUp();
 
 	virtual bool OnClick() { return true; };
 	virtual bool OnHover() { return true; };
@@ -46,6 +47,9 @@ public:
 	
 public:
 	UIEvents		mouse_state = MOUSE_NONE;
+
+	SDL_Rect		debugRect;
+	bool			debug = false;
 
 	SDL_Texture*	UI_tex = nullptr;
 	SDL_Rect		UI_rect;

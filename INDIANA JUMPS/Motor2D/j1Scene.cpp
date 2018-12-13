@@ -14,6 +14,7 @@
 #include "j1Bird.h"
 #include "j1Zombie.h"
 #include "j1Gui.h"
+#include "j1MainMenu.h"
 
 #include "Brofiler/Brofiler.h"
 #pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )
@@ -221,3 +222,10 @@ void j1Scene::CameraToPlayer()
 		App->render->camera.x = -App->entity_m->player->pos_player.x + w / 3;
 	
 }
+
+//void j1Scene::GoToMenu()
+//{
+//	load_gui = true;
+//	App->scene->CleanUp();
+//	App->mainmenu->Start();
+//}

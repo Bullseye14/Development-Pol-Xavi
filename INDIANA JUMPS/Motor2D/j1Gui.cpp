@@ -82,12 +82,41 @@ bool j1Gui::PostUpdate()
 		element_iterator = element_iterator->next;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	{
+		while (element_iterator != nullptr)
+		{
+			if (!element_iterator->data->debug)
+			{
+				element_iterator->data->debug = true;
+			}
+			else
+			{
+				element_iterator->data->debug = false;
+			}
+
+			element_iterator = element_iterator->next;
+		}
+	}
+
+	if (startgame)
+	{
+		startgame = false;
+		CleanUp();
+	}
+
 	return true;
 }
 
 bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
+
+	for (p2List_item<j1UI_Element*>* item = App->gui->element_list.start; item != nullptr; item = item->next) {
+		//item->data->CleanUp();
+		element_list.del(item);
+	}
+
 	return true;
 }
 

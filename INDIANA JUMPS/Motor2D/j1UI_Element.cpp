@@ -54,4 +54,9 @@ bool j1UI_Element::Update(float dt)
 
 	return true;
 }
+bool j1UI_Element::CleanUp()
+{
+	App->tex->UnLoad(App->gui->GetAtlas());
+	return true;
+}
 

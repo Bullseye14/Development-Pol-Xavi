@@ -46,6 +46,7 @@ public:
 	//p2DynArray<_TTF_Font*> fonts_array;
 
 	bool mouse_hovering = false;
+	bool startgame = false;
 
 private:
 	

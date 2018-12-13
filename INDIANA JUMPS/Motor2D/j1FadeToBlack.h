@@ -15,7 +15,7 @@ public:
 	// Called each loop iteration
 	bool Update(float dt);
 
-	bool FadeToBlack(j1Module* module_off, j1Module* module_on, float time = 2.0f);
+	bool FadeToBlack(j1Module* module_off, j1Module* module_on);
 	//bool IsFading() const;
 
 private:
@@ -28,12 +28,15 @@ private:
 
 	} current_step = fade_step::none;
 
+	j1Timer clock;
+
 	Uint32 start_time = 0;
 	Uint32 total_time = 0;
 	SDL_Rect screen;
-
-	j1Module* fade_in = nullptr;
-	j1Module* fade_out = nullptr;
+	uint transp;
+	bool free_gui = false;
+	j1Module* to_enable = nullptr;
+	j1Module* to_disable = nullptr;
 };
 
 #endif //__j1FADETOBLACK_H__

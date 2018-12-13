@@ -52,6 +52,7 @@ public:
 
 	void SuperClean();
 	void CameraToPlayer();
+	//void GoToMenu();
 
 	// Save and Load
 	bool Load(pugi::xml_node&);
@@ -65,6 +66,8 @@ public:
 	int limitcamera_left;
 	int limitcamera_right;
 	int limitplayer;
+
+	bool load_gui = true;
 
 private:
 	SDL_Texture * img;

@@ -30,6 +30,7 @@ public:
 
 	bool OnHover();
 	bool OnClick();
+	void DrawDebug();
 
 private:
 
