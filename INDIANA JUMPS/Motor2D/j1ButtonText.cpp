@@ -27,17 +27,17 @@ bool j1ButtonText::Start()
 
 bool j1ButtonText::PostUpdate()
 {
-	App->render->Blit(tex1, position.x, position.y);
+	App->render->Blit(text_texture, position.x, position.y);
 	return false;
 }
 
 void j1ButtonText::SelectFont()
 {
 	if (font == 0) {
-		tex1 = App->font->Print(string, text_color, App->font->Load("fonts/CenturyGothic.ttf", 26));
+		text_texture = App->font->Print(string, text_color, App->font->Load("fonts/CenturyGothic.ttf", 26));
 	}
 	else if (font == 1){
-		tex1 = App->font->Print(string, text_color, App->font->Load("fonts/vanilla whale.ttf", 110));
+		text_texture = App->font->Print(string, text_color, App->font->Load("fonts/burnstown dam.ttf", 82));
 	}
 }
 

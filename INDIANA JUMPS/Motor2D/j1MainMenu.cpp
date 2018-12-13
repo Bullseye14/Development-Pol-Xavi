@@ -83,7 +83,7 @@ bool j1MainMenu::Start()
 	App->gui->element_list.add(App->gui->SpawnText(850, 184, 0, TEXT, "CREDITS", { 230,115,0,0 }));
 	App->gui->element_list.add(App->gui->SpawnText(873, 325, 0, TEXT, "EXIT", { 230,115,0,0 }));
 
-	App->gui->element_list.add(App->gui->SpawnText(30, 20, 1, TEXT, "Indiana Jumps", { 0, 0, 0, 0 }));
+	App->gui->element_list.add(App->gui->SpawnText(15, -10, 1, TEXT, "Indiana Jumps", { 0, 0, 0, 0 }));
 	
 	//App->gui->element_list.add(App->gui->SpawnText(30, 20, 0, TEXT, "INDIANA JUMPS", { 0,200,0,0 }));
 
