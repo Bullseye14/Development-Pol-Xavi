@@ -8,9 +8,11 @@
 #include "j1UI_Element.h"
 #include "j1Button.h"
 #include "j1ButtonText.h"
+#include "j1Fonts.h"
 
 enum BUTTON_TYPE;
 enum TEXT_TYPE;
+enum FONT_TYPE;
 
 class j1Gui : public j1Module
 {
@@ -36,11 +38,12 @@ public:
 
 	//void SpawnMenuBackground(int x, int y, E_TYPE type, j1Module* mod);
 	j1UI_Element* SpawnButton(int x, int y, BUTTON_TYPE type);
-	j1UI_Element* SpawnText(int x, int y, TEXT_TYPE type, uint font, const char* text, SDL_Color color);
+	j1UI_Element* SpawnText(int x, int y, uint font, E_TYPE type, const char* text, SDL_Color color);
 	
 public:
 	p2List<j1UI_Element*> element_list;
 	SDL_Texture* menuBackgroundTex = nullptr;
+	//p2DynArray<_TTF_Font*> fonts_array;
 
 	bool mouse_hovering = false;
 

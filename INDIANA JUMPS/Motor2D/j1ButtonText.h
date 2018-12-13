@@ -7,25 +7,25 @@
 class SDL_Texture;
 class _TTF_Font;
 
-enum TEXT_TYPE 
-{
-	TEXT_TITLE,
-	TEXT_BUTTON
-};
 
 class j1ButtonText : public j1UI_Element {
 	public: 
-		j1ButtonText(TEXT_TYPE type, uint font, const char* text, SDL_Color color);
+		j1ButtonText(uint font, E_TYPE type, const char * text, SDL_Color color);
 		j1ButtonText();
 
 		bool Start();
+		bool PostUpdate();
+
+		void SelectFont();
 
 	public:
 
-		uint font;
 		const char* string = nullptr;
 		SDL_Color text_color = { 102, 51, 0, 255 };
-		SDL_Texture* text_tex = nullptr;
+		SDL_Texture* tex1 = nullptr;
+		SDL_Texture* tex2 = nullptr;
+		//FONT_TYPE font_type;
+		uint font;
 
 };
 #endif // __j1BUTTONTEXT_H__

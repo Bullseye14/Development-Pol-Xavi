@@ -6,11 +6,12 @@
 #include "j1Render.h"
 #include "j1Fonts.h"
 
-j1ButtonText::j1ButtonText(TEXT_TYPE type, uint font_num, const char * text, SDL_Color color)
+j1ButtonText::j1ButtonText(uint fontnum, E_TYPE type, const char * text, SDL_Color color)
 {
-	font = font_num;
+	font = fontnum;
 	string = text;
 	text_color = color;
+	string = text;
 }
 
 j1ButtonText::j1ButtonText()
@@ -19,12 +20,27 @@ j1ButtonText::j1ButtonText()
 
 bool j1ButtonText::Start()
 {
-	/*if (font == 0)
-	{
-		text_tex = App->font->Print(string, text_color, App->font->font_title);
-	}
-	else {
-		text_tex = App->font->Print(string, text_color, App->font->font_buttons);
-	}*/
+	SelectFont();
+
 	return true;
 }
+
+bool j1ButtonText::PostUpdate()
+{
+	App->render->Blit(tex1, position.x, position.y);
+	return false;
+}
+
+void j1ButtonText::SelectFont()
+{
+	if (font == 0) {
+		tex1 = App->font->Print(string, text_color, App->font->Load("fonts/CenturyGothic.ttf", 26));
+	}
+	else if (font == 1){
+		tex1 = App->font->Print(string, text_color, App->font->Load("fonts/vanilla whale.ttf", 110));
+	}
+}
+
+
+
+

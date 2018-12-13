@@ -5,6 +5,12 @@
 #include "j1Module.h"
 #include "SDL\include\SDL.h"
 
+enum FONT_TYPE
+{
+	TITLE_FONT,
+	BUTTON_FONT
+};
+
 enum E_TYPE
 {
 	NONE_UI,
@@ -35,6 +41,8 @@ public:
 
 	virtual bool OnClick() { return true; };
 	virtual bool OnHover() { return true; };
+
+	//virtual void SelectFont(FONT_TYPE font);
 	
 public:
 	UIEvents		mouse_state = MOUSE_NONE;
@@ -43,6 +51,7 @@ public:
 	SDL_Rect		UI_rect;
 	iPoint			position;
 	E_TYPE			type;
+	//FONT_TYPE		font_type;
 	
 	bool hover = false;
 	bool none = false;

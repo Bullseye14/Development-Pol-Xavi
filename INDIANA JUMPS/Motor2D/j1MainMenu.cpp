@@ -69,12 +69,23 @@ bool j1MainMenu::Start()
 	menuBackgroundTex = App->tex->Load("gui/MainMenu_TILED.png");
 	BG_Rect = { 0, 0, 1024, 480 };
 
+	//Spawn Buttons
 	App->gui->element_list.add(App->gui->SpawnButton(550, 95, PLAY));
 	App->gui->element_list.add(App->gui->SpawnButton(550, 235, CONTINUE));
 	App->gui->element_list.add(App->gui->SpawnButton(800, 25, SETTINGS));
 	App->gui->element_list.add(App->gui->SpawnButton(800, 165, CREDITS));
 	App->gui->element_list.add(App->gui->SpawnButton(800, 305, EXIT));
 
+	//Spawn Text
+	App->gui->element_list.add(App->gui->SpawnText(615, 114, 0, TEXT, "PLAY", { 230,115,0,0 }));
+	App->gui->element_list.add(App->gui->SpawnText(583, 255, 0, TEXT, "CONTINUE", { 230,115,0,0 }));
+	App->gui->element_list.add(App->gui->SpawnText(848, 44, 0, TEXT, "SETTINGS", { 230,115,0,0 }));
+	App->gui->element_list.add(App->gui->SpawnText(850, 184, 0, TEXT, "CREDITS", { 230,115,0,0 }));
+	App->gui->element_list.add(App->gui->SpawnText(873, 325, 0, TEXT, "EXIT", { 230,115,0,0 }));
+
+	App->gui->element_list.add(App->gui->SpawnText(30, 20, 1, TEXT, "Indiana Jumps", { 0, 0, 0, 0 }));
+	
+	//App->gui->element_list.add(App->gui->SpawnText(30, 20, 0, TEXT, "INDIANA JUMPS", { 0,200,0,0 }));
 
 	//Loading Fonts
 	//App->font->font_title = App->font->Load("fonts/Adventure.ttf", 12);

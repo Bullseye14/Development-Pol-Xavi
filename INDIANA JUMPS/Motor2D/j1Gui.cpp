@@ -111,9 +111,9 @@ j1UI_Element* j1Gui::SpawnButton(int x, int y, BUTTON_TYPE type)
 	return button_elem;
 }
 
-j1UI_Element* j1Gui::SpawnText(int x, int y, TEXT_TYPE type, uint font, const char * text, SDL_Color color)
+j1UI_Element* j1Gui::SpawnText(int x, int y, uint font, E_TYPE type, const char * text, SDL_Color color)
 {
-	j1UI_Element* text_elem = new j1ButtonText(type, font, text, color);
+	j1UI_Element* text_elem = new j1ButtonText(font, type, text, color);
 
 	text_elem->position.x = x;
 	text_elem->position.y = y;
