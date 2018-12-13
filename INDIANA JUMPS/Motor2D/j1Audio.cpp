@@ -7,10 +7,15 @@
 #include "SDL_mixer\include\SDL_mixer.h"
 #pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
 
+#define VOLUME_DEFAULT MIX_MAX_VOLUME/2
+
 j1Audio::j1Audio() : j1Module()
 {
 	music = NULL;
 	name.create("audio");
+
+	CurrentVolume = VOLUME_DEFAULT;
+
 }
 
 // Destructor
@@ -163,6 +168,32 @@ unsigned int j1Audio::LoadFx(const char* path)
 	return ret;
 }
 
+void j1Audio::MusicVolume(float vol)
+{
+	if (vol > MIX_MAX_VOLUME)
+		vol = MIX_MAX_VOLUME;
+
+	else if (vol < -MIX_MAX_VOLUME)
+		vol = -MIX_MAX_VOLUME;
+
+	Mix_VolumeMusic(vol);
+	CurrentVolume = vol;
+}
+
+void j1Audio::FxVolume(float vol)
+{
+	if (vol > MIX_MAX_VOLUME)
+		vol = MIX_MAX_VOLUME;
+
+	p2List_item<Mix_Chunk*>* fx_list;
+
+	for (fx_list = fx.start; fx_list != NULL; fx_list = fx_list->next)
+	{
+		Mix_VolumeChunk(fx_list->data, vol);
+	}
+	CurrentFXVolume = vol;
+}
+
 // Play WAV
 bool j1Audio::PlayFx(unsigned int id, int repeat)
 {
@@ -177,4 +208,14 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
+}
+
+float j1Audio::GetFxVolume()
+{
+	return CurrentFXVolume;
+}
+
+float j1Audio::GetVolume()
+{
+	return CurrentVolume;
 }

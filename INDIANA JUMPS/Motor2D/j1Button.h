@@ -13,7 +13,8 @@ enum BUTTON_TYPE
 	CONTINUE,
 	EXIT,
 	SETTINGS,
-	CREDITS
+	CREDITS,
+	VOLUME
 };
 
 class j1Button : public j1UI_Element
@@ -34,6 +35,7 @@ private:
 
 	BUTTON_TYPE		b_type;
 	SDL_Rect		buttonRect, buttonOnHover, buttonOnClick;
+	SDL_Rect		volumeRect;
 	p2SString		buttonText;
 };
 

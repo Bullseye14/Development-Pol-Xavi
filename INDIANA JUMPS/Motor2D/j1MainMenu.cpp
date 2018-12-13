@@ -10,6 +10,7 @@
 #include "j1Fonts.h"
 #include "j1Button.h"
 #include "j1Window.h"
+#include "j1Audio.h"
 
 j1MainMenu::j1MainMenu()
 {
@@ -52,10 +53,15 @@ bool j1MainMenu::Awake(pugi::xml_node &)
 
 bool j1MainMenu::Start()
 {
+	actualVolume = App->audio->CurrentVolume;
+	
 	App->scene->active = false;
 	App->entity_m->active = false;
 
 	IndianaJumps = App->tex->Load("textures/MainMenuSpritesheet.png");
+
+	UI_spritesheet = App->tex->Load("gui/atlas_new.png");
+	VolumeRect = { 0,225,500,75 };
 
 	current_animation = &idle;
 
@@ -81,15 +87,36 @@ bool j1MainMenu::Update(float dt)
 {
 	App->render->Blit(menuBackgroundTex, 0, 0, &BG_Rect);
 
+	App->audio->CurrentVolume = actualVolume / 4;
+
+	VolumeToMove = { 0,300,actualVolume,75 };
+
+	if (manageVolume) { ManageVolume(); }
+
 	ManageMenuAnimation();
 
-	if (mouseInButton == false) {
+	if (mouseInButton == false) 
+	{
 		current_animation = &idle;
 		App->render->Blit(IndianaJumps, 200, 148, &current_animation->GetCurrentFrame());
 	}
-	else {
+	else 
+	{
 		current_animation = &running;
 		App->render->Blit(IndianaJumps, 200, 148, &current_animation->GetCurrentFrame());
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+		App->audio->MusicVolume(App->audio->GetVolume() + 10.0f);
+
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+		App->audio->MusicVolume(App->audio->GetVolume() - 10.0f);
+
+	if (showVolume) 
+	{
+		App->gui->element_list.add(App->gui->SpawnButton(300, 400, VOLUME));
+		App->render->Blit(UI_spritesheet, 300, 400, &VolumeRect);
+		App->render->Blit(UI_spritesheet, 300, 400, &VolumeToMove);
 	}
 	
 	return true;
@@ -106,15 +133,13 @@ bool j1MainMenu::CleanUp()
 	return true;
 }
 
-
-
 void j1MainMenu::ManageMenuAnimation()
 {
 	int x, y;
 	App->input->GetMousePosition(x, y);
 
 	if	(
-		((x > 550 && x < 748) && (y > 95 && y < 170 || y>235 && y < 310)) 
+		((x > 550 && x < 748) && (y > 95 && y < 170 || y > 235 && y < 310))
 		|| ((x > 800 && x < 999) && (y > 25 && y < 100 || y > 165 && y < 240 || y > 305 && y < 380))
 		)
 	{
@@ -125,7 +150,22 @@ void j1MainMenu::ManageMenuAnimation()
 	{
 		mouseInButton = false;
 	}
+}
+
+void j1MainMenu::ManageVolume() 
+{
+	int x, y;
+	App->input->GetMousePosition(x, y);
+
+	if (x > 300 && x < 800) 
+	{
+		actualVolume = (x - 300);
+	}
 	
+	if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
+	{
+		App->audio->CurrentVolume = actualVolume / 4;
+	}
 }
 
 void j1MainMenu::GoToScene()

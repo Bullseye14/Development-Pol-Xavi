@@ -34,10 +34,19 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
+	float GetFxVolume();
+	float GetVolume();
+
+	void MusicVolume(float vol);
+	void FxVolume(float vol);
+
 	int jump;
 	int slide;
+	float CurrentVolume;
 
 private:
+
+	float CurrentFXVolume;
 
 	_Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;

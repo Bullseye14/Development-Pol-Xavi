@@ -16,6 +16,8 @@ j1Button::j1Button(BUTTON_TYPE type)
 	buttonOnHover = { 0,75,199,75 };
 	buttonOnClick = { 0,150,199,75 };
 
+	volumeRect = { 0,0,500,75 };
+
 	b_type = type;
 }
 
@@ -25,7 +27,12 @@ j1Button::~j1Button()
 
 bool j1Button::Start() 
 {
-	App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonRect);
+	if (b_type == VOLUME) 
+	{
+		App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &volumeRect);
+	}
+	else
+		App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonRect);
 	
 	return true;
 }
@@ -37,16 +44,24 @@ bool j1Button::PostUpdate()
 	switch (mouse_state) 
 	{
 	case MOUSE_NONE:
-		ret = App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonRect);
-		break;
+		if (b_type != VOLUME)
+		{
+			ret = App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonRect);
+			break;
+		}
 
 	case MOUSE_HOVER:
-		//App->gui->mouse_hovering = true;
-		ret = App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonOnHover);
-		break;
+		if (b_type != VOLUME)
+		{
+			ret = App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonOnHover);
+			break;
+		}
 
 	case MOUSE_CLICK:
-		ret = App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonOnClick);
+		if (b_type != VOLUME)
+		{
+			ret = App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &buttonOnClick);
+		}
 		if (b_type == PLAY) 
 		{
 			App->mainmenu->GoToScene();
@@ -65,6 +80,24 @@ bool j1Button::PostUpdate()
 		else if (b_type == EXIT) 
 		{
 			App->mainmenu->ending = true;
+		}
+		else if (b_type == SETTINGS) 
+		{
+			if (App->mainmenu->showVolume == false) 
+			{
+				App->mainmenu->showVolume = true;
+			}
+			
+			/*else 
+			{
+				App->mainmenu->showVolume = false;
+			}*/
+			
+			App->mainmenu->manageVolume = false;
+		}
+		else if (b_type == VOLUME)
+		{
+			App->mainmenu->manageVolume = true;
 		}
 		break;
 

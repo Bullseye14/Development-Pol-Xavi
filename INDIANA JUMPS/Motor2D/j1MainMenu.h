@@ -22,13 +22,18 @@ public:
 	bool CleanUp();
 	
 	void ManageMenuAnimation();
+	void ManageVolume();
 	void GoToScene();
 	
+	bool manageVolume = false;
 	bool ending = false;
+	bool showVolume = false;
 
 private:
 
 	SDL_Texture *	UI_spritesheet = nullptr;
+	SDL_Rect		VolumeRect;
+	SDL_Rect		VolumeToMove;
 
 	SDL_Texture *	IndianaJumps = nullptr;
 	SDL_Rect		PlayerRect;
@@ -38,6 +43,8 @@ private:
 	
 	Animation*		current_animation;
 	Animation		idle, running;
+
+	int				actualVolume;
 
 	bool mouseInButton = false;
 
