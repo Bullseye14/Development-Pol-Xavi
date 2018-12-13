@@ -45,21 +45,19 @@ bool j1FadeToBlack::Update(float dt)
 		{
 		case fade_step::fade_to_black:
 		{
-			if (transp <= 249)
+			if (transp <= 250)
 			{
-				transp += 6;
-
+				transp += 5;
 			}
 
-			if (clock.ReadSec() >= 1.5 && free_gui)
+			if (free_gui)
 			{
 				free_gui = false;
 				App->gui->startgame = true;
 			}
-			if (clock.ReadSec() >= 2)
+			if (clock.ReadSec() >= 1.5)
 			{
 				to_disable->active = false;
-
 				App->render->camera.x = 0;
 				App->render->camera.y = 0;
 
@@ -92,7 +90,7 @@ bool j1FadeToBlack::Update(float dt)
 		break;
 		}
 
-		SDL_SetRenderDrawColor(App->render->renderer, 255, 255, 225, transp);
+		SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, transp);
 		SDL_RenderFillRect(App->render->renderer, &screen);
 	}
 

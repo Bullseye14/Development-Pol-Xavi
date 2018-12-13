@@ -28,6 +28,7 @@ public:
 	bool manageVolume = false;
 	bool ending = false;
 	bool showVolume = false;
+	bool runAway = false;
 
 private:
 
@@ -45,6 +46,8 @@ private:
 	
 	Animation*		current_animation;
 	Animation		idle, running;
+
+	j1Timer			clock;
 
 	int				actualVolume;
 

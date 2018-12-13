@@ -10,7 +10,10 @@
 #include "j1Fonts.h"
 #include "j1Button.h"
 #include "j1Window.h"
+#include "j1FadeToBlack.h"
 #include "j1Audio.h"
+#include "j1Timer.h"
+#include "SDL/include/SDL_timer.h"
 
 j1MainMenu::j1MainMenu()
 {
@@ -110,6 +113,11 @@ bool j1MainMenu::Update(float dt)
 		App->render->Blit(IndianaJumps, 300, 148, &current_animation->GetCurrentFrame());
 	}
 
+	if (runAway) 
+	{
+		current_animation = &running;		
+	}
+
 	if (showVolume) 
 	{
 		App->gui->element_list.add(App->gui->SpawnButton(300, 400, VOLUME));
@@ -165,9 +173,8 @@ void j1MainMenu::ManageVolume()
 
 void j1MainMenu::GoToScene()
 {
-	App->mainmenu->active = false;
-	//App->scene->Start();
-	App->gui->active = false; //temporal
-	App->scene->active = true;
-	App->entity_m->active = true;
+	App->fade->FadeToBlack(App->mainmenu, App->scene);
+	CleanUp();
+	runAway = true;
+	if (clock.ReadSec() >= 1.5) { App->entity_m->active = true; }
 }
