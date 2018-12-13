@@ -15,14 +15,14 @@ You won't complete the levels if you bump into cactus or if you fall into the wa
   - Github [Xavimarin35](https://github.com/xavimarin35)
   
   <p_align="center">
-    <img src="LINKTOIMAGE" width=""/>
+    <img src="" width=""/>
   </p>
-  *Pol Casaú & Xavi Marín
+  *Pol Casaú and Xavi Marín*
   
 * Group's Github link
   - [Indiana Jumps Github](https://github.com/Bullseye14/Development-Pol-Xavi)
   
-  * Release link
+* Release link
   - [Indiana Jumps v1.0](https://github.com/Bullseye14/IndianaJumps/releases/tag/0.75)
   
 ## Accomplishments
