@@ -35,6 +35,8 @@ private:
 	SDL_Rect		VolumeRect;
 	SDL_Rect		VolumeToMove;
 
+	SDL_Rect		logo;
+
 	SDL_Texture *	IndianaJumps = nullptr;
 	SDL_Rect		PlayerRect;
 
@@ -46,7 +48,8 @@ private:
 
 	int				actualVolume;
 
-	bool mouseInButton = false;
+	bool			mouseInButton = false;
+	bool			mouseInVolume = false;
 
 };
 

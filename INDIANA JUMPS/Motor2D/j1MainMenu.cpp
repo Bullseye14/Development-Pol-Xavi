@@ -63,6 +63,8 @@ bool j1MainMenu::Start()
 	UI_spritesheet = App->tex->Load("gui/atlas_new.png");
 	VolumeRect = { 0,225,500,75 };
 
+	logo = { 224,0,304,169 };
+
 	current_animation = &idle;
 
 	//Background of the menu
@@ -83,22 +85,13 @@ bool j1MainMenu::Start()
 	App->gui->element_list.add(App->gui->SpawnText(850, 184, 0, TEXT, "CREDITS", { 230,115,0,0 }));
 	App->gui->element_list.add(App->gui->SpawnText(873, 325, 0, TEXT, "EXIT", { 230,115,0,0 }));
 
-	App->gui->element_list.add(App->gui->SpawnText(15, -10, 1, TEXT, "Indiana Jumps", { 0, 0, 0, 0 }));
-	
-	//App->gui->element_list.add(App->gui->SpawnText(30, 20, 0, TEXT, "INDIANA JUMPS", { 0,200,0,0 }));
-
-	//Loading Fonts
-	//App->font->font_title = App->font->Load("fonts/Adventure.ttf", 12);
-	//App->font->font_buttons = App->font->Load("fonts/West.ttf", 8);
-
 	return true;
 }
 
 bool j1MainMenu::Update(float dt)
 {
 	App->render->Blit(menuBackgroundTex, 0, 0, &BG_Rect);
-
-	App->audio->CurrentVolume = actualVolume / 4;
+	App->render->Blit(UI_spritesheet, 20, 20, &logo);
 
 	VolumeToMove = { 0,300,actualVolume,75 };
 
@@ -109,25 +102,21 @@ bool j1MainMenu::Update(float dt)
 	if (mouseInButton == false) 
 	{
 		current_animation = &idle;
-		App->render->Blit(IndianaJumps, 200, 148, &current_animation->GetCurrentFrame());
+		App->render->Blit(IndianaJumps, 300, 148, &current_animation->GetCurrentFrame());
 	}
 	else 
 	{
 		current_animation = &running;
-		App->render->Blit(IndianaJumps, 200, 148, &current_animation->GetCurrentFrame());
+		App->render->Blit(IndianaJumps, 300, 148, &current_animation->GetCurrentFrame());
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
-		App->audio->MusicVolume(App->audio->GetVolume() + 10.0f);
-
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
-		App->audio->MusicVolume(App->audio->GetVolume() - 10.0f);
 
 	if (showVolume) 
 	{
 		App->gui->element_list.add(App->gui->SpawnButton(300, 400, VOLUME));
 		App->render->Blit(UI_spritesheet, 300, 400, &VolumeRect);
 		App->render->Blit(UI_spritesheet, 300, 400, &VolumeToMove);
+		
+		App->audio->MusicVolume(actualVolume / 4);
 	}
 	
 	return true;
@@ -168,14 +157,9 @@ void j1MainMenu::ManageVolume()
 	int x, y;
 	App->input->GetMousePosition(x, y);
 
-	if (x > 300 && x < 800) 
+	if (x > 300 && x < 800 && y > 400 && y < 475)
 	{
 		actualVolume = (x - 300);
-	}
-	
-	if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
-	{
-		App->audio->CurrentVolume = actualVolume / 4;
 	}
 }
 
