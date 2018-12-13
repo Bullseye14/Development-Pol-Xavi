@@ -33,6 +33,9 @@ You won't complete the levels if you bump into cactus or if you fall into the wa
 * Group's Github link
   - [Indiana Jumps](https://github.com/Bullseye14/Development-Pol-Xavi)
   
+* Link to our website
+  - [IndianaJumps](https://bullseye14.github.io/IndianaJumps/)
+  
 ## Accomplishments
 ### Pol:
 - Map updates: Parallax and adapt it to enemies' movement
