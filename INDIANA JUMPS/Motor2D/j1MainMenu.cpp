@@ -63,10 +63,10 @@ bool j1MainMenu::Start()
 	menuBackgroundTex = App->tex->Load("gui/MainMenu_TILED.png");
 	BG_Rect = { 0, 0, 1024, 480 };
 
-	App->gui->element_list.add(App->gui->SpawnButton(800, 25, PLAY));
-	App->gui->element_list.add(App->gui->SpawnButton(800, 95, CONTINUE));
-	App->gui->element_list.add(App->gui->SpawnButton(800, 165, SETTINGS));
-	App->gui->element_list.add(App->gui->SpawnButton(800, 235, CREDITS));
+	App->gui->element_list.add(App->gui->SpawnButton(550, 95, PLAY));
+	App->gui->element_list.add(App->gui->SpawnButton(550, 235, CONTINUE));
+	App->gui->element_list.add(App->gui->SpawnButton(800, 25, SETTINGS));
+	App->gui->element_list.add(App->gui->SpawnButton(800, 165, CREDITS));
 	App->gui->element_list.add(App->gui->SpawnButton(800, 305, EXIT));
 
 
@@ -113,12 +113,10 @@ void j1MainMenu::ManageMenuAnimation()
 	int x, y;
 	App->input->GetMousePosition(x, y);
 
-	if ((x > 800 && x < 933) && 
-		(y > 25 && y < 75 
-		|| y > 95 && y < 145
-		|| y > 165 && y < 215
-		|| y > 235 && y < 285
-		|| y > 305 && y < 355))
+	if	(
+		((x > 550 && x < 748) && (y > 95 && y < 170 || y>235 && y < 310)) 
+		|| ((x > 800 && x < 999) && (y > 25 && y < 100 || y > 165 && y < 240 || y > 305 && y < 380))
+		)
 	{
 		mouseInButton = true;
 	}

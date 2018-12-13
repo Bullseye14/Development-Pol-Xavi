@@ -7,7 +7,7 @@
 
 j1Coin::j1Coin(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::COIN) 
 {
-	idle.PushBack({ 133,0,50,50 });
+	idle.PushBack({ 199,0,25,25 });
 	idle.loop = false;
 }
 
@@ -15,10 +15,10 @@ j1Coin::~j1Coin(){}
 
 bool j1Coin::Start() 
 {
-	graphics = App->tex->Load("gui/atlas.png");
+	graphics = App->tex->Load("gui/atlas_new.png");
 	animation = &idle;
 
-	playerHitbox = App->collision->AddCollider({ (int)position.x, (int)position.y, 50, 50 } , COLLIDER_COIN, (j1Module*)App->entity_m);
+	playerHitbox = App->collision->AddCollider({ (int)position.x, (int)position.y, 25, 25 } , COLLIDER_COIN, (j1Module*)App->entity_m);
 	
 	speed = { 0,0 };
 

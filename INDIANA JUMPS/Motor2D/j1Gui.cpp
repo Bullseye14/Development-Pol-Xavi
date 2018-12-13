@@ -30,7 +30,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 
 bool j1Gui::Start()
 {
-	atlas = App->tex->Load("gui/atlas.png");
+	atlas = App->tex->Load("gui/atlas_new.png");
 
 	p2List_item<j1UI_Element*>* element_iterator = element_list.start;
 

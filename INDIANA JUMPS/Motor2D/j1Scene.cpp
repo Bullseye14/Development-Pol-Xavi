@@ -59,7 +59,6 @@ bool j1Scene::Start()
 	//App->entity_m->AddEnemy(300, 200, BIRD);
 	App->entity_m->AddEnemy(1000, 325, ZOMBIE);
 	App->entity_m->AddEnemy(200, 300, COIN);
-//	App->entity_m->AddEnemy(400, 200, COIN);
 
 	return true;
 }

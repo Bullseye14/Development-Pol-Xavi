@@ -12,9 +12,9 @@
 
 j1Button::j1Button(BUTTON_TYPE type)
 {
-	buttonRect = { 0,0,133,50 };
-	buttonOnHover = { 0,50,133,50 };
-	buttonOnClick = { 0,100,133,50 };
+	buttonRect = { 0,0,199,75 };
+	buttonOnHover = { 0,75,199,75 };
+	buttonOnClick = { 0,150,199,75 };
 
 	b_type = type;
 }
