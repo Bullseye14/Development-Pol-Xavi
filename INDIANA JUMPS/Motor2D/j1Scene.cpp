@@ -213,7 +213,7 @@ void j1Scene::SuperClean() {
 	App->tex->UnLoad(path_img);
 	//App->map->CleanUp();
 	App->collision->CleanUp();
-	/*App->tex->CleanUp();*/
+	/*App->tex->CleanUp();*/	// Don't know why but with tex->CleanUp() game crashes when click window exit
 	App->gui->CleanUp();
 }
 
