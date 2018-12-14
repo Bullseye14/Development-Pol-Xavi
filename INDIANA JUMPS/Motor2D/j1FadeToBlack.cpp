@@ -55,7 +55,7 @@ bool j1FadeToBlack::Update(float dt)
 				free_gui = false;
 				App->gui->startgame = true;
 			}
-			if (clock.ReadSec() >= 1.5)
+			if (clock.ReadSec() >= 2.0)
 			{
 				to_disable->active = false;
 				App->render->camera.x = 0;

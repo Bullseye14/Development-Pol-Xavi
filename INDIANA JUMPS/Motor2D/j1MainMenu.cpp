@@ -102,7 +102,7 @@ bool j1MainMenu::Update(float dt)
 
 	ManageMenuAnimation();
 
-	if (run_away) 
+	if (finishRun) 
 	{
 
 	}
@@ -148,7 +148,7 @@ void j1MainMenu::ManageMenuAnimation()
 	if (runAway) 
 	{ 
 		mouseInButton = true; 
-		run_away = true;
+		//finishRun = true;
 	}
 
 	else if (
@@ -180,12 +180,12 @@ void j1MainMenu::GoToScene()
 {
 	App->fade->FadeToBlack(App->mainmenu, App->scene);
 
-	CleanUp();
 	runAway = true;
 
 	if (clock.ReadSec() >= 3.0) 
 	{ 
 		App->entity_m->active = true; 
+		CleanUp();
 	}
 
 }

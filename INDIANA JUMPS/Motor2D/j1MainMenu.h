@@ -53,7 +53,7 @@ private:
 
 	bool			mouseInButton = false;
 	bool			mouseInVolume = false;
-	bool			run_away = false;
+	bool			finishRun = false;
 
 };
 
