@@ -18,6 +18,8 @@ public:
 	bool FadeToBlack(j1Module* module_off, j1Module* module_on);
 	//bool IsFading() const;
 
+	bool free_gui = false;
+
 private:
 
 	enum fade_step
@@ -34,7 +36,6 @@ private:
 	Uint32 total_time = 0;
 	SDL_Rect screen;
 	uint transp;
-	bool free_gui = false;
 	j1Module* to_enable = nullptr;
 	j1Module* to_disable = nullptr;
 };

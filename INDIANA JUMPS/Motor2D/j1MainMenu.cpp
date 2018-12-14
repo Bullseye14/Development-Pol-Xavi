@@ -57,6 +57,9 @@ bool j1MainMenu::Awake(pugi::xml_node &)
 bool j1MainMenu::Start()
 {
 	actualVolume = App->audio->CurrentVolume;
+
+	run_pos_x = 300;
+	run_pos_y = 148;
 	
 	App->scene->active = false;
 	App->entity_m->active = false;
@@ -104,17 +107,18 @@ bool j1MainMenu::Update(float dt)
 
 	if (finishRun) 
 	{
-
+		run_pos_x += 12;
+		App->render->Blit(IndianaJumps, run_pos_x, run_pos_y, &current_animation->GetCurrentFrame());
 	}
 	else if (mouseInButton == false) 
 	{
 		current_animation = &idle;
-		App->render->Blit(IndianaJumps, 300, 148, &current_animation->GetCurrentFrame());
+		App->render->Blit(IndianaJumps, run_pos_x, run_pos_y, &current_animation->GetCurrentFrame());
 	}
 	else 
 	{
 		current_animation = &running;
-		App->render->Blit(IndianaJumps, 300, 148, &current_animation->GetCurrentFrame());
+		App->render->Blit(IndianaJumps, run_pos_x, run_pos_y, &current_animation->GetCurrentFrame());
 	}
 
 	if (showVolume) 
@@ -148,7 +152,7 @@ void j1MainMenu::ManageMenuAnimation()
 	if (runAway) 
 	{ 
 		mouseInButton = true; 
-		//finishRun = true;
+		finishRun = true;
 	}
 
 	else if (
@@ -176,16 +180,22 @@ void j1MainMenu::ManageVolume()
 	}
 }
 
-void j1MainMenu::GoToScene()
+void j1MainMenu::GoToScene(int button)
 {
+	// BUTTON 0 PLAY // BUTTON 1 CONTINUE //
 	App->fade->FadeToBlack(App->mainmenu, App->scene);
+
+	number = button;
 
 	runAway = true;
 
-	if (clock.ReadSec() >= 3.0) 
-	{ 
-		App->entity_m->active = true; 
+	if (clock.ReadSec() >= 3.0)
+	{
+		App->entity_m->active = true;
 		CleanUp();
+		if (button == 1)
+		{
+			App->LoadGame("save_game.xml");
+		}
 	}
-
 }
