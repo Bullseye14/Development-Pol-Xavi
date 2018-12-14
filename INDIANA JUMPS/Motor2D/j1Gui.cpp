@@ -112,10 +112,15 @@ bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
 
-	for (p2List_item<j1UI_Element*>* element_iterator = App->gui->element_list.start; element_iterator != nullptr; element_iterator = element_iterator->next) {
-		element_iterator->data->CleanUp();
-		element_list.del(element_iterator);
+	p2List_item<j1UI_Element*>* element_iterator;
+	element_iterator = element_list.start;
+
+	while (element_iterator != nullptr)
+	{
+		RELEASE(element_iterator->data);
+		element_iterator = element_iterator->next;
 	}
+	element_list.clear();
 
 	return true;
 }
