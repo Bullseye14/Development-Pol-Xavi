@@ -161,7 +161,7 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
-	SuperClean();	//Calling CleanUp() of collisions module (in a future the map module too)
+	SuperClean();
 
 	return true;
 }
@@ -209,8 +209,12 @@ void j1Scene::LoadLevel(int number)
 
 void j1Scene::SuperClean() {
 
+	App->tex->UnLoad(img);
+	App->tex->UnLoad(path_img);
 	//App->map->CleanUp();
 	App->collision->CleanUp();
+	/*App->tex->CleanUp();*/
+	App->gui->CleanUp();
 }
 
 void j1Scene::CameraToPlayer()
