@@ -141,6 +141,10 @@ bool j1MainMenu::PostUpdate()
 
 bool j1MainMenu::CleanUp()
 {
+	App->tex->UnLoad(IndianaJumps);
+	App->tex->UnLoad(UI_spritesheet);
+	App->tex->UnLoad(menuBackgroundTex);
+	//App->tex->UnLoad();
 	return true;
 }
 

@@ -57,6 +57,7 @@ bool j1UI_Element::Update(float dt)
 bool j1UI_Element::CleanUp()
 {
 	App->tex->UnLoad(App->gui->GetAtlas());
+	App->tex->UnLoad(App->gui->menuBackgroundTex);
 	return true;
 }
 
