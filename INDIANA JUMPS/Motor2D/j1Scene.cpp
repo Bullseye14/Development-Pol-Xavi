@@ -15,6 +15,7 @@
 #include "j1Zombie.h"
 #include "j1Gui.h"
 #include "j1MainMenu.h"
+#include "j1FadeToBlack.h"
 
 #include "Brofiler/Brofiler.h"
 #pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )
@@ -142,8 +143,15 @@ bool j1Scene::PostUpdate()
 	
 	bool ret = true;
 
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 
+	{
+		App->fade->FadeToBlack(App->scene, App->mainmenu);
+		App->entity_m->active = false;
+		App->gui->active = true; 
+		App->fade->free_gui = true;
+		App->mainmenu->finishRun = false;
+		App->mainmenu->run_pos_x = 300;
+	}
 
 	return ret;
 }

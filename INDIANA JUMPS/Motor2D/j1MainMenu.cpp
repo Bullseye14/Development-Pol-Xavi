@@ -57,6 +57,9 @@ bool j1MainMenu::Awake(pugi::xml_node &)
 bool j1MainMenu::Start()
 {
 	actualVolume = App->audio->CurrentVolume;
+
+	run_pos_x = 300;
+	run_pos_y = 148;
 	
 	App->scene->active = false;
 	App->entity_m->active = false;
@@ -102,20 +105,20 @@ bool j1MainMenu::Update(float dt)
 
 	ManageMenuAnimation();
 
-	if (mouseInButton == false) 
+	if (finishRun) 
+	{
+		run_pos_x += 12;
+		App->render->Blit(IndianaJumps, run_pos_x, run_pos_y, &current_animation->GetCurrentFrame());
+	}
+	else if (mouseInButton == false) 
 	{
 		current_animation = &idle;
-		App->render->Blit(IndianaJumps, 300, 148, &current_animation->GetCurrentFrame());
+		App->render->Blit(IndianaJumps, run_pos_x, run_pos_y, &current_animation->GetCurrentFrame());
 	}
 	else 
 	{
 		current_animation = &running;
-		App->render->Blit(IndianaJumps, 300, 148, &current_animation->GetCurrentFrame());
-	}
-
-	if (runAway) 
-	{
-		current_animation = &running;		
+		App->render->Blit(IndianaJumps, run_pos_x, run_pos_y, &current_animation->GetCurrentFrame());
 	}
 
 	if (showVolume) 
@@ -138,6 +141,10 @@ bool j1MainMenu::PostUpdate()
 
 bool j1MainMenu::CleanUp()
 {
+	App->tex->UnLoad(IndianaJumps);
+	App->tex->UnLoad(UI_spritesheet);
+	App->tex->UnLoad(menuBackgroundTex);
+	//App->tex->UnLoad();
 	return true;
 }
 
@@ -146,10 +153,16 @@ void j1MainMenu::ManageMenuAnimation()
 	int x, y;
 	App->input->GetMousePosition(x, y);
 
-	if	(
+	if (runAway) 
+	{ 
+		mouseInButton = true; 
+		finishRun = true;
+	}
+
+	else if (
 		((x > 550 && x < 748) && (y > 95 && y < 170 || y > 235 && y < 310))
 		|| ((x > 800 && x < 999) && (y > 25 && y < 100 || y > 165 && y < 240 || y > 305 && y < 380))
-		)
+			)
 	{
 		mouseInButton = true;
 	}
@@ -171,10 +184,22 @@ void j1MainMenu::ManageVolume()
 	}
 }
 
-void j1MainMenu::GoToScene()
+void j1MainMenu::GoToScene(int button)
 {
+	// BUTTON 0 PLAY // BUTTON 1 CONTINUE //
 	App->fade->FadeToBlack(App->mainmenu, App->scene);
-	CleanUp();
+
+	number = button;
+
 	runAway = true;
-	if (clock.ReadSec() >= 1.5) { App->entity_m->active = true; }
+
+	if (clock.ReadSec() >= 3.0)
+	{
+		App->entity_m->active = true;
+		CleanUp();
+		if (button == 1)
+		{
+			App->LoadGame("save_game.xml");
+		}
+	}
 }

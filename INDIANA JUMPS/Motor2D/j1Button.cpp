@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "Animation.h"
 #include "j1FadeToBlack.h"
+#include "j1EntityManager.h"
 
 j1Button::j1Button(BUTTON_TYPE type)
 {
@@ -66,16 +67,11 @@ bool j1Button::PostUpdate()
 		}
 		if (b_type == PLAY) 
 		{
-			//App->fade->FadeToBlack(App->mainmenu, App->scene);
-			App->mainmenu->GoToScene();
-			//App->mainmenu->CleanUp();
+			App->mainmenu->GoToScene(0);
 		}
 		else if (b_type == CONTINUE) 
 		{
-			//App->fade->FadeToBlack(App->mainmenu, App->scene);
-			App->mainmenu->GoToScene();
-			App->LoadGame("save_game.xml");
-			//App->mainmenu->CleanUp();
+			App->mainmenu->GoToScene(1);
 		}
 		else if (b_type == CREDITS)
 		{

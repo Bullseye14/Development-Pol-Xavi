@@ -23,12 +23,19 @@ public:
 	
 	void ManageMenuAnimation();
 	void ManageVolume();
-	void GoToScene();
+	void GoToScene(int button);
 	
 	bool manageVolume = false;
 	bool ending = false;
 	bool showVolume = false;
 	bool runAway = false;
+//	bool continueActive = false;
+
+	int number;
+
+	int	run_pos_x, run_pos_y;
+
+	bool			finishRun = false;
 
 private:
 
