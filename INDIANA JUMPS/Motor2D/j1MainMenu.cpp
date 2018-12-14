@@ -193,13 +193,8 @@ void j1MainMenu::GoToScene(int button)
 
 	runAway = true;
 
-	if (clock.ReadSec() >= 3.0)
+	if (clock.ReadSec() >= 999.0)
 	{
-		App->entity_m->active = true;
 		CleanUp();
-		if (button == 1)
-		{
-			App->LoadGame("save_game.xml");
-		}
 	}
 }

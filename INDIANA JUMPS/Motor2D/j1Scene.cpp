@@ -146,11 +146,11 @@ bool j1Scene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 
 	{
 		App->fade->FadeToBlack(App->scene, App->mainmenu);
-		App->entity_m->active = false;
+		/*App->entity_m->active = false;
 		App->gui->active = true; 
 		App->fade->free_gui = true;
 		App->mainmenu->finishRun = false;
-		App->mainmenu->run_pos_x = 300;
+		App->mainmenu->run_pos_x = 300;*/
 	}
 
 	return ret;

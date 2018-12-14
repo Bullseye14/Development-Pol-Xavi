@@ -1,4 +1,3 @@
-#include <math.h>
 #include "Globals.h"
 #include "j1App.h"
 #include "j1FadeToBlack.h"
@@ -10,6 +9,7 @@
 #include "j1Scene.h"
 #include "p2Log.h"
 #include "p2Defs.h"
+#include "j1EntityManager.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 
@@ -59,15 +59,21 @@ bool j1FadeToBlack::Update(float dt)
 			{
 				App->render->camera.x = 0;
 				App->render->camera.y = 0;
+				App->entity_m->active = true;
+
 
 				if (to_enable == App->scene)
 				{
 					if (App->mainmenu->number == 0) 
 					{ 
-						to_disable->active = false;
+						//to_disable->active = false;
 						App->mainmenu->GoToScene(0); 
 					}
-					else App->mainmenu->GoToScene(1);
+					else 
+					{
+						App->mainmenu->GoToScene(1);
+						App->LoadGame("save_game.xml");
+					}
 				}
 				/*else
 				{
