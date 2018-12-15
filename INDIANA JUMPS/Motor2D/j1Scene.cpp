@@ -62,6 +62,8 @@ bool j1Scene::Start()
 	App->entity_m->AddEnemy(1000, 325, ZOMBIE);
 	App->entity_m->AddEnemy(200, 300, COIN);
 
+	
+
 	return true;
 }
 
@@ -132,6 +134,9 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 	App->render->Blit(img, 0, 0);
+
+	//HUD
+	App->gui->element_list.add(App->gui->SpawnImage(30, 20, { 0, 0, 100, 100 }, true));
 
 	return true;
 }

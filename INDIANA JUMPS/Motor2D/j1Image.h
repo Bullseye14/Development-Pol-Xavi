@@ -10,19 +10,18 @@ class j1Image : public j1UI_Element
 {
 public:
 
-	j1Image(int x, int y, SDL_Rect rect, bool visible = false);
+	j1Image(SDL_Rect rect, bool visible = false);
 	~j1Image() {};
 
-	bool Update();
 	bool PostUpdate();
 
-	bool visible = false;
+	bool isVisible = false;
 
 private:
 
 	SDL_Rect		img;
 	SDL_Texture*	graphics = nullptr;
-	int				x, y;
+	//int				x, y;
 };
 
 #endif //__j1IMAGE_H__

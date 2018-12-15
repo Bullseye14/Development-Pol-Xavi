@@ -92,7 +92,7 @@ bool j1MainMenu::Start()
 	App->gui->element_list.add(App->gui->SpawnText(873, 325, 0, TEXT, "EXIT", { 230,115,0,0 }));
 
 	//Spawn Image
-	App->gui->element_list.add(App->gui->SpawnImage(20, 20, logo, true));
+	App->gui->element_list.add(App->gui->SpawnImage(30, 20, logo, true));
 
 	return true;
 }

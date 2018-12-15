@@ -158,7 +158,8 @@ j1UI_Element* j1Gui::SpawnText(int x, int y, uint font, E_TYPE type, const char 
 
 j1UI_Element* j1Gui::SpawnImage(int x, int y, SDL_Rect rect, bool visible) 
 {
-	j1UI_Element* image_elem = new j1Image(x, y, rect, visible);
+	j1UI_Element* image_elem = new j1Image(rect, visible);
+
 	image_elem->position.x = x;
 	image_elem->position.y = y;
 
