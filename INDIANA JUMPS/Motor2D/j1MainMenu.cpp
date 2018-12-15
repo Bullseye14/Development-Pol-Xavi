@@ -91,13 +91,15 @@ bool j1MainMenu::Start()
 	App->gui->element_list.add(App->gui->SpawnText(850, 184, 0, TEXT, "CREDITS", { 230,115,0,0 }));
 	App->gui->element_list.add(App->gui->SpawnText(873, 325, 0, TEXT, "EXIT", { 230,115,0,0 }));
 
+	//Spawn Image
+	App->gui->element_list.add(App->gui->SpawnImage(20, 20, logo, true));
+
 	return true;
 }
 
 bool j1MainMenu::Update(float dt)
 {
 	App->render->Blit(menuBackgroundTex, 0, 0, &BG_Rect);
-	App->render->Blit(UI_spritesheet, 20, 20, &logo);
 
 	VolumeToMove = { 0,300,actualVolume,75 };
 
