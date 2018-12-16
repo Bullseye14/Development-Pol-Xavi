@@ -8,7 +8,7 @@ Indiana Jumps is a platformer where you put yourself in the shoes of an adventur
 You won't complete the levels if you bump into cactus or if you fall into the water; there are also enemies which you can kill by sliding at them, but they will follow you, so be careful while jumping through the map!
 
 * Download our game here
-  - [Indiana Jumps v1.0](https://github.com/Bullseye14/IndianaJumps/releases/tag/0.75)
+  - [Indiana Jumps v1.0](https://github.com/Bullseye14/IndianaJumps/releases/tag/1.0)
 
 ## Authors
   
@@ -55,7 +55,11 @@ You won't complete the levels if you bump into cactus or if you fall into the wa
 - Animation and movement from character in main menu. Reacts to mouse on hover and clicking.
 - Player can double-jump or slide.
 
-<iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0"width="788.54" height="443" type="text/html" src="https://www.youtube.com/embed/8w2Rehk_lF4?autoplay=0&fs=0&iv_load_policy=3&showinfo=0&rel=0&cc_load_policy=0&start=0&end=0&origin=https://youtubeembedcode.com"><div><small><a href="https://youtubeembedcode.com/es/">youtube embed code</a></small></div><div><small><a href="https://misshowtostartablog.com/best-wordpress-themes-for-your-food-blog/">https://misshowtostartablog.com/best-wordpress-themes-for-your-food-blog/</a></small></div><div><small><a href="https://youtubeembedcode.com/es/">youtube embed code</a></small></div><div><small><a href="http://directorioweblol.com">directorioweblol.com</a></small></div></iframe>
+## Video
+
+<iframe width="645" height="520"
+src="https://www.youtube.com/watch?v=8w2Rehk_lF4" frameborder="0" allowfullscreen>
+</iframe>
 
 ## Information
 
