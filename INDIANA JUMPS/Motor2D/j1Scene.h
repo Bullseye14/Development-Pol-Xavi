@@ -63,11 +63,12 @@ public:
 
 	int choose_level = 1;
 
-	int limitcamera_left;
-	int limitcamera_right;
-	int limitplayer;
+	j1Timer clock;
+	j1Timer pressEsc;
 
 	bool load_gui = true;
+
+
 
 private:
 	SDL_Texture * img;

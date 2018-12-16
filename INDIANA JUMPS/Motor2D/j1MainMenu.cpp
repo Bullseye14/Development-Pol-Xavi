@@ -207,8 +207,11 @@ void j1MainMenu::GoToScene(int button)
 
 	if(button == 1)
 	{
-		App->scene->LoadLevel(1);
 		App->LoadGame("save_game.xml");
+		if (App->scene->choose_level == 1)
+			App->scene->LoadLevel(1);
+		else
+			App->scene->LoadLevel(2);
 	}
 
 	App->fade->FadeToBlack(App->mainmenu, App->scene);
@@ -219,7 +222,7 @@ void j1MainMenu::GoToScene(int button)
 	if (clock.ReadSec() - pressStart.ReadSec() >= 3.0)
 	{
 		CleanUp();
+		App->mainmenu->active = false;
 	}
-
 
 }

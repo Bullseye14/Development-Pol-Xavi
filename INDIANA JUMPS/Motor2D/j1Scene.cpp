@@ -181,10 +181,16 @@ void j1Scene::LoadLevel(int number)
 		App->map->CleanUp();
 		App->collision->CleanUp();
 
+		
 		//Starting the level & player
-		App->map->Load(current_level->data->map_name.GetString());
+		if (App->scene->current_level->data->level == 1)
+			App->map->Load(current_level->data->map_name.GetString());
+		else
+			App->map->Load(current_level->data->map_name.GetString());
+
 		App->entity_m->player->playerHitbox = nullptr;
 		App->entity_m->player->Start();
+		
 	}
 
 }
@@ -218,13 +224,22 @@ void j1Scene::CameraToPlayer()
 }
 void j1Scene::GoToMenu()
 {
+	pressEsc.ReadSec();
+
 	App->fade->FadeToBlack(App->scene, App->mainmenu);
 	App->mainmenu->active = true;
+	App->scene->active = false;
 	App->entity_m->active = false;
 	App->mainmenu->comeFromScene = true;
 	load_gui = true;
-	App->scene->CleanUp();
+
+	if (clock.ReadSec() - pressEsc.ReadSec() >= 3.0)
+	{
+		this->CleanUp();
+	}
+
 	App->mainmenu->Start();
+	App->mainmenu->ManageMenuAnimation();
 	App->mainmenu->finishRun = false;
 	App->mainmenu->run_pos_x = 300;
 }
