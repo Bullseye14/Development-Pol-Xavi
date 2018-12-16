@@ -146,6 +146,13 @@ bool j1MainMenu::CleanUp()
 	App->tex->UnLoad(IndianaJumps);
 	App->tex->UnLoad(UI_spritesheet);
 	App->tex->UnLoad(menuBackgroundTex);
+
+	runAway = false;
+	mouseInButton = false;
+	mouseInVolume = false;
+	finishRun = false;
+	showVolume = false;
+	ending = false;
 	//App->tex->UnLoad();
 	return true;
 }
@@ -188,6 +195,10 @@ void j1MainMenu::ManageVolume()
 
 void j1MainMenu::GoToScene(int button)
 {
+	App->scene->current_level = nullptr;
+	
+	pressStart.ReadSec();
+
 	// BUTTON 0 PLAY // BUTTON 1 CONTINUE //
 	if (button == 0)
 	{
@@ -196,8 +207,8 @@ void j1MainMenu::GoToScene(int button)
 
 	if(button == 1)
 	{
+		App->scene->LoadLevel(1);
 		App->LoadGame("save_game.xml");
-
 	}
 
 	App->fade->FadeToBlack(App->mainmenu, App->scene);
@@ -205,7 +216,7 @@ void j1MainMenu::GoToScene(int button)
 
 	runAway = true;
 
-	if (clock.ReadSec() >= 999.0)
+	if (clock.ReadSec() - pressStart.ReadSec() >= 3.0)
 	{
 		CleanUp();
 	}

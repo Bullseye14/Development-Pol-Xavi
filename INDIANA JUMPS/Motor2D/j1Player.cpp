@@ -8,6 +8,8 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "j1Collision.h"
+#include "j1FadeToBlack.h"
+#include "j1MainMenu.h"
 #include <stdio.h>
 
 #include "Brofiler/Brofiler.h"
@@ -405,12 +407,15 @@ void j1Player::Check_Collision()
 
 	if (won == true) 
 	{
-		if (App->scene->current_level->data->level == 1) 
+		if (App->scene->current_level->data->level == 2)
 		{
 			App->scene->LoadLevel(2); // Switching between levels when winning
 		}
-		else if(App->scene->current_level->data->level == 2)
-			App->scene->LoadLevel(1);
+		
+		if (App->scene->current_level->data->level == 3)
+		{
+			App->fade->FadeToBlack(App->scene, App->mainmenu);
+		}
 	}
 }
 

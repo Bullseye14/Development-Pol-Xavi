@@ -123,19 +123,17 @@ bool j1Scene::PostUpdate()
 	
 	bool ret = true;
 
-	
-	
-
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 
 	{
 		App->SaveGame("save_game.xml");
 		App->fade->FadeToBlack(App->scene, App->mainmenu);
 		App->mainmenu->active = true;
+		GoToMenu();
+
 		/*App->entity_m->active = false;
 		App->gui->active = true; 
 		App->fade->free_gui = true;
-		App->mainmenu->finishRun = false;
-		App->mainmenu->run_pos_x = 300;*/
+		*/
 	}
 
 	return ret;
@@ -167,32 +165,31 @@ bool j1Scene::Save(pugi::xml_node& data) const
 }
 
 void j1Scene::LoadLevel(int number)
-{
+{	
+	choose_level = number;
+
 	// Loading the current level
 	p2List_item<map*>* level = mapList.start;
 
-	while (choose_level < number)
-	{
-		level = level->next;
-		choose_level++;
-	}
-	current_level = level;
+	if (choose_level == 1) { current_level = level; }
+
+	else current_level = level->next;
 
 	if (current_level != nullptr)
 	{
 		//Clean up the level
-		App->collision->CleanUp();
 		App->map->CleanUp();
+		App->collision->CleanUp();
 
-		if (current_level->data->level == 1) 
-		{
-			//Starting the level & player
-			App->map->Load(current_level->data->map_name.GetString());
-			App->collision->Start();
-			App->entity_m->player->playerHitbox = nullptr;
-			App->entity_m->player->Start();
-		}
+		//if (current_level->data->level == 1) 
+		//Starting the level & player
+		App->map->Load(current_level->data->map_name.GetString());
+
+		//App->collision->Start();
+		App->entity_m->player->playerHitbox = nullptr;
+		App->entity_m->player->Start();
 	}
+
 }
 
 void j1Scene::SuperClean() {
@@ -227,4 +224,6 @@ void j1Scene::GoToMenu()
 	load_gui = true;
 	App->scene->CleanUp();
 	App->mainmenu->Start();
+	App->mainmenu->finishRun = false;
+	App->mainmenu->run_pos_x = 300;
 }

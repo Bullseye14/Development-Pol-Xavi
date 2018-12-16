@@ -55,6 +55,7 @@ private:
 	Animation		idle, running;
 
 	j1Timer			clock;
+	j1Timer			pressStart;
 
 	int				actualVolume;
 
