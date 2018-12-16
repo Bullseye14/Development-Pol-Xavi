@@ -9,6 +9,7 @@
 #include "j1MainMenu.h"
 #include "j1Scene.h"
 #include "Animation.h"
+#include "j1Audio.h"
 #include "j1FadeToBlack.h"
 #include "j1EntityManager.h"
 

@@ -42,6 +42,8 @@ public:
 
 	int jump;
 	int slide;
+	int click;
+	int hover;
 	float CurrentVolume;
 
 private:
