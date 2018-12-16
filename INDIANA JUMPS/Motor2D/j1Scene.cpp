@@ -216,24 +216,18 @@ void j1Scene::CameraToPlayer()
 		App->render->camera.x = -App->entity_m->player->pos_player.x + w / 3;
 	
 }
+
 void j1Scene::GoToMenu()
 {
-	pressEsc.ReadSec();
-
 	App->fade->FadeToBlack(App->scene, App->mainmenu);
 	App->mainmenu->active = true;
 	App->scene->active = false;
 	App->entity_m->active = false;
 	App->mainmenu->comeFromScene = true;
-	load_gui = true;
 
-	if (clock.ReadSec() - pressEsc.ReadSec() >= 3.0)
-	{
-		this->CleanUp();
-	}
+	CleanUp();
 
 	App->mainmenu->Start();
-	App->mainmenu->ManageMenuAnimation();
 	App->mainmenu->finishRun = false;
 	App->mainmenu->run_pos_x = 300;
 }
