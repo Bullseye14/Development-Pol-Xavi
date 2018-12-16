@@ -29,19 +29,29 @@ You won't complete the levels if you bump into cactus or if you fall into the wa
   
 ## Accomplishments
 ### Pol:
-- Map updates: Parallax and adapt it to enemies' movement
-- Enemies' spritesheet
-- Sliding
-- Zombie entity
-- Brofiler
-- UML file
+- Image element
+- Button element
+- Transitions between menu and scene
+- Webpage
+- Main menu:
+  - Background
+  - Animation and movement
+  - Settings (volume)
+  - Credits and exit
 
 ### Xavi:
-- Timer: Frame cap and timer modules
-- Sliding
-- Entity system
-- Pathfinding
-- Bird entity
+- Button element
+- Text element (fonts)
+- Fade to black
+- Memory leaks
+- Webpage
+- Save and Load new fixtures
+- Main menu:
+  - Logo
+  
+### Innovations:
+- Animation and movement from character in main menu. Reacts to mouse on hover and clicking.
+- Player can double-jump or slide.
 
 ## Information
 
