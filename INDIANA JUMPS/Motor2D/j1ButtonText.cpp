@@ -28,7 +28,8 @@ bool j1ButtonText::Start()
 bool j1ButtonText::PostUpdate()
 {
 	App->render->Blit(text_texture, position.x, position.y);
-	return false;
+
+	return true;
 }
 
 void j1ButtonText::SelectFont()
