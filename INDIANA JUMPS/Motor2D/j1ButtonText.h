@@ -23,7 +23,6 @@ class j1ButtonText : public j1UI_Element {
 		const char* string = nullptr;
 		SDL_Color text_color = { 102, 51, 0, 255 };
 		SDL_Texture* text_texture = nullptr;
-		//FONT_TYPE font_type;
 		uint font;
 
 };

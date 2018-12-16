@@ -153,7 +153,6 @@ bool j1MainMenu::CleanUp()
 	finishRun = false;
 	showVolume = false;
 	ending = false;
-	//App->tex->UnLoad();
 	return true;
 }
 

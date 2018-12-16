@@ -51,12 +51,6 @@ bool j1UI_Element::Update(float dt)
 		break;
 	}
 
-	/*if (fix == true)
-	{
-		position = {}
-	}*/
-
-
 	return true;
 }
 bool j1UI_Element::CleanUp()

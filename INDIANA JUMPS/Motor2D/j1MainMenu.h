@@ -29,7 +29,6 @@ public:
 	bool ending = false;
 	bool showVolume = false;
 	bool runAway = false;
-//	bool continueActive = false;
 
 	int number;
 

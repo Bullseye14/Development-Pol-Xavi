@@ -17,8 +17,6 @@
 
 j1Player::j1Player(int x, int y, ENTITY_TYPES type) : j1Entity(x, y, ENTITY_TYPES::PLAYER)
 {
-	//name.create("player");
-
 	animation = NULL;
 
 	// Loading all animations
@@ -62,8 +60,6 @@ bool j1Player::Awake(pugi::xml_node& config)
 	max_speed_x = node.child("max_speed_x").attribute("value").as_float();
 	slidingforce = node.child("slidingforce").attribute("value").as_float();
 	speed_slide = node.child("speed_slide").attribute("value").as_float();
-
-	//pos_initial = pos_player;
 
 	return true;
 }
@@ -333,8 +329,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	{
 		death = false;
 		c2->to_delete = true;
-		// Still not created:
-		// App->enemy->Dies();
 	}
 
 	// SLIDE && DEATH
@@ -384,7 +378,7 @@ void j1Player::Check_Collision()
 	{
 		speed.y = 0;
 		onfloor = true;
-//		animation = &idle;		// Touching floor
+		// Touching floor
 		doublejump = 2;
 		start_freefalling = false;
 	}

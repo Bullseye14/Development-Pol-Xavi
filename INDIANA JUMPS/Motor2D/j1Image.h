@@ -21,7 +21,6 @@ private:
 
 	SDL_Rect		img;
 	SDL_Texture*	graphics = nullptr;
-	//int				x, y;
 };
 
 #endif //__j1IMAGE_H__

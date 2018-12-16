@@ -65,8 +65,7 @@ bool j1FadeToBlack::Update(float dt)
 				if (to_enable == App->scene)
 				{
 					if (App->mainmenu->number == 0) 
-					{ 
-						//to_disable->active = false;
+					{
 						App->mainmenu->GoToScene(0); 
 					}
 					else 
