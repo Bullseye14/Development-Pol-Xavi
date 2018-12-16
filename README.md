@@ -43,6 +43,7 @@ If you want to know more about the game and about us:
 - Image element
 - Button element
 - Transitions between menu and scene
+- UML
 - Main menu:
   - Background
   - Animation and movement
@@ -56,6 +57,7 @@ If you want to know more about the game and about us:
 - Memory leaks
 - Webpage
 - Save and Load new fixtures
+- Video
 - Main menu:
   - Logo
   
