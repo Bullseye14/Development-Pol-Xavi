@@ -33,6 +33,7 @@ You won't complete the levels if you bump into cactus or if you fall into the wa
 - Button element
 - Transitions between menu and scene
 - Webpage
+- UML
 - Main menu:
   - Background
   - Animation and movement
@@ -46,6 +47,7 @@ You won't complete the levels if you bump into cactus or if you fall into the wa
 - Memory leaks
 - Webpage
 - Save and Load new fixtures
+- Video
 - Main menu:
   - Logo
   
