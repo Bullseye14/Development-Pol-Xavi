@@ -51,7 +51,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	PERF_START(ptimer);
+	//PERF_START(ptimer);
 	// Calling the function to load the map
 	App->map->Load(mapList.start->data->map_name.GetString());
 	path_img = App->tex->Load("path.png");
