@@ -107,7 +107,7 @@ bool j1MainMenu::Update(float dt)
 
 	ManageMenuAnimation();
 
-	if (finishRun) 
+	if (finishRun && comeFromScene == false)
 	{
 		run_pos_x += 12;
 		App->render->Blit(IndianaJumps, run_pos_x, run_pos_y, &current_animation->GetCurrentFrame());

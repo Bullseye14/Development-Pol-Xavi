@@ -10,7 +10,7 @@
 		<level num="1" />
 	</scene>
 	<EntityManager>
-		<position x="225" y="357" />
+		<position x="0" y="259" />
 		<god_mode active="false" />
 	</EntityManager>
 	<:anonymous />

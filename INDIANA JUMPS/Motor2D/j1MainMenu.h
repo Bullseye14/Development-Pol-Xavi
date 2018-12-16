@@ -36,6 +36,7 @@ public:
 	int	run_pos_x, run_pos_y;
 
 	bool			finishRun = false;
+	bool			comeFromScene = false;
 
 private:
 

@@ -56,6 +56,8 @@ bool j1Scene::Start()
 	App->map->Load(mapList.start->data->map_name.GetString());
 	path_img = App->tex->Load("path.png");
 	
+	current_level->data->level = 1;
+
 	// Creating the player
 	App->entity_m->CreatePlayer();
 	img = App->entity_m->player->graphics;
@@ -126,11 +128,9 @@ bool j1Scene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 
 	{
 		App->SaveGame("save_game.xml");
-		App->fade->FadeToBlack(App->scene, App->mainmenu);
-		App->mainmenu->active = true;
 		GoToMenu();
 
-		/*App->entity_m->active = false;
+		/*
 		App->gui->active = true; 
 		App->fade->free_gui = true;
 		*/
@@ -181,11 +181,8 @@ void j1Scene::LoadLevel(int number)
 		App->map->CleanUp();
 		App->collision->CleanUp();
 
-		//if (current_level->data->level == 1) 
 		//Starting the level & player
 		App->map->Load(current_level->data->map_name.GetString());
-
-		//App->collision->Start();
 		App->entity_m->player->playerHitbox = nullptr;
 		App->entity_m->player->Start();
 	}
@@ -221,6 +218,10 @@ void j1Scene::CameraToPlayer()
 }
 void j1Scene::GoToMenu()
 {
+	App->fade->FadeToBlack(App->scene, App->mainmenu);
+	App->mainmenu->active = true;
+	App->entity_m->active = false;
+	App->mainmenu->comeFromScene = true;
 	load_gui = true;
 	App->scene->CleanUp();
 	App->mainmenu->Start();

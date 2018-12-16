@@ -407,14 +407,14 @@ void j1Player::Check_Collision()
 
 	if (won == true) 
 	{
-		if (App->scene->current_level->data->level == 2)
+		if (App->scene->current_level->data->level == 1)
 		{
 			App->scene->LoadLevel(2); // Switching between levels when winning
 		}
 		
-		if (App->scene->current_level->data->level == 3)
+		else if (App->scene->current_level->data->level == 2)
 		{
-			App->fade->FadeToBlack(App->scene, App->mainmenu);
+			App->scene->GoToMenu();
 		}
 	}
 }
