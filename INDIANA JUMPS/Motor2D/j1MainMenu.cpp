@@ -189,8 +189,18 @@ void j1MainMenu::ManageVolume()
 void j1MainMenu::GoToScene(int button)
 {
 	// BUTTON 0 PLAY // BUTTON 1 CONTINUE //
-	App->fade->FadeToBlack(App->mainmenu, App->scene);
+	if (button == 0)
+	{
+		App->scene->LoadLevel(1);
+	}
 
+	if(button == 1)
+	{
+		App->LoadGame("save_game.xml");
+
+	}
+
+	App->fade->FadeToBlack(App->mainmenu, App->scene);
 	number = button;
 
 	runAway = true;
@@ -199,4 +209,6 @@ void j1MainMenu::GoToScene(int button)
 	{
 		CleanUp();
 	}
+
+
 }

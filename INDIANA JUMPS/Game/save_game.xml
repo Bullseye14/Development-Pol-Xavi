@@ -10,7 +10,7 @@
 		<level num="1" />
 	</scene>
 	<EntityManager>
-		<position x="1458" y="195" />
+		<position x="515" y="946" />
 		<god_mode active="false" />
 	</EntityManager>
 	<:anonymous />
@@ -19,6 +19,6 @@
 	<gui />
 	<fonts />
 	<renderer>
-		<camera x="-1117" y="0" />
+		<camera x="-174" y="0" />
 	</renderer>
 </game_state>

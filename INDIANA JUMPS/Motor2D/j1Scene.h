@@ -52,7 +52,7 @@ public:
 
 	void SuperClean();
 	void CameraToPlayer();
-	//void GoToMenu();
+	void GoToMenu();
 
 	// Save and Load
 	bool Load(pugi::xml_node&);

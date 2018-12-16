@@ -60,6 +60,8 @@ public:
 	bool hover = false;
 	bool none = false;
 	bool click = false;
+
+	bool fix = false;
 };
 
 #endif // __j1UI_ELEMENT_H__ 

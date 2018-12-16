@@ -16,6 +16,7 @@
 #include "j1Gui.h"
 #include "j1MainMenu.h"
 #include "j1FadeToBlack.h"
+#include "j1UI_Element.h"
 
 #include "Brofiler/Brofiler.h"
 #pragma comment ( lib, "Brofiler/ProfilerCore32.lib" )
@@ -50,6 +51,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	PERF_START(ptimer);
 	// Calling the function to load the map
 	App->map->Load(mapList.start->data->map_name.GetString());
 	path_img = App->tex->Load("path.png");
@@ -59,10 +61,10 @@ bool j1Scene::Start()
 	img = App->entity_m->player->graphics;
 
 	//App->entity_m->AddEnemy(300, 200, BIRD);
-	App->entity_m->AddEnemy(1000, 325, ZOMBIE);
-	App->entity_m->AddEnemy(200, 300, COIN);
+	//App->entity_m->AddEnemy(1000, 325, ZOMBIE);
+	//App->entity_m->AddEnemy(200, 300, COIN);
 
-	
+	//App->gui->element_list.add(App->gui->SpawnImage(800, 10, { 35, 375, 140, 50 }, true));
 
 	return true;
 }
@@ -105,38 +107,11 @@ bool j1Scene::Update(float dt)
 		App->entity_m->player->Respawn();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
-	{
-		DrawPath != DrawPath;
-	}
-
-	if (DrawPath) 
-	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint map_coord = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-
-
-		iPoint point = App->render->ScreenToWorld(x, y);
-		point = App->map->WorldToMap(point.x, point.y);
-		point = App->map->MapToWorld(point.x, point.y);
-
-		App->render->Blit(path_img, point.x, point.y);
-
-		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-
-		for (uint i = 0; i < path->Count(); ++i)
-		{
-			iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-			App->render->Blit(path_img, pos.x, pos.y);
-		}
-	}
-
 	App->map->Draw();
-	App->render->Blit(img, 0, 0);
+	//App->render->Blit(img, 0, 0);
 
 	//HUD
-	App->gui->element_list.add(App->gui->SpawnImage(30, 20, { 0, 0, 100, 100 }, true));
+	
 
 	return true;
 }
@@ -148,9 +123,14 @@ bool j1Scene::PostUpdate()
 	
 	bool ret = true;
 
+	
+	
+
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 
 	{
+		App->SaveGame("save_game.xml");
 		App->fade->FadeToBlack(App->scene, App->mainmenu);
+		App->mainmenu->active = true;
 		/*App->entity_m->active = false;
 		App->gui->active = true; 
 		App->fade->free_gui = true;
@@ -204,11 +184,14 @@ void j1Scene::LoadLevel(int number)
 		App->collision->CleanUp();
 		App->map->CleanUp();
 
-		//Starting the level & player
-
-		App->map->Load(current_level->data->map_name.GetString());
-		App->entity_m->player->playerHitbox = nullptr;
-		App->entity_m->player->Start();
+		if (current_level->data->level == 1) 
+		{
+			//Starting the level & player
+			App->map->Load(current_level->data->map_name.GetString());
+			App->collision->Start();
+			App->entity_m->player->playerHitbox = nullptr;
+			App->entity_m->player->Start();
+		}
 	}
 }
 
@@ -239,10 +222,9 @@ void j1Scene::CameraToPlayer()
 		App->render->camera.x = -App->entity_m->player->pos_player.x + w / 3;
 	
 }
-
-//void j1Scene::GoToMenu()
-//{
-//	load_gui = true;
-//	App->scene->CleanUp();
-//	App->mainmenu->Start();
-//}
+void j1Scene::GoToMenu()
+{
+	load_gui = true;
+	App->scene->CleanUp();
+	App->mainmenu->Start();
+}

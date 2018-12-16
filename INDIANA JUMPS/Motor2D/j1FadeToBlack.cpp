@@ -75,10 +75,10 @@ bool j1FadeToBlack::Update(float dt)
 						App->LoadGame("save_game.xml");
 					}
 				}
-				/*else
+				else
 				{
 					App->scene->GoToMenu();
-				}*/
+				}
 
 				to_enable->active = true;
 				current_step = fade_step::fade_from_black;
