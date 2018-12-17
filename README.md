@@ -58,7 +58,7 @@ You won't complete the levels if you bump into cactus or if you fall into the wa
 ## Video
 
 <iframe width="645" height="520"
-src="https://www.youtube.com/watch?v=8w2Rehk_lF4" frameborder="0" allowfullscreen>
+src="https://www.youtube.com/embed/watch?v=8w2Rehk_lF4" frameborder="0" allowfullscreen>
 </iframe>
 
 ## Information
